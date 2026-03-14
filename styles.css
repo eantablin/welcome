@@ -141,10 +141,10 @@ body::after {
     border: none !important;
 }
 
-/* ===== THEME TOGGLE ===== */
-.theme-toggle {
+/* ===== TOGGLE BUTTONS (shared) ===== */
+.theme-toggle,
+.fx-toggle {
     position: fixed;
-    top: 20px;
     right: 20px;
     z-index: 10000;
     background: var(--bg-card);
@@ -162,9 +162,54 @@ body::after {
     -webkit-backdrop-filter: blur(10px);
 }
 
-.theme-toggle:hover {
+.theme-toggle { top: 20px; }
+.fx-toggle { top: 72px; }
+
+.theme-toggle:hover,
+.fx-toggle:hover {
     border-color: var(--neon-gold);
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+/* FX toggle active state */
+.fx-on .fx-toggle {
+    border-color: #ff4500;
+    color: #ff4500;
+    box-shadow: 0 0 12px rgba(255, 69, 0, 0.3);
+}
+
+.fx-toggle .icon-flipper {
+    width: 26px;
+    height: 26px;
+}
+
+.fx-toggle .icon-front,
+.fx-toggle .icon-back {
+    width: 26px;
+    height: 26px;
+}
+
+.fx-toggle:hover .icon-flipper {
+    animation: iconSpin 1.2s linear infinite;
+}
+
+[data-theme="dark"] .fx-toggle {
+    border-color: var(--neon-purple);
+    color: var(--neon-purple);
+}
+
+[data-theme="dark"] .fx-on .fx-toggle {
+    border-color: #39ff14;
+    color: #39ff14;
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+}
+
+/* Effects canvas */
+#fxCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* Icon flip system */
@@ -371,16 +416,50 @@ ul {
     margin-bottom: 20px;
 }
 
+.skill-card-wrapper {
+    perspective: 600px;
+}
+
 .skill-card {
+    position: relative;
+    min-height: 100px;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+.skill-card-wrapper:hover .skill-card {
+    transform: rotateY(180deg);
+}
+
+.skill-front,
+.skill-back {
+    position: absolute;
+    inset: 0;
     padding: 14px;
     background: var(--bg-card);
     border: 1px solid var(--glass-border);
     border-radius: 8px;
-    transition: all 0.3s ease;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
-.skill-card:hover {
-    border-color: rgba(0, 240, 255, 0.15);
+.skill-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-color: var(--neon-cyan);
+}
+
+.skill-back p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+.skill-card-wrapper:hover .skill-front {
+    pointer-events: none;
 }
 
 .skill-card h3 {
