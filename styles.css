@@ -147,10 +147,12 @@ body::after {
     position: fixed;
     right: 20px;
     z-index: 10000;
+    width: 52px;
+    height: 52px;
     background: var(--bg-card);
     border: 2px solid var(--neon-gold);
     border-radius: 8px;
-    padding: 10px 12px;
+    padding: 0;
     cursor: pointer;
     color: var(--neon-gold);
     display: flex;
@@ -163,7 +165,7 @@ body::after {
 }
 
 .theme-toggle { top: 20px; }
-.fx-toggle { top: 72px; }
+.fx-toggle { top: 74px; right: 20px; }
 
 .theme-toggle:hover {
     border-color: var(--neon-gold);
@@ -245,17 +247,6 @@ body::after {
     height: 28px;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-}
-
-.icon-flipper.icon-flipper-lg {
-    width: 36px;
-    height: 36px;
-}
-
-.icon-flipper-lg .icon-front,
-.icon-flipper-lg .icon-back {
-    width: 36px;
-    height: 36px;
 }
 
 .icon-flipper .icon-back {
