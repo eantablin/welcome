@@ -173,8 +173,9 @@ body::after {
 
 .nav-links {
     display: flex;
-    gap: 24px;
+    gap: 28px;
     flex-wrap: wrap;
+    padding-right: 50px;
 }
 
 .nav-links a {
@@ -196,10 +197,14 @@ body::after {
 
 /* ===== THEME TOGGLE ===== */
 .theme-toggle {
-    background: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: var(--bg-card);
     border: 1px solid var(--glass-border);
-    border-radius: 6px;
-    padding: 6px 8px;
+    border-radius: 8px;
+    padding: 10px 12px;
     cursor: pointer;
     color: var(--neon-gold);
     display: flex;
@@ -207,12 +212,14 @@ body::after {
     justify-content: center;
     transition: all 0.3s ease;
     line-height: 1;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .theme-toggle:hover {
     border-color: var(--neon-gold);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
-    transform: translateY(-1px);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    transform: scale(1.1);
 }
 
 /* In dark mode (default): show star, hide ghost */
