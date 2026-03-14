@@ -148,7 +148,7 @@ body::after {
     right: 20px;
     z-index: 10000;
     background: var(--bg-card);
-    border: 1px solid var(--glass-border);
+    border: 2px solid var(--neon-gold);
     border-radius: 8px;
     padding: 10px 12px;
     cursor: pointer;
@@ -175,11 +175,6 @@ body::after {
 /* In dark mode: show ghost, hide star */
 [data-theme="dark"] .theme-toggle .icon-star { display: none; }
 [data-theme="dark"] .theme-toggle .icon-ghost { display: block; }
-[data-theme="dark"] .theme-toggle { color: var(--neon-purple); }
-[data-theme="dark"] .theme-toggle:hover {
-    border-color: var(--neon-purple);
-    box-shadow: 0 0 10px rgba(132, 0, 184, 0.15);
-}
 
 /* ===== HERO ===== */
 .hero {
