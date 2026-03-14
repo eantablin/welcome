@@ -167,15 +167,31 @@ body::after {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
-.theme-toggle .icon-star {
+/* Icon flip system */
+.icon-flipper {
+    position: relative;
+    width: 28px;
+    height: 28px;
     transform-style: preserve-3d;
 }
 
-.theme-toggle:hover .icon-star {
-    animation: starSpin 1.2s linear infinite;
+.icon-flipper .icon-front,
+.icon-flipper .icon-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
 }
 
-@keyframes starSpin {
+.icon-flipper .icon-back {
+    transform: rotateY(180deg);
+}
+
+.theme-toggle:hover .icon-flipper {
+    animation: iconSpin 1.2s linear infinite;
+}
+
+@keyframes iconSpin {
     from { transform: perspective(200px) rotateY(0deg); }
     to { transform: perspective(200px) rotateY(360deg); }
 }
@@ -194,19 +210,6 @@ body::after {
 [data-theme="dark"] .theme-toggle:hover {
     border-color: var(--neon-purple);
     box-shadow: 0 0 15px rgba(180, 0, 255, 0.2);
-}
-
-.theme-toggle .icon-ghost {
-    transform-style: preserve-3d;
-}
-
-.theme-toggle:hover .icon-ghost {
-    animation: ghostSpin 1.2s linear infinite;
-}
-
-@keyframes ghostSpin {
-    from { transform: perspective(200px) rotateY(0deg); }
-    to { transform: perspective(200px) rotateY(360deg); }
 }
 
 /* ===== HERO ===== */
