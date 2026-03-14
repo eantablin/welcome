@@ -187,6 +187,27 @@ body::after {
 /* In dark mode: show ghost, hide star */
 [data-theme="dark"] .theme-toggle .icon-star { display: none; }
 [data-theme="dark"] .theme-toggle .icon-ghost { display: block; }
+[data-theme="dark"] .theme-toggle {
+    color: var(--neon-purple);
+    border-color: var(--neon-purple);
+}
+[data-theme="dark"] .theme-toggle:hover {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 15px rgba(180, 0, 255, 0.2);
+}
+
+.theme-toggle .icon-ghost {
+    transform-style: preserve-3d;
+}
+
+.theme-toggle:hover .icon-ghost {
+    animation: ghostSpin 1.2s linear infinite;
+}
+
+@keyframes ghostSpin {
+    from { transform: perspective(200px) rotateY(0deg); }
+    to { transform: perspective(200px) rotateY(360deg); }
+}
 
 /* ===== HERO ===== */
 .hero {
