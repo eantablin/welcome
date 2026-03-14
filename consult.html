@@ -1,37 +1,102 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultations</title>
+    <title>Consulting — Emanuel Antablin</title>
+    <meta name="description" content="Book a consultation with Emanuel Antablin — AI integration, security audits, cloud architecture, and engineering mentorship.">
+    <meta property="og:title" content="Consulting — Emanuel Antablin">
+    <meta property="og:description" content="AI integration, security audits, cloud architecture, and engineering mentorship.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230a0a0f'/><rect x='2' y='2' width='60' height='60' rx='10' fill='none' stroke='%2300f0ff' stroke-width='2' opacity='0.6'/><text x='32' y='42' font-family='monospace' font-weight='900' font-size='28' fill='%2300f0ff' text-anchor='middle'>EA</text></svg>">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="wrapper">
-        <a href="index.html"><-- home</a>
-        <h1 class="postTitle">Consultations</h1>
-        <p>
-            Need help writing the next big thing?
-            Email for scheduling
+        <a href="index.html" class="back-link">&larr; Home</a>
+
+        <h1>Consulting</h1>
+        <p class="bio-text">
+            Need help building the next big thing? I offer consulting across the domains
+            I work in daily — from enterprise AI to security hardening. Pick your power-up.
         </p>
 
-        <p>
-            Free initial (15m) consultation
+        <div class="consult-grid">
+            <div class="power-card tier-free">
+                <span class="power-icon">&#127775;</span>
+                <div class="power-name">First Contact</div>
+                <span class="power-label">Free &bull; 15 min</span>
+                <div class="power-desc">
+                    Introductory call to scope your problem and see if we're a good fit.
+                    <ul>
+                        <li>Problem assessment</li>
+                        <li>Feasibility check</li>
+                        <li>No commitment</li>
+                    </ul>
+                </div>
+            </div>
 
-        </p>
+            <div class="power-card tier-ai">
+                <span class="power-icon">&#129302;</span>
+                <div class="power-name">AI Integration</div>
+                <span class="power-label">Strategy</span>
+                <div class="power-desc">
+                    From LLM selection to agentic system architecture — ship AI that works in production.
+                    <ul>
+                        <li>LLM & agentic AI architecture</li>
+                        <li>Model deployment pipelines</li>
+                        <li>Cost optimization</li>
+                        <li>Enterprise AI strategy</li>
+                    </ul>
+                </div>
+            </div>
 
+            <div class="power-card tier-security">
+                <span class="power-icon">&#128737;</span>
+                <div class="power-name">Security Audit</div>
+                <span class="power-label">Defense</span>
+                <div class="power-desc">
+                    Find the vulnerabilities before someone else does. OWASP-aligned assessments.
+                    <ul>
+                        <li>Penetration testing</li>
+                        <li>Vulnerability assessment</li>
+                        <li>OWASP Top 10 compliance</li>
+                        <li>Security posture review</li>
+                    </ul>
+                </div>
+            </div>
 
-        </ol>
-        <!-- Software Engineer building tools allowing furthering of research. If the first try doesn't work, take a rest and try again; maybe you'll come back to more bugs? -->
+            <div class="power-card tier-mentor">
+                <span class="power-icon">&#127942;</span>
+                <div class="power-name">Mentorship</div>
+                <span class="power-label">Level Up</span>
+                <div class="power-desc">
+                    Accelerate your engineering career with structured guidance and hands-on practice.
+                    <ul>
+                        <li>1-on-1 technical mentoring</li>
+                        <li>Code review & best practices</li>
+                        <li>Career path guidance</li>
+                        <li>From junior to senior track</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="mailto:eantablin@protonmail.com" class="cta-button">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                Book a Session
+            </a>
+        </div>
 
         <div class="footer">
             <div class="copyright">
-                ©
+                &copy;
                 <script>document.write(new Date().getFullYear())</script>
                 Emanuel Antablin
             </div>
         </div>
     </div>
 </body>
-
+</html>

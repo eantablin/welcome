@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Over — 404</title>
+    <meta name="description" content="Page not found. Game Over.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230a0a0f'/><rect x='2' y='2' width='60' height='60' rx='10' fill='none' stroke='%2300f0ff' stroke-width='2' opacity='0.6'/><text x='32' y='42' font-family='monospace' font-weight='900' font-size='28' fill='%2300f0ff' text-anchor='middle'>EA</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="game-over">
+            <div class="game-over-code">404</div>
+            <div class="game-over-title">GAME OVER</div>
+            <p class="game-over-sub">The page you seek has fallen into the void</p>
+            <div class="game-over-continue">
+                Continue? <a href="index.html" id="countdown">10</a>
+            </div>
+            <p class="coin-insert">Insert coin to continue</p>
+        </div>
+    </div>
+
+    <script>
+        let count = 10;
+        const el = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            count--;
+            el.textContent = count;
+            if (count <= 0) {
+                clearInterval(timer);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

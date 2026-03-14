@@ -1,23 +1,70 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Emanuel Antablin</title>
+    <meta name="description" content="Blog posts on security, cognitive science, BJJ, UX, and random ramblings by Emanuel Antablin.">
+    <meta property="og:title" content="Blog — Emanuel Antablin">
+    <meta property="og:description" content="Writing on security, cognitive science, martial arts, UX, and more.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230a0a0f'/><rect x='2' y='2' width='60' height='60' rx='10' fill='none' stroke='%2300f0ff' stroke-width='2' opacity='0.6'/><text x='32' y='42' font-family='monospace' font-weight='900' font-size='28' fill='%2300f0ff' text-anchor='middle'>EA</text></svg>">
     <link rel="stylesheet" href="./../styles.css">
 </head>
 
 <body>
-    <div class="links">
-        <a href="./../index.html">Home</a>
-        <a href="./blog/Ramblings/homeramb.html">Ramblings</a>
-        <a href="./blog/CognitiveScience/homecogsci.html">Cognitive Science</a>
-        <a href="./blog/Security/homesec.html">Security</a>
-        <a href="./blog/BJJ/homebjj.html">Jiu-Jitsu</a>
+    <div class="wrapper">
+        <a href="./../index.html" class="back-link">&larr; Home</a>
+
+        <h1>Blog</h1>
+        <p class="bio-text">Pick a category or jump to a recent post.</p>
+
+        <!-- CATEGORIES -->
+        <h2 class="section-title">Categories</h2>
+        <div class="blog-grid">
+            <a href="./blog/Security/homesec.html" class="blog-card accent-magenta">
+                <span class="card-icon">&#128274;</span>
+                <div class="card-title">Security</div>
+                <p class="card-desc">Writeups, learnings, and offensive/defensive security explorations.</p>
+            </a>
+
+            <a href="./blog/CognitiveScience/homecogsci.html" class="blog-card accent-purple">
+                <span class="card-icon">&#129504;</span>
+                <div class="card-title">Cognitive Science</div>
+                <p class="card-desc">Psychology, AI, neuroscience, and the nature of consciousness.</p>
+            </a>
+
+            <a href="./blog/BJJ/homebjj.html" class="blog-card accent-cyan">
+                <span class="card-icon">&#129354;</span>
+                <div class="card-title">Jiu-Jitsu</div>
+                <p class="card-desc">A newbie's thoughts and advice on the gentle art.</p>
+            </a>
+
+            <a href="./blog/Ramblings/homeramb.html" class="blog-card accent-green">
+                <span class="card-icon">&#128173;</span>
+                <div class="card-title">Ramblings</div>
+                <p class="card-desc">Beauty is in the eye of the beholder. Miscellaneous musings.</p>
+            </a>
+        </div>
+
+        <!-- RECENT POSTS -->
+        <h2 class="section-title">Recent Posts</h2>
+        <ul class="postList">
+            <li class="postItem">
+                <ol>
+                    <li><span class="date">2023 Jun 3</span> - <a href="./../mentoringTips.html">Efficient Mentorship</a></li>
+                    <li><span class="date">2021 Dec 31</span> - <a href="./../uxtips.html">Designing an intuitive UX</a></li>
+                </ol>
+            </li>
+        </ul>
+
+        <div class="footer">
+            <div class="copyright">
+                &copy;
+                <script>document.write(new Date().getFullYear())</script>
+                Emanuel Antablin
+            </div>
+        </div>
     </div>
-
-    <p>
-        Please pick a category
-    </p>
-
-    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fnegativespace.co%2Fwp-content%2Fuploads%2F2017%2F11%2Fnegative-space-pen-notebook-notepad-paper-writing-aaron-burden-thumb-1-1062x704.jpg&f=1&nofb=1" alt="A fine fountain pen on a notebook above a wooden desk">
 </body>
+</html>
