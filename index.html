@@ -284,25 +284,51 @@
                 <polygon points="24,1 29,16 45,16 32,26 37,42 24,32 11,42 16,26 3,16 19,16" fill="url(#starGradBack)" stroke="#8a6d00" stroke-width="0.8"/>
             </svg>
         </div>
-        <!-- Ghost (shown in dark mode — Boo) -->
+        <!-- Moon (shown in dark mode — Majora's Mask) -->
         <div class="icon-ghost icon-flipper">
-            <svg class="icon-front" viewBox="-2 -2 52 52" width="28" height="28">
-                <circle cx="24" cy="22" r="18" fill="white" stroke="#ccc" stroke-width="0.8"/>
-                <ellipse cx="18" cy="20" rx="3" ry="4.5" fill="#1a1a2e"/>
-                <ellipse cx="30" cy="20" rx="3" ry="4.5" fill="#1a1a2e"/>
-                <ellipse cx="19" cy="18.5" rx="1.2" ry="1.5" fill="rgba(255,255,255,0.5)"/>
-                <ellipse cx="31" cy="18.5" rx="1.2" ry="1.5" fill="rgba(255,255,255,0.5)"/>
-                <ellipse cx="24" cy="30" rx="4" ry="3" fill="#1a1a2e"/>
-                <ellipse cx="25" cy="31.5" rx="2" ry="1.5" fill="#e55"/>
-                <ellipse cx="5" cy="26" rx="4.5" ry="2.5" fill="white" stroke="#ccc" stroke-width="0.5" transform="rotate(-25 5 26)"/>
-                <ellipse cx="43" cy="26" rx="4.5" ry="2.5" fill="white" stroke="#ccc" stroke-width="0.5" transform="rotate(25 43 26)"/>
+            <!-- Front: Majora's Mask Moon face -->
+            <svg class="icon-front" viewBox="0 0 48 48" width="28" height="28">
+                <defs>
+                    <radialGradient id="moonGrad" cx="45%" cy="40%" r="50%">
+                        <stop offset="0%" stop-color="#f5f0d0"/>
+                        <stop offset="60%" stop-color="#d4c878"/>
+                        <stop offset="100%" stop-color="#a89840"/>
+                    </radialGradient>
+                </defs>
+                <!-- Moon body -->
+                <circle cx="24" cy="24" r="20" fill="url(#moonGrad)" stroke="#8a7a30" stroke-width="0.8"/>
+                <!-- Angry eyes — slanted brows built in -->
+                <polygon points="12,17 14,14 20,17 20,22 14,22" fill="#3a1a1a"/>
+                <polygon points="36,17 34,14 28,17 28,22 34,22" fill="#3a1a1a"/>
+                <!-- Pupils -->
+                <circle cx="17" cy="19.5" r="1.5" fill="#ff2200"/>
+                <circle cx="31" cy="19.5" r="1.5" fill="#ff2200"/>
+                <!-- Nose -->
+                <polygon points="24,22 22,28 26,28" fill="#8a7a30"/>
+                <!-- Mouth — jagged grimace -->
+                <path d="M16 32 L18 30 L20 33 L22 30 L24 33 L26 30 L28 33 L30 30 L32 32" fill="none" stroke="#3a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+                <!-- Craters -->
+                <circle cx="10" cy="12" r="2" fill="rgba(0,0,0,0.08)"/>
+                <circle cx="36" cy="8" r="1.5" fill="rgba(0,0,0,0.06)"/>
+                <circle cx="38" cy="34" r="2.5" fill="rgba(0,0,0,0.07)"/>
             </svg>
-            <svg class="icon-back" viewBox="-2 -2 52 52" width="28" height="28">
-                <circle cx="24" cy="22" r="18" fill="#f0f0f0" stroke="#ccc" stroke-width="0.8"/>
-                <!-- Tail sticking out -->
-                <path d="M24 40 Q28 46 32 44 Q28 44 26 40Z" fill="#f0f0f0" stroke="#ccc" stroke-width="0.5"/>
-                <ellipse cx="5" cy="26" rx="4.5" ry="2.5" fill="#f0f0f0" stroke="#ccc" stroke-width="0.5" transform="rotate(-25 5 26)"/>
-                <ellipse cx="43" cy="26" rx="4.5" ry="2.5" fill="#f0f0f0" stroke="#ccc" stroke-width="0.5" transform="rotate(25 43 26)"/>
+            <!-- Back: Plain cratered moon -->
+            <svg class="icon-back" viewBox="0 0 48 48" width="28" height="28">
+                <defs>
+                    <radialGradient id="moonGradBack" cx="55%" cy="45%" r="50%">
+                        <stop offset="0%" stop-color="#d4c878"/>
+                        <stop offset="60%" stop-color="#b8a850"/>
+                        <stop offset="100%" stop-color="#8a7a30"/>
+                    </radialGradient>
+                </defs>
+                <circle cx="24" cy="24" r="20" fill="url(#moonGradBack)" stroke="#6a5a20" stroke-width="0.8"/>
+                <!-- Craters -->
+                <circle cx="16" cy="14" r="3" fill="rgba(0,0,0,0.1)"/>
+                <circle cx="30" cy="10" r="2" fill="rgba(0,0,0,0.08)"/>
+                <circle cx="12" cy="28" r="2.5" fill="rgba(0,0,0,0.09)"/>
+                <circle cx="32" cy="30" r="3.5" fill="rgba(0,0,0,0.1)"/>
+                <circle cx="22" cy="34" r="2" fill="rgba(0,0,0,0.07)"/>
+                <circle cx="28" cy="20" r="1.5" fill="rgba(0,0,0,0.06)"/>
             </svg>
         </div>
     </button>
