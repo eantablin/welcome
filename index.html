@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script>var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
+    <script>var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');else if(t)localStorage.removeItem('theme');</script>
 </head>
 
 <body>
@@ -209,45 +209,40 @@
 
     <!-- Theme toggle - fixed top right -->
     <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle light/dark theme">
-        <!-- Star (shown in dark mode) -->
-        <svg class="icon-star" viewBox="0 0 16 16" width="20" height="20">
-            <rect x="7" y="0" width="2" height="2" fill="currentColor"/>
-            <rect x="5" y="2" width="6" height="2" fill="currentColor"/>
-            <rect x="3" y="4" width="10" height="2" fill="currentColor"/>
-            <rect x="0" y="6" width="16" height="4" fill="currentColor"/>
-            <rect x="2" y="10" width="12" height="2" fill="currentColor"/>
-            <rect x="2" y="12" width="4" height="2" fill="currentColor"/>
-            <rect x="10" y="12" width="4" height="2" fill="currentColor"/>
-            <rect x="2" y="14" width="2" height="2" fill="currentColor"/>
-            <rect x="12" y="14" width="2" height="2" fill="currentColor"/>
+        <!-- Star (shown in light mode — Mario Super Star) -->
+        <svg class="icon-star" viewBox="0 0 24 24" width="20" height="20">
+            <polygon points="12,0 14.5,8 24,8 16.5,13.5 19,22 12,17 5,22 7.5,13.5 0,8 9.5,8" fill="currentColor"/>
+            <ellipse cx="9" cy="10" rx="1.8" ry="2.5" fill="var(--bg-dark)"/>
+            <ellipse cx="15" cy="10" rx="1.8" ry="2.5" fill="var(--bg-dark)"/>
         </svg>
-        <!-- Ghost (shown in light mode) -->
-        <svg class="icon-ghost" viewBox="0 0 16 16" width="20" height="20">
-            <rect x="4" y="0" width="8" height="2" fill="currentColor"/>
-            <rect x="2" y="2" width="12" height="2" fill="currentColor"/>
-            <rect x="2" y="4" width="3" height="3" fill="currentColor"/>
-            <rect x="8" y="4" width="3" height="3" fill="currentColor"/>
-            <rect x="5" y="4" width="3" height="3" fill="currentColor" opacity="0.3"/>
-            <rect x="11" y="4" width="3" height="3" fill="currentColor" opacity="0.3"/>
-            <rect x="2" y="7" width="12" height="5" fill="currentColor"/>
-            <rect x="2" y="12" width="3" height="2" fill="currentColor"/>
-            <rect x="7" y="12" width="2" height="2" fill="currentColor"/>
-            <rect x="11" y="12" width="3" height="2" fill="currentColor"/>
-            <rect x="2" y="14" width="2" height="2" fill="currentColor"/>
-            <rect x="7" y="14" width="2" height="2" fill="currentColor"/>
-            <rect x="12" y="14" width="2" height="2" fill="currentColor"/>
+        <!-- Ghost (shown in dark mode — Boo) -->
+        <svg class="icon-ghost" viewBox="0 0 24 24" width="20" height="20">
+            <circle cx="12" cy="11" r="10" fill="white" stroke="currentColor" stroke-width="0.5"/>
+            <!-- Eyes -->
+            <ellipse cx="9" cy="10" rx="2" ry="2.5" fill="#1a1a2e"/>
+            <ellipse cx="15" cy="10" rx="2" ry="2.5" fill="#1a1a2e"/>
+            <!-- Mouth -->
+            <ellipse cx="12" cy="15" rx="2.5" ry="1.8" fill="#1a1a2e"/>
+            <!-- Tongue -->
+            <ellipse cx="12.5" cy="15.8" rx="1.2" ry="1" fill="#e55"/>
+            <!-- Left arm -->
+            <ellipse cx="2.5" cy="13" rx="2.5" ry="1.5" fill="white" transform="rotate(-30 2.5 13)"/>
+            <!-- Right arm -->
+            <ellipse cx="21.5" cy="13" rx="2.5" ry="1.5" fill="white" transform="rotate(30 21.5 13)"/>
+            <!-- Tail -->
+            <path d="M12 21 Q14 23 16 21 Q14 22 12 21Z" fill="white"/>
         </svg>
     </button>
 
     <script>
         document.getElementById('themeToggle').addEventListener('click', function() {
             var current = document.documentElement.getAttribute('data-theme');
-            if (current === 'light') {
+            if (current === 'dark') {
                 document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'dark');
+                localStorage.removeItem('theme');
             } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
             }
         });
     </script>
