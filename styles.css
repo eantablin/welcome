@@ -167,13 +167,17 @@ body::after {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
+.theme-toggle .icon-star {
+    transform-style: preserve-3d;
+}
+
 .theme-toggle:hover .icon-star {
-    animation: starSpin 0.8s linear infinite;
+    animation: starSpin 1.2s linear infinite;
 }
 
 @keyframes starSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from { transform: perspective(200px) rotateY(0deg); }
+    to { transform: perspective(200px) rotateY(360deg); }
 }
 
 /* In light mode (default): show star, hide ghost */
