@@ -173,6 +173,7 @@ body::after {
     width: 28px;
     height: 28px;
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
 }
 
 .icon-flipper .icon-front,
@@ -180,7 +181,10 @@ body::after {
     position: absolute;
     top: 0;
     left: 0;
+    width: 28px;
+    height: 28px;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .icon-flipper .icon-back {
