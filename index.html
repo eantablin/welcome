@@ -494,6 +494,13 @@
         }
 
         if (fxActive) startFx();
+
+        // Skill card click-to-flip
+        document.querySelectorAll('.skill-card-wrapper').forEach(function(wrapper) {
+            wrapper.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+            });
+        });
     </script>
 </body>
 </html>

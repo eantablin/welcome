@@ -165,17 +165,30 @@ body::after {
 .theme-toggle { top: 20px; }
 .fx-toggle { top: 72px; }
 
-.theme-toggle:hover,
-.fx-toggle:hover {
+.theme-toggle:hover {
     border-color: var(--neon-gold);
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
-/* FX toggle active state */
+/* FX toggle — red (off) by default */
+.fx-toggle {
+    border-color: #cc2200;
+    color: #cc2200;
+}
+
+.fx-toggle:hover {
+    box-shadow: 0 0 12px rgba(204, 34, 0, 0.3);
+}
+
+/* FX toggle — green (on) */
 .fx-on .fx-toggle {
-    border-color: #ff4500;
-    color: #ff4500;
-    box-shadow: 0 0 12px rgba(255, 69, 0, 0.3);
+    border-color: #22aa00;
+    color: #22aa00;
+    box-shadow: 0 0 12px rgba(34, 170, 0, 0.3);
+}
+
+.fx-on .fx-toggle:hover {
+    box-shadow: 0 0 18px rgba(34, 170, 0, 0.4);
 }
 
 .fx-toggle .icon-flipper {
@@ -189,13 +202,15 @@ body::after {
     height: 26px;
 }
 
-.fx-toggle:hover .icon-flipper {
+/* Spin only when effects are on */
+.fx-on .fx-toggle .icon-flipper {
     animation: iconSpin 1.2s linear infinite;
 }
 
+/* Dark mode FX toggle — same red/green, brighter */
 [data-theme="dark"] .fx-toggle {
-    border-color: var(--neon-purple);
-    color: var(--neon-purple);
+    border-color: #ff3322;
+    color: #ff3322;
 }
 
 [data-theme="dark"] .fx-on .fx-toggle {
@@ -428,7 +443,7 @@ ul {
     transition: transform 0.5s ease;
 }
 
-.skill-card-wrapper:hover .skill-card {
+.skill-card-wrapper.flipped .skill-card {
     transform: rotateY(180deg);
 }
 
@@ -458,8 +473,8 @@ ul {
     color: var(--text-primary);
 }
 
-.skill-card-wrapper:hover .skill-front {
-    pointer-events: none;
+.skill-card-wrapper {
+    cursor: pointer;
 }
 
 .skill-card h3 {
