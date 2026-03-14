@@ -247,6 +247,17 @@ body::after {
     -webkit-backface-visibility: hidden;
 }
 
+.icon-flipper.icon-flipper-lg {
+    width: 36px;
+    height: 36px;
+}
+
+.icon-flipper-lg .icon-front,
+.icon-flipper-lg .icon-back {
+    width: 36px;
+    height: 36px;
+}
+
 .icon-flipper .icon-back {
     transform: rotateY(180deg);
 }

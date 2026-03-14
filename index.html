@@ -285,50 +285,80 @@
             </svg>
         </div>
         <!-- Moon (shown in dark mode — Majora's Mask) -->
-        <div class="icon-ghost icon-flipper">
+        <div class="icon-ghost icon-flipper icon-flipper-lg">
             <!-- Front: Majora's Mask Moon face -->
-            <svg class="icon-front" viewBox="0 0 48 48" width="28" height="28">
+            <svg class="icon-front" viewBox="0 0 64 64" width="36" height="36">
                 <defs>
-                    <radialGradient id="moonGrad" cx="45%" cy="40%" r="50%">
-                        <stop offset="0%" stop-color="#f5f0d0"/>
-                        <stop offset="60%" stop-color="#d4c878"/>
-                        <stop offset="100%" stop-color="#a89840"/>
-                    </radialGradient>
-                </defs>
-                <!-- Moon body -->
-                <circle cx="24" cy="24" r="20" fill="url(#moonGrad)" stroke="#8a7a30" stroke-width="0.8"/>
-                <!-- Angry eyes — slanted brows built in -->
-                <polygon points="12,17 14,14 20,17 20,22 14,22" fill="#3a1a1a"/>
-                <polygon points="36,17 34,14 28,17 28,22 34,22" fill="#3a1a1a"/>
-                <!-- Pupils -->
-                <circle cx="17" cy="19.5" r="1.5" fill="#ff2200"/>
-                <circle cx="31" cy="19.5" r="1.5" fill="#ff2200"/>
-                <!-- Nose -->
-                <polygon points="24,22 22,28 26,28" fill="#8a7a30"/>
-                <!-- Mouth — jagged grimace -->
-                <path d="M16 32 L18 30 L20 33 L22 30 L24 33 L26 30 L28 33 L30 30 L32 32" fill="none" stroke="#3a1a1a" stroke-width="1.5" stroke-linecap="round"/>
-                <!-- Craters -->
-                <circle cx="10" cy="12" r="2" fill="rgba(0,0,0,0.08)"/>
-                <circle cx="36" cy="8" r="1.5" fill="rgba(0,0,0,0.06)"/>
-                <circle cx="38" cy="34" r="2.5" fill="rgba(0,0,0,0.07)"/>
-            </svg>
-            <!-- Back: Plain cratered moon -->
-            <svg class="icon-back" viewBox="0 0 48 48" width="28" height="28">
-                <defs>
-                    <radialGradient id="moonGradBack" cx="55%" cy="45%" r="50%">
-                        <stop offset="0%" stop-color="#d4c878"/>
-                        <stop offset="60%" stop-color="#b8a850"/>
+                    <radialGradient id="moonGrad" cx="42%" cy="38%" r="52%">
+                        <stop offset="0%" stop-color="#f5efc8"/>
+                        <stop offset="35%" stop-color="#e0d490"/>
+                        <stop offset="70%" stop-color="#c4b060"/>
                         <stop offset="100%" stop-color="#8a7a30"/>
                     </radialGradient>
                 </defs>
-                <circle cx="24" cy="24" r="20" fill="url(#moonGradBack)" stroke="#6a5a20" stroke-width="0.8"/>
+                <!-- Moon body -->
+                <circle cx="32" cy="32" r="29" fill="url(#moonGrad)" stroke="#6a5a20" stroke-width="0.8"/>
+                <!-- Forehead wrinkles -->
+                <path d="M18 18 Q24 16 30 18" fill="none" stroke="rgba(100,80,20,0.3)" stroke-width="0.6"/>
+                <path d="M34 17 Q38 15 44 18" fill="none" stroke="rgba(100,80,20,0.3)" stroke-width="0.6"/>
+                <path d="M20 15 Q28 12 36 14" fill="none" stroke="rgba(100,80,20,0.25)" stroke-width="0.5"/>
+                <!-- Heavy brow ridges -->
+                <path d="M14 22 L18 19 L26 22" fill="#8a7a30" stroke="#6a5a10" stroke-width="0.4"/>
+                <path d="M50 22 L46 19 L38 22" fill="#8a7a30" stroke="#6a5a10" stroke-width="0.4"/>
+                <!-- Eye sockets (deep, shadowed) -->
+                <ellipse cx="22" cy="26" rx="6" ry="5" fill="#2a1508"/>
+                <ellipse cx="42" cy="26" rx="6" ry="5" fill="#2a1508"/>
+                <!-- Eyeballs -->
+                <ellipse cx="22" cy="26" rx="3.5" ry="3" fill="#c8a030"/>
+                <ellipse cx="42" cy="26" rx="3.5" ry="3" fill="#c8a030"/>
+                <!-- Pupils — red/orange glow -->
+                <circle cx="22" cy="26" r="1.8" fill="#cc2200"/>
+                <circle cx="42" cy="26" r="1.8" fill="#cc2200"/>
+                <circle cx="22" cy="26" r="0.8" fill="#ff4400"/>
+                <circle cx="42" cy="26" r="0.8" fill="#ff4400"/>
+                <!-- Nose — long and pointed -->
+                <path d="M30 28 L32 38 L34 28" fill="#9a8a38" stroke="#6a5a10" stroke-width="0.4"/>
+                <path d="M30.5 36 L32 38 L33.5 36" fill="#7a6a20"/>
+                <!-- Nostrils -->
+                <circle cx="31" cy="36" r="0.7" fill="#3a2a08"/>
+                <circle cx="33" cy="36" r="0.7" fill="#3a2a08"/>
+                <!-- Mouth — wide grimace with jagged teeth -->
+                <path d="M17 42 Q20 39 24 42 Q28 39 32 42 Q36 39 40 42 Q44 39 47 42" fill="none" stroke="#2a1508" stroke-width="1.2"/>
+                <!-- Upper teeth -->
+                <polygon points="19,41 21,41 20,43" fill="#e8dcc0"/>
+                <polygon points="23,41 25,41 24,43.5" fill="#e8dcc0"/>
+                <polygon points="27,41 29,41 28,43" fill="#e8dcc0"/>
+                <polygon points="31,41 33,41 32,43.5" fill="#e8dcc0"/>
+                <polygon points="35,41 37,41 36,43" fill="#e8dcc0"/>
+                <polygon points="39,41 41,41 40,43.5" fill="#e8dcc0"/>
+                <polygon points="43,41 45,41 44,43" fill="#e8dcc0"/>
+                <!-- Chin / jaw line -->
+                <path d="M15 44 Q22 50 32 51 Q42 50 49 44" fill="none" stroke="rgba(100,80,20,0.4)" stroke-width="0.6"/>
                 <!-- Craters -->
-                <circle cx="16" cy="14" r="3" fill="rgba(0,0,0,0.1)"/>
-                <circle cx="30" cy="10" r="2" fill="rgba(0,0,0,0.08)"/>
-                <circle cx="12" cy="28" r="2.5" fill="rgba(0,0,0,0.09)"/>
-                <circle cx="32" cy="30" r="3.5" fill="rgba(0,0,0,0.1)"/>
-                <circle cx="22" cy="34" r="2" fill="rgba(0,0,0,0.07)"/>
-                <circle cx="28" cy="20" r="1.5" fill="rgba(0,0,0,0.06)"/>
+                <circle cx="12" cy="12" r="2.5" fill="rgba(0,0,0,0.07)"/>
+                <circle cx="50" cy="14" r="2" fill="rgba(0,0,0,0.06)"/>
+                <circle cx="50" cy="46" r="3" fill="rgba(0,0,0,0.06)"/>
+                <circle cx="10" cy="42" r="2" fill="rgba(0,0,0,0.05)"/>
+            </svg>
+            <!-- Back: Plain cratered moon -->
+            <svg class="icon-back" viewBox="0 0 64 64" width="36" height="36">
+                <defs>
+                    <radialGradient id="moonGradBack" cx="55%" cy="45%" r="52%">
+                        <stop offset="0%" stop-color="#c4b060"/>
+                        <stop offset="50%" stop-color="#a89840"/>
+                        <stop offset="100%" stop-color="#6a5a20"/>
+                    </radialGradient>
+                </defs>
+                <circle cx="32" cy="32" r="29" fill="url(#moonGradBack)" stroke="#5a4a18" stroke-width="0.8"/>
+                <!-- Craters -->
+                <circle cx="20" cy="16" r="4" fill="rgba(0,0,0,0.1)"/>
+                <circle cx="40" cy="12" r="2.5" fill="rgba(0,0,0,0.08)"/>
+                <circle cx="14" cy="36" r="3.5" fill="rgba(0,0,0,0.09)"/>
+                <circle cx="42" cy="38" r="5" fill="rgba(0,0,0,0.1)"/>
+                <circle cx="28" cy="46" r="3" fill="rgba(0,0,0,0.08)"/>
+                <circle cx="36" cy="24" r="2" fill="rgba(0,0,0,0.06)"/>
+                <circle cx="24" cy="28" r="2.5" fill="rgba(0,0,0,0.07)"/>
+                <circle cx="48" cy="26" r="1.5" fill="rgba(0,0,0,0.05)"/>
             </svg>
         </div>
     </button>
