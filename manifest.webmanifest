@@ -1,0 +1,12 @@
+{
+  "name": "Emanuel Antablin — AI Engineer",
+  "short_name": "E. Antablin",
+  "description": "AI Engineer building agentic AI, RAG, and LLM systems in production.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06070d",
+  "theme_color": "#06070d",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
