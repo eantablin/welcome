@@ -399,8 +399,9 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 .terminal-bar .dot.y { background: #febc2e; }
 .terminal-bar .dot.g { background: #28c840; }
 .terminal-bar .title { margin-left: 8px; color: #8b93b2; font-size: .76rem; letter-spacing: .04em; }
-.terminal-body { padding: 18px 18px 22px; color: #c8d2ef; line-height: 1.85; }
-.terminal-body .ln { white-space: pre-wrap; }
+.terminal-body { padding: 18px 20px 22px; color: #c8d2ef; font-size: .8rem; line-height: 1.75; overflow-x: auto; }
+.terminal-body .ln { display: block; white-space: pre; }
+.terminal-body .ln:empty { height: 1.4em; }
 .terminal-body .c-prompt { color: var(--green); }
 .terminal-body .c-key { color: var(--cyan); }
 .terminal-body .c-str { color: var(--gold); }

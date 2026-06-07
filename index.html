@@ -163,15 +163,16 @@
                                 <span class="title">~/agents/monitor.py</span>
                             </div>
                             <div class="terminal-body">
-<span class="ln"><span class="c-com"># autonomous DC monitoring agent</span></span>
+<span class="ln"><span class="c-com"># autonomous SRE agent · prod</span></span>
 <span class="ln"><span class="c-key">class</span> <span class="c-fn">MonitorAgent</span>(Agent):</span>
 <span class="ln">    <span class="c-key">def</span> <span class="c-fn">observe</span>(self):</span>
-<span class="ln">        m = telemetry.read(<span class="c-str">"cpu,mem,disk"</span>)</span>
+<span class="ln">        m   = telemetry.read(<span class="c-str">"cpu,mem,disk"</span>)</span>
 <span class="ln">        ctx = rag.retrieve(m, <span class="c-key">k</span>=<span class="c-num">8</span>)</span>
-<span class="ln">        <span class="c-key">if</span> self.anomaly(m, ctx):</span>
-<span class="ln">            self.page_sre(diagnose(m, ctx))</span>
 <span class="ln"></span>
-<span class="ln"><span class="c-prompt">›</span> mttr: <span class="c-num">4h</span> → <span class="c-num">28m</span>  <span class="c-com"># ✓ shipped</span></span>
+<span class="ln">        <span class="c-key">if</span> self.anomaly(m, ctx):</span>
+<span class="ln">            self.page_sre(<span class="c-fn">diagnose</span>(m, ctx))</span>
+<span class="ln"></span>
+<span class="ln"><span class="c-prompt">›</span> mttr <span class="c-num">4h</span> → <span class="c-num">28m</span>   <span class="c-com">✓ shipped, not slideware</span></span>
                             </div>
                         </div>
                     </aside>
