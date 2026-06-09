@@ -1,0 +1,185 @@
+---
+import Base from "../layouts/Base.astro";
+import { identity, hero, stats, pillars, caseStudies, skillGroups, timeline, education, projects } from "../data/profile";
+
+const title = "Emanuel Antablin — AI Engineer | Agentic AI, RAG & LLM Systems";
+const description =
+  "Emanuel Antablin is an AI Engineer building agentic AI, RAG, and LLM systems in production at Walmart Global Tech — cutting incident response from hours to minutes and saving millions through automation.";
+
+const phrases = hero.phrases.join("|");
+
+const socialIcons: Record<string, string> = {
+  github:
+    "M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5.3 18 5.6 18 5.6c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z",
+  linkedin:
+    "M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z",
+  email: "M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z",
+};
+const skillIcons: Record<string, string> = {
+  brain: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1.5v3M15 1.5v3M9 19.5v3M15 19.5v3M1.5 9h3M1.5 15h3M19.5 9h3M19.5 15h3"/>',
+  code: '<path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/>',
+  stack: '<path d="M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/>',
+  cloud: '<path d="M17 18a4 4 0 0 0 0-8 6 6 0 0 0-11.3 2A3.5 3.5 0 0 0 6 18z"/>',
+};
+const arrow = '<path d="M5 12h14M13 6l6 6-6 6"/>';
+---
+
+<Base title={title} description={description} path="/" structuredData={true}>
+  <main id="main">
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="top">
+      <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero__content">
+        <p class="kicker reveal">{hero.kicker}</p>
+        <h1 class="hero__name reveal" style="--i:1">{identity.name}</h1>
+        <p class="hero__role reveal" style="--i:2">{identity.role}</p>
+        <p class="hero__typed reveal" style="--i:3"><span id="typed" data-phrases={phrases}></span></p>
+        <p class="hero__blurb reveal" style="--i:4" set:html={hero.blurb.replace(/agentic AI, RAG, and LLM systems/,'<strong>agentic AI, RAG, and LLM systems</strong>').replace(/Walmart Global Tech/,'<strong>Walmart Global Tech</strong>')} />
+        <div class="hero__cta reveal" style="--i:5">
+          <a class="btn btn--primary" href="#work"><span>View the work</span><svg viewBox="0 0 24 24" set:html={arrow} /></a>
+          <a class="btn btn--ghost" href="#contact"><span>Get in touch</span></a>
+        </div>
+        <div class="hero__socials reveal" style="--i:6">
+          <a class="hero__social" href={identity.github} target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d={socialIcons.github} /></svg></a>
+          <a class="hero__social" href={identity.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d={socialIcons.linkedin} /></svg></a>
+          <a class="hero__social" href={`mailto:${identity.email}`} aria-label="Email"><svg viewBox="0 0 24 24"><path d={socialIcons.email} /></svg></a>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#impact" aria-label="Scroll down">
+        <span class="scroll-cue__txt">SCROLL</span><span class="scroll-cue__line"></span>
+      </a>
+    </section>
+
+    <!-- ===================== IMPACT STATS ===================== -->
+    <section class="section" id="impact" style="padding-top:0">
+      <div class="wrap">
+        <div class="stats reveal">
+          {stats.map((s) => (
+            <div class="stat">
+              <span class="stat__num" data-count={s.value} data-prefix={s.prefix ?? ""} data-suffix={s.suffix ?? ""}>{(s.prefix ?? "") + "0" + (s.suffix ?? "")}</span>
+              <span class="stat__label">{s.label}</span>
+              <span class="stat__sub">{s.sub}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EXPERTISE ===================== -->
+    <section class="section" id="expertise" data-jiggy-zone>
+      <div class="wrap">
+        <p class="kicker reveal">How I build</p>
+        <h2 class="section__title reveal" style="--i:1">Engineering <em>intelligence</em>, end&nbsp;to&nbsp;end.</h2>
+        <p class="section__lede reveal" style="--i:2">Not prompts in a notebook — autonomous systems that observe, reason, and act in production. Four disciplines I bring to every build.</p>
+        <div class="pillars">
+          {pillars.map((p, i) => (
+            <article class="pillar reveal" style={`--accent:${p.accent};--i:${i}`}>
+              <span class="pillar__index">{p.index}</span>
+              <h3 class="pillar__title">{p.title}</h3>
+              <p class="pillar__tagline">{p.tagline}</p>
+              <p class="pillar__body">{p.body}</p>
+              <ul class="pillar__points">{p.points.map((pt) => <li>{pt}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WORK / CASE STUDIES ===================== -->
+    <section class="section" id="work" data-jiggy-zone>
+      <div class="wrap">
+        <p class="kicker reveal">Selected work</p>
+        <h2 class="section__title reveal" style="--i:1">AI that survives contact with <em>production</em>.</h2>
+        <p class="section__lede reveal" style="--i:2">Real systems, real stakes, real numbers — kept at a level I can talk through, with no proprietary internals.</p>
+        <div class="cases">
+          {caseStudies.map((c) => (
+            <article class="case reveal" style={`--accent:${c.accent}`}>
+              <div class="case__main">
+                <span class="case__tag">{c.tag}</span>
+                <p class="case__org">{c.org}</p>
+                <h3 class="case__title">{c.title}</h3>
+                <div class="case__block"><h4>Problem</h4><p>{c.problem}</p></div>
+                <div class="case__block"><h4>What I built</h4><p>{c.built}</p></div>
+                <div class="case__block case__block--result"><h4>Result</h4><p>{c.result}</p></div>
+                <div class="case__stack">{c.stack.map((t) => <span class="case__chip">{t}</span>)}</div>
+              </div>
+              <div class="case__metric">
+                <div class="case__metric-val">{c.metric.value}</div>
+                <div class="case__metric-label">{c.metric.label}</div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SKILLS ===================== -->
+    <section class="section" id="skills" data-jiggy-zone>
+      <div class="wrap">
+        <p class="kicker reveal">Toolkit</p>
+        <h2 class="section__title reveal" style="--i:1">The <em>stack</em> behind the systems.</h2>
+        <div class="skills">
+          {skillGroups.map((g, i) => (
+            <div class="skillgroup reveal" style={`--i:${i}`}>
+              <h3 class="skillgroup__title"><svg viewBox="0 0 24 24" set:html={skillIcons[g.icon]} />{g.title}</h3>
+              <ul>{g.skills.map((s) => <li>{s}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EXPERIENCE ===================== -->
+    <section class="section" id="experience" data-jiggy-zone>
+      <div class="wrap">
+        <p class="kicker reveal">Trajectory</p>
+        <h2 class="section__title reveal" style="--i:1">From ML pipelines to <em>agentic systems</em>.</h2>
+        <div class="timeline">
+          {timeline.map((t) => (
+            <div class={`tl reveal ${t.current ? "is-current" : ""}`}>
+              <div class="tl__head">
+                <span><span class="tl__role">{t.role}</span> <span class="tl__org">· {t.org}</span></span>
+                <span class="tl__period">{t.period}</span>
+              </div>
+              <ul class="tl__points">{t.points.map((p) => <li>{p}</li>)}</ul>
+            </div>
+          ))}
+          <div class="edu reveal">
+            <div class="edu__degree">{education.degree}</div>
+            <div class="edu__detail">{education.school} · {education.detail}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROJECTS ===================== -->
+    <section class="section" id="projects" data-jiggy-zone>
+      <div class="wrap">
+        <p class="kicker reveal">Lab</p>
+        <h2 class="section__title reveal" style="--i:1">Side <em>experiments</em>.</h2>
+        <div class="projects">
+          {projects.map((p, i) => (
+            <article class="project reveal" style={`--i:${i}`}>
+              <h3 class="project__title">{p.title}</h3>
+              <p class="project__blurb">{p.blurb}</p>
+              <div class="project__tags">{p.tags.map((t) => <span>{t}</span>)}</div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section class="section contact" id="contact">
+      <div class="wrap">
+        <p class="kicker reveal">Contact</p>
+        <h2 class="contact__title reveal" style="--i:1">Let's build something <em>intelligent</em>.</h2>
+        <p class="contact__lede reveal" style="--i:2">Hiring, collaborating, or just want to talk agents and RAG? My inbox is open.</p>
+        <a class="contact__email reveal" style="--i:3" href={`mailto:${identity.email}`}>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4zM4 7l8 6 8-6" /></svg>
+          {identity.email}
+        </a>
+      </div>
+    </section>
+  </main>
+</Base>

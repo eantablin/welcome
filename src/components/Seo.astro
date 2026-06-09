@@ -1,0 +1,86 @@
+---
+import { identity, hero } from "../data/profile";
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  noindex?: boolean;
+  structuredData?: boolean;
+}
+const { title, description, path = "/", noindex = false, structuredData = false } = Astro.props;
+
+const site = Astro.site ?? new URL("https://emanuel.antablin.com");
+const canonical = new URL(path, site).href;
+const ogImage = new URL("/og-image.jpg", site).href;
+
+const keywords = [
+  "Emanuel Antablin", "AI Engineer", "Agentic AI Engineer", "LLM Engineer", "RAG Engineer",
+  "Machine Learning Engineer", "AI Software Engineer", "Prompt Engineering", "Model Context Protocol",
+  "Python", "FastAPI", "Walmart Global Tech",
+].join(", ");
+
+const graph = structuredData
+  ? {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": `${site.origin}/#person`,
+          name: identity.name,
+          givenName: "Emanuel",
+          familyName: "Antablin",
+          jobTitle: "AI Engineer",
+          description: hero.blurb,
+          url: `${site.origin}/`,
+          image: ogImage,
+          email: `mailto:${identity.email}`,
+          worksFor: { "@type": "Organization", name: "Walmart Global Tech" },
+          alumniOf: { "@type": "CollegeOrUniversity", name: "Full Sail University" },
+          sameAs: [identity.github, identity.linkedin],
+          knowsAbout: [
+            "Artificial Intelligence Engineering", "Agentic AI", "Large Language Models",
+            "Retrieval-Augmented Generation", "Machine Learning", "Prompt Engineering",
+            "Model Context Protocol", "Python", "FastAPI", "Cloud Architecture", "Kubernetes",
+            "Distributed Systems", "Application Security",
+          ],
+        },
+        {
+          "@type": "WebSite",
+          "@id": `${site.origin}/#website`,
+          url: `${site.origin}/`,
+          name: `${identity.name} — AI Engineer`,
+          description,
+          inLanguage: "en",
+          about: { "@id": `${site.origin}/#person` },
+        },
+      ],
+    }
+  : null;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={identity.name} />
+<meta name="keywords" content={keywords} />
+<link rel="canonical" href={canonical} />
+{noindex
+  ? <meta name="robots" content="noindex, nofollow" />
+  : <meta name="robots" content="index, follow, max-image-preview:large" />}
+
+<meta property="og:type" content="profile" />
+<meta property="og:site_name" content={identity.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="profile:first_name" content="Emanuel" />
+<meta property="profile:last_name" content="Antablin" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{graph && <script type="application/ld+json" set:html={JSON.stringify(graph)} />}

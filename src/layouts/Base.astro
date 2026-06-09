@@ -1,0 +1,113 @@
+---
+import "../styles/global.css";
+import Seo from "../components/Seo.astro";
+import { identity, arcade } from "../data/profile";
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  noindex?: boolean;
+  structuredData?: boolean;
+}
+const { title, description, path = "/", noindex = false, structuredData = false } = Astro.props;
+const nav = [
+  { id: "expertise", label: "Expertise" },
+  { id: "work", label: "Work" },
+  { id: "skills", label: "Skills" },
+  { id: "experience", label: "Experience" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#06070d" />
+    <Seo title={title} description={description} path={path} noindex={noindex} structuredData={structuredData} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- boot sequence -->
+    <div class="boot" id="boot" role="dialog" aria-label="Boot sequence">
+      <div class="boot__inner">
+        <div class="boot__logo">EMANUEL ANTABLIN</div>
+        <pre class="boot__log" id="bootLog" aria-live="polite"></pre>
+        <button class="boot__start" id="bootStart">▶ PRESS START</button>
+        <button class="boot__skip" id="bootSkip">skip intro →</button>
+      </div>
+    </div>
+
+    <!-- fixed overlays -->
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="ruler" aria-hidden="true"><span class="ruler__fill" id="rulerFill"></span></div>
+
+    <!-- HUD -->
+    <div class="hud" id="hud" data-jiggies-total={arcade.jiggiesTotal} aria-label="Game HUD">
+      <span class="hud__item"><span class="hud__jig" aria-hidden="true"><svg viewBox="0 0 100 100"><path fill="#ffd25a" d="M22 22 L41 22 C41 10 59 10 59 22 L78 22 L78 41 C90 41 90 59 78 59 L78 78 L59 78 C59 66 41 66 41 78 L22 78 L22 59 C34 59 34 41 22 41 L22 22 Z"/></svg></span> <span class="hud__val" id="hudJig">0/{arcade.jiggiesTotal}</span></span>
+      <span class="hud__sep"></span>
+      <span class="hud__item"><span class="hud__label-full">SCORE</span> <span class="hud__val" id="hudScore">0</span></span>
+      <span class="hud__sep"></span>
+      <button class="hud__btn" id="hudPlay" title="Play MONOLITH SMASH" aria-label="Play the hidden mini-game">▶</button>
+      <button class="hud__btn on" id="hudSound" title="Toggle sound" aria-label="Toggle sound" aria-pressed="true">♪</button>
+      <button class="hud__btn" id="hudCrt" title="Toggle CRT mode" aria-label="Toggle CRT mode">▦</button>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- nav -->
+    <header class="nav" id="nav">
+      <a class="nav__brand" href="https://www.antablin.com" aria-label="The Antablin family — antablin.com">
+        <span class="nav__mark">EA</span>
+        <span class="nav__name">EMANUEL ANTABLIN</span>
+      </a>
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        {nav.map((n) => <a href={`#${n.id}`}>{n.label}</a>)}
+      </nav>
+      <a class="nav__cta" href="#contact">Get in touch</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </header>
+
+    <slot />
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="wrap footer__wrap">
+        <span class="footer__brand">EMANUEL&nbsp;ANTABLIN</span>
+        <span class="footer__meta">© <span id="year">2026</span> · Irvine, CA · built with too much fun</span>
+        <span class="footer__hint">psst — find all the <b>🧩 puzzle pieces</b></span>
+      </div>
+    </footer>
+
+    <!-- mini-game modal -->
+    <div class="arcade" id="arcade" role="dialog" aria-label="MONOLITH SMASH mini-game" aria-modal="true">
+      <div class="arcade__cab">
+        <div class="arcade__bar">
+          <span class="arcade__title">{arcade.miniGameName}</span>
+          <button class="arcade__close" id="arcadeClose">✕ ESC</button>
+        </div>
+        <canvas class="arcade__canvas" id="gameCanvas" width="900" height="520"></canvas>
+        <p class="arcade__hint">←/→ <b>move</b> · ↑ <b>jump</b> (drift into a wall to <b>climb</b>) · SPACE <b>punch</b> (hold ↑/↓/back to aim) · X <b>ground-pound</b> (or <b>dive</b> in mid-air) · eat the humans · <b>1/2/3</b> pick upgrades</p>
+      </div>
+    </div>
+
+    <script>
+      import "../scripts/boot.js";
+    </script>
+  </body>
+</html>
