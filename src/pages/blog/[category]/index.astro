@@ -1,0 +1,88 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { categories } from "../../../data/categories";
+
+export async function getStaticPaths() {
+  return categories.map((c) => ({ params: { category: c.slug }, props: { cat: c } }));
+}
+const { cat } = Astro.props;
+
+const posts = (await getCollection("blog", (p) => p.data.category === cat.slug)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const fmt = (d: Date) =>
+  `${d.getUTCFullYear()} · ${d.toLocaleString("en", { month: "short", timeZone: "UTC" })} ${d.getUTCDate()}`;
+---
+
+<Base
+  title={`${cat.name} — Blog | Emanuel Antablin`}
+  description={cat.blurb}
+  path={`/blog/${cat.slug}`}
+>
+  <main id="main" style={`--accent:${cat.accent}`}>
+    <section class="page-hero">
+      <div class="wrap">
+        <a class="page-hero__back" href="/blog">← Blog</a>
+        <p class="kicker reveal">{cat.icon} {cat.name}</p>
+        <h1 class="page-hero__title reveal" style="--i:1">
+          <em>{cat.tagline}</em>
+        </h1>
+        <p class="page-hero__lede reveal" style="--i:2">{cat.blurb}</p>
+
+        {
+          cat.motif === "terminal" && (
+            <div class="motif motif--terminal reveal" style="--i:3" aria-hidden="true">
+              <span class="dim">$</span> nmap -sV --script vuln target.local<br />
+              <span class="dim">…</span> 443/tcp open · ssl/https<br />
+              <span class="dim">$</span> echo "offense informs defense"_
+            </div>
+          )
+        }
+        {
+          cat.motif === "neural" && (
+            <svg class="motif motif--neural reveal" style="--i:3" viewBox="0 0 380 110" aria-hidden="true">
+              <line x1="40" y1="55" x2="150" y2="20" /><line x1="40" y1="55" x2="150" y2="55" />
+              <line x1="40" y1="55" x2="150" y2="90" /><line x1="150" y1="20" x2="260" y2="38" />
+              <line x1="150" y1="55" x2="260" y2="38" /><line x1="150" y1="55" x2="260" y2="74" />
+              <line x1="150" y1="90" x2="260" y2="74" /><line x1="260" y1="38" x2="345" y2="55" />
+              <line x1="260" y1="74" x2="345" y2="55" />
+              <circle cx="40" cy="55" r="7" /><circle cx="150" cy="20" r="6" />
+              <circle cx="150" cy="55" r="6" /><circle cx="150" cy="90" r="6" />
+              <circle cx="260" cy="38" r="6" /><circle cx="260" cy="74" r="6" />
+              <circle cx="345" cy="55" r="7" />
+            </svg>
+          )
+        }
+        {cat.motif === "belt" && <div class="motif motif--belt reveal" style="--i:3" aria-hidden="true" />}
+        {
+          cat.motif === "ink" && (
+            <p class="motif motif--ink reveal" style="--i:3" aria-hidden="true">
+              Beauty is in the eye of the beholder.
+            </p>
+          )
+        }
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        {
+          posts.length > 0 ? (
+            <div class="posts">
+              {posts.map((p) => (
+                <a class="post-row reveal" href={`/blog/${cat.slug}/${p.id}`}>
+                  <span class="post-row__date">{fmt(p.data.date)}</span>
+                  <span class="post-row__title">{p.data.title}</span>
+                  <span class="post-row__cat">{p.data.readMinutes} min read</span>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="posts-empty reveal">{cat.empty}</p>
+          )
+        }
+      </div>
+    </section>
+  </main>
+</Base>

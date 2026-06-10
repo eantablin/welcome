@@ -1,0 +1,79 @@
+---
+import Base from "../../layouts/Base.astro";
+import { deepStudies } from "../../data/casestudies";
+import { identity } from "../../data/profile";
+
+export async function getStaticPaths() {
+  return deepStudies.map((cs) => ({ params: { slug: cs.slug }, props: { cs } }));
+}
+const { cs } = Astro.props;
+const others = deepStudies.filter((s) => s.slug !== cs.slug);
+
+const site = Astro.site ?? new URL("https://emanuel.antablin.com");
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: `${cs.title} — case study`,
+  description: cs.problem,
+  author: { "@type": "Person", name: identity.name, url: `${site.origin}/` },
+  url: new URL(`/portfolio/${cs.slug}`, site).href,
+  about: cs.stack,
+};
+---
+
+<Base
+  title={`${cs.title} — Case Study | Emanuel Antablin`}
+  description={`${cs.domain} case study at ${cs.org}: ${cs.problem}`}
+  path={`/portfolio/${cs.slug}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} slot="head" />
+  <main id="main" style={`--accent:${cs.accent}`}>
+    <section class="page-hero">
+      <div class="wrap">
+        <a class="page-hero__back" href="/portfolio">← Portfolio</a>
+        <p class="kicker reveal">{cs.domain} · {cs.org}</p>
+        <h1 class="page-hero__title reveal" style="--i:1">{cs.title}</h1>
+        <div class="cs-metric reveal" style="--i:2">
+          <span class="cs-metric__num">{cs.metric}</span>
+          <span class="cs-metric__sub">{cs.metricSub}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="cs-cols reveal">
+          <div class="cs-col"><h3>Problem</h3><p>{cs.problem}</p></div>
+          <div class="cs-col"><h3>Approach</h3><p>{cs.approach}</p></div>
+          <div class="cs-col"><h3>Impact</h3><p>{cs.impact}</p></div>
+        </div>
+
+        <div class="cs-detail">
+          {
+            cs.detail?.map((d) => (
+              <div class="reveal">
+                <h2>{d.heading}</h2>
+                <p>{d.body}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="cs-stack reveal">
+          {cs.stack.map((s) => <span class="case__chip">{s}</span>)}
+        </div>
+
+        <div class="cs-next reveal">
+          {
+            others.map((o) => (
+              <a class="btn btn--ghost" href={`/portfolio/${o.slug}`}>
+                <span>{o.title} →</span>
+              </a>
+            ))
+          }
+          <a class="btn btn--primary" href="/contact"><span>Talk through the architecture</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

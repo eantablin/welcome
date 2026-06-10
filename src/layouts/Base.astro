@@ -1,4 +1,16 @@
 ---
+import "@fontsource/orbitron/700.css";
+import "@fontsource/orbitron/800.css";
+import "@fontsource/orbitron/900.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/800.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "@fontsource/jetbrains-mono/600.css";
+import "@fontsource/jetbrains-mono/700.css";
 import "../styles/global.css";
 import Seo from "../components/Seo.astro";
 import { identity, arcade } from "../data/profile";
@@ -11,11 +23,17 @@ interface Props {
   structuredData?: boolean;
 }
 const { title, description, path = "/", noindex = false, structuredData = false } = Astro.props;
+const home = path === "/";
+// On the homepage, section links are plain anchors (keeps scroll-spy);
+// on subpages they route back to the homepage sections.
+const anchor = (id: string) => (home ? `#${id}` : `/#${id}`);
 const nav = [
-  { id: "expertise", label: "Expertise" },
-  { id: "work", label: "Work" },
-  { id: "skills", label: "Skills" },
-  { id: "experience", label: "Experience" },
+  { href: anchor("expertise"), label: "Expertise" },
+  { href: anchor("work"), label: "Work" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/blog", label: "Blog" },
+  { href: "/consulting", label: "Consulting" },
+  { href: "/resume", label: "Résumé" },
 ];
 ---
 
@@ -29,26 +47,28 @@ const nav = [
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <slot name="head" />
   </head>
 
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- boot sequence -->
-    <div class="boot" id="boot" role="dialog" aria-label="Boot sequence">
-      <div class="boot__inner">
-        <div class="boot__logo">EMANUEL ANTABLIN</div>
-        <pre class="boot__log" id="bootLog" aria-live="polite"></pre>
-        <button class="boot__start" id="bootStart">▶ PRESS START</button>
-        <button class="boot__skip" id="bootSkip">skip intro →</button>
-      </div>
-    </div>
+    {
+      home && (
+        <div class="boot" id="boot" role="dialog" aria-label="Boot sequence">
+          <div class="boot__inner">
+            <div class="boot__logo">EMANUEL ANTABLIN</div>
+            <pre class="boot__log" id="bootLog" aria-live="polite" />
+            <button class="boot__start" id="bootStart">
+              ▶ PRESS START
+            </button>
+            <button class="boot__skip" id="bootSkip">
+              skip intro →
+            </button>
+          </div>
+        </div>
+      )
+    }
 
     <!-- fixed overlays -->
     <div class="grid-bg" aria-hidden="true"></div>
@@ -77,9 +97,9 @@ const nav = [
         <span class="nav__name">EMANUEL ANTABLIN</span>
       </a>
       <nav class="nav__links" id="navLinks" aria-label="Primary">
-        {nav.map((n) => <a href={`#${n.id}`}>{n.label}</a>)}
+        {nav.map((n) => <a href={n.href}>{n.label}</a>)}
       </nav>
-      <a class="nav__cta" href="#contact">Get in touch</a>
+      <a class="nav__cta" href="/contact">Get in touch</a>
       <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
     </header>
 
@@ -89,6 +109,13 @@ const nav = [
     <footer class="footer">
       <div class="wrap footer__wrap">
         <span class="footer__brand">EMANUEL&nbsp;ANTABLIN</span>
+        <nav class="footer__nav" aria-label="Footer">
+          <a href="/portfolio">Portfolio</a>
+          <a href="/blog">Blog</a>
+          <a href="/consulting">Consulting</a>
+          <a href="/resume">Résumé</a>
+          <a href="/contact">Contact</a>
+        </nav>
         <span class="footer__meta">© <span id="year">2026</span> · Irvine, CA · built with too much fun</span>
         <span class="footer__hint">psst — find all the <b>🧩 puzzle pieces</b></span>
       </div>

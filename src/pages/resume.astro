@@ -1,0 +1,153 @@
+---
+import Base from "../layouts/Base.astro";
+import { identity } from "../data/profile";
+
+const skills = [
+  { label: "Languages", value: "Python, TypeScript, JavaScript, Bash, SQL" },
+  {
+    label: "AI / ML",
+    value:
+      "LLMs, RAG, Agentic AI, Prompt Engineering, MCP, PyTorch, scikit-learn, TensorFlow, pandas",
+  },
+  { label: "Frameworks & Tools", value: "FastAPI, React.js, PostgreSQL, Prometheus" },
+  { label: "Cloud & Infra", value: "AWS, Azure, GCP, Kubernetes, Docker, Jenkins" },
+  {
+    label: "Security",
+    value: "OWASP Top 10, Penetration Testing, Vulnerability Assessment",
+  },
+];
+
+const jobs = [
+  {
+    role: "Lead Software Engineer",
+    org: "Walmart Global Tech",
+    when: "2022 — Present",
+    points: [
+      "Deployed a distributed agentic monitoring system across DC server infrastructure; agents continuously track memory, CPU, and storage utilization, autonomously detect anomalies, log diagnostic notes, and page SRE teams with pre-analyzed findings — eliminating idle discovery time entirely.",
+      "Reduced MTTR from ~4 hours to under 30 minutes by ensuring SREs are alerted at anomaly onset and arrive with full context, replacing the legacy discover → escalate → troubleshoot chain.",
+      "Engineered RAG pipelines integrating ServiceNow and internal APIs as LLM knowledge sources, supplying agents with real-time operational context and historical incident signal to inform diagnostics.",
+      "Led the enterprise agentic AI initiative across global logistics operations, reporting architecture and outcomes to director-level stakeholders.",
+      "Eliminated a sequential API bottleneck in a legacy messaging platform by re-architecting recipient resolution as concurrent FastAPI calls; adopted across all North American distribution centers and supporting teams.",
+      "Saved the division $1M+/year by automating technician workflows, increasing team throughput by 40%.",
+      "Enforced OWASP Top 10 compliance across all customer-facing services; eliminated SQL injection vulnerabilities.",
+      "Mentored a network engineer from L1 to L3 through a structured Python and backend curriculum.",
+    ],
+  },
+  {
+    role: "Founding Technical Lead",
+    org: "Stealth Startup",
+    when: "2018 — 2022",
+    points: [
+      "Trained a language pattern-recognition model as the core of an AI-led PTSD symptom analysis pipeline.",
+      "Built end-to-end data collection, cleaning, and training-set preparation pipelines from raw sources.",
+      "Architected full-stack applications from requirements through deployment, owning the technical roadmap.",
+      "Documented model architecture and pipeline decisions, enabling reproducibility and onboarding of junior contributors.",
+    ],
+  },
+  {
+    role: "Software Engineer",
+    org: "simuwatt",
+    when: "2018",
+    points: [
+      "Acquired and cleaned building energy datasets from web and manual sources, preparing training data for a PyTorch-based energy-auditing model designed to benchmark buildings and recommend cost-reduction improvements.",
+      "Expanded the training database by 30% through web-scraping pipelines; doubled viable in-house data by surfacing overlooked sets through Python parsing programs.",
+      "Automated QA and internal user workflows via Selenium, cutting manual testing overhead and freeing engineering bandwidth for model development.",
+      "Contributed to model fitting in collaboration with the Data Science lead, raising end-of-year user retention by 20%.",
+    ],
+  },
+  {
+    role: "Computer Science Tutor",
+    org: "Volunteer",
+    when: "2016 — Present",
+    points: [
+      "Taught C++ through Python OOP via pair programming, a structured syllabus, and project-based milestones.",
+    ],
+  },
+];
+---
+
+<Base
+  title="Résumé — Emanuel Antablin | AI Engineer"
+  description="Résumé of Emanuel Antablin: AI Engineer and Lead Software Engineer specializing in agentic AI, RAG pipelines, and LLM systems in production at enterprise scale."
+  path="/resume"
+>
+  <main id="main" data-page="resume">
+    <section class="page-hero" style="padding-bottom:10px">
+      <div class="wrap">
+        <a class="page-hero__back" href="/">← Home</a>
+        <p class="kicker reveal">Résumé</p>
+        <h1 class="page-hero__title reveal" style="--i:1">Emanuel <em>Antablin</em></h1>
+        <p class="page-hero__lede reveal" style="--i:2">
+          AI Engineer · Lead Software Engineer
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:20px">
+      <div class="wrap">
+        <div class="resume">
+          <div class="resume__links reveal">
+            <a href={`mailto:${identity.email}`}>Email</a>
+            <a href={identity.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href={identity.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+          <p class="resume__summary reveal" style="--i:1">
+            AI Engineer specializing in <strong>agentic AI, RAG pipelines, and LLM
+            systems in production</strong>. I turn machine learning into reliable
+            infrastructure at enterprise scale — cutting incident response from hours
+            to minutes and saving millions through automation.
+          </p>
+
+          <h2 class="reveal">Skills</h2>
+          <div class="skills-rows reveal">
+            {
+              skills.map((s) => (
+                <div class="skills-row">
+                  <b>{s.label}</b>
+                  <span>{s.value}</span>
+                </div>
+              ))
+            }
+          </div>
+
+          <h2 class="reveal">Experience</h2>
+          {
+            jobs.map((j) => (
+              <div class="job reveal">
+                <div class="job__head">
+                  <span class="job__role">
+                    {j.role}, <i>{j.org}</i>
+                  </span>
+                  <span class="job__when">{j.when}</span>
+                </div>
+                <ul>
+                  {j.points.map((p) => (
+                    <li>{p}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+
+          <h2 class="reveal">Education</h2>
+          <div class="job reveal">
+            <div class="job__head">
+              <span class="job__role">Full Sail University — <i>B.S. in Computer Science · Salutatorian</i></span>
+              <span class="job__when">Florida · 2018</span>
+            </div>
+          </div>
+
+          <div class="resume__actions reveal">
+            <a class="btn btn--primary" href="/AntablinEmanuelResume.pdf" download>
+              <span>⬇ Download PDF</span>
+            </a>
+            <button class="btn btn--ghost" onclick="window.print()">
+              <span>🖨 Print / Save as PDF</span>
+            </button>
+            <a class="btn btn--ghost" href="/contact"><span>Email me</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

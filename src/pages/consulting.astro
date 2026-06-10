@@ -1,0 +1,150 @@
+---
+import Base from "../layouts/Base.astro";
+import { identity } from "../data/profile";
+
+const offers = [
+  {
+    icon: "🌟",
+    title: "First Contact",
+    tag: "Free · 15 min",
+    body: "An intro call to scope your problem and see if we're a fit.",
+    points: ["Problem assessment", "Feasibility check", "No commitment"],
+    accent: "#ffd25a",
+  },
+  {
+    icon: "🤖",
+    title: "AI Integration",
+    tag: "Strategy → Production",
+    body: "From LLM selection to agentic system architecture — ship AI that works in production, not just demos.",
+    points: [
+      "Agentic & RAG architecture",
+      "LLM selection & evaluation",
+      "Model deployment pipelines",
+      "Cost & latency optimization",
+    ],
+    accent: "#2ee6ff",
+  },
+  {
+    icon: "🛡️",
+    title: "Security Audit",
+    tag: "Defense",
+    body: "Find the vulnerabilities before someone else does. OWASP-aligned assessments.",
+    points: [
+      "Penetration testing",
+      "Vulnerability assessment",
+      "OWASP Top 10 compliance",
+      "Security posture review",
+    ],
+    accent: "#36f9b3",
+  },
+  {
+    icon: "🏆",
+    title: "Mentorship",
+    tag: "Level Up",
+    body: "Accelerate your engineering career with structured guidance and hands-on practice.",
+    points: [
+      "1-on-1 technical mentoring",
+      "Code review & best practices",
+      "Career path guidance",
+      "Junior → senior track",
+    ],
+    accent: "#a855f7",
+  },
+];
+
+const areas = [
+  {
+    icon: "🤖",
+    title: "AI & Machine Learning",
+    points: ["Agentic & RAG systems", "LLM integration & evaluation", "Model deployment pipelines", "Data science & engineering"],
+    accent: "#2ee6ff",
+  },
+  {
+    icon: "⚙️",
+    title: "Software Development",
+    points: ["Back-end & API development", "Front-end development", "Automation development"],
+    accent: "#ffd25a",
+  },
+  {
+    icon: "🛡️",
+    title: "Security",
+    points: ["Penetration testing", "OSINT investigations", "Vulnerability assessment", "OWASP Top 10 compliance"],
+    accent: "#36f9b3",
+  },
+];
+---
+
+<Base
+  title="Consulting — Emanuel Antablin | AI Integration & Security"
+  description="AI integration, security audits, and engineering mentorship from a production AI engineer. From LLM selection to agentic architecture — first call is free."
+  path="/consulting"
+>
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <a class="page-hero__back" href="/">← Home</a>
+        <p class="kicker reveal">Consulting</p>
+        <h1 class="page-hero__title reveal" style="--i:1">Pick your <em>power-up</em>.</h1>
+        <p class="page-hero__lede reveal" style="--i:2">
+          Need help building the next big thing? I consult across the domains I work
+          in every day — from enterprise AI to security hardening. Production-grade,
+          no fluff.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="card-grid">
+          {
+            offers.map((o, i) => (
+              <article class="tcard reveal" style={`--accent:${o.accent};--i:${(i % 2) + 1}`}>
+                <span class="tcard__icon">{o.icon}</span>
+                <h2 class="tcard__title">{o.title}</h2>
+                <p class="tcard__tag">{o.tag}</p>
+                <p class="tcard__body">{o.body}</p>
+                <ul class="tcard__list">
+                  {o.points.map((p) => (
+                    <li>{p}</li>
+                  ))}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+
+        <h2 class="section__title reveal" style="margin-top:80px;font-size:clamp(1.4rem,3vw,2rem)">
+          Where I plug in
+        </h2>
+        <p class="section__lede reveal" style="--i:1">
+          Whether you're shipping AI, hardening a system, or just need a senior pair
+          of hands.
+        </p>
+        <div class="card-grid card-grid--3">
+          {
+            areas.map((a, i) => (
+              <article class="tcard reveal" style={`--accent:${a.accent};--i:${i + 1}`}>
+                <span class="tcard__icon">{a.icon}</span>
+                <h3 class="tcard__title" style="font-size:1.15rem">{a.title}</h3>
+                <ul class="tcard__list" style="margin-top:10px">
+                  {a.points.map((p) => (
+                    <li>{p}</li>
+                  ))}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="cs-next reveal" style="align-items:center">
+          <a class="btn btn--primary" href={`mailto:${identity.email}?subject=Consulting`}>
+            <span>Book a session</span>
+          </a>
+          <span style="font-family:var(--mono);font-size:12.5px;color:var(--muted)">
+            Tell me what you're building — first call is on me. · {identity.email}
+          </span>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

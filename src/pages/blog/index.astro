@@ -1,0 +1,74 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { categories } from "../../data/categories";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const fmt = (d: Date) =>
+  `${d.getUTCFullYear()} · ${d.toLocaleString("en", { month: "short", timeZone: "UTC" })} ${d.getUTCDate()}`;
+const catName = (slug: string) => categories.find((c) => c.slug === slug)?.name ?? slug;
+const catAccent = (slug: string) => categories.find((c) => c.slug === slug)?.accent ?? "var(--cyan)";
+---
+
+<Base
+  title="Blog — Emanuel Antablin | Security, AI & Cognitive Science"
+  description="Notes from the rabbit hole: security, cognitive science, AI, jiu-jitsu, and whatever else catches Emanuel Antablin's interest."
+  path="/blog"
+>
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <a class="page-hero__back" href="/">← Home</a>
+        <p class="kicker reveal">Blog</p>
+        <h1 class="page-hero__title reveal" style="--i:1">Notes from the <em>rabbit hole</em>.</h1>
+        <p class="page-hero__lede reveal" style="--i:2">
+          Security, cognitive science, AI, jiu-jitsu, and whatever else catches my
+          interest. Pick a category or jump to a recent post.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="card-grid">
+          {
+            categories.map((c, i) => (
+              <a
+                class="tcard reveal"
+                style={`--accent:${c.accent};--i:${i + 1}`}
+                href={`/blog/${c.slug}`}
+              >
+                <span class="tcard__icon">{c.icon}</span>
+                <h2 class="tcard__title">{c.name}</h2>
+                <p class="tcard__tag">{c.tagline}</p>
+                <p class="tcard__body">{c.blurb}</p>
+                <span class="tcard__cta">Enter {c.name.toLowerCase()}</span>
+              </a>
+            ))
+          }
+        </div>
+
+        <h2 class="section__title reveal" style="margin-top:70px;font-size:clamp(1.4rem,3vw,2rem)">
+          Recent posts
+        </h2>
+        <div class="posts">
+          {
+            posts.map((p) => (
+              <a
+                class="post-row reveal"
+                style={`--accent:${catAccent(p.data.category)}`}
+                href={`/blog/${p.data.category}/${p.id}`}
+              >
+                <span class="post-row__date">{fmt(p.data.date)}</span>
+                <span class="post-row__title">{p.data.title}</span>
+                <span class="post-row__cat">{catName(p.data.category)}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

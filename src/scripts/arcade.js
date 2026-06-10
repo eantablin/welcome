@@ -53,7 +53,7 @@ function runBoot(onStart) {
   const log = document.getElementById("bootLog");
   const startBtn = document.getElementById("bootStart");
   const skipBtn = document.getElementById("bootSkip");
-  if (!boot) { onStart(); return; }
+  if (!boot) { document.body.classList.add("loaded"); onStart(); return; }
 
   const finish = () => {
     if (boot.classList.contains("is-done")) return;

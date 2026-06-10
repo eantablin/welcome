@@ -1,0 +1,68 @@
+---
+import Base from "../../layouts/Base.astro";
+import { caseStudies } from "../../data/casestudies";
+---
+
+<Base
+  title="Portfolio — Emanuel Antablin | AI Engineering Case Studies"
+  description="Case studies in production AI: agentic monitoring, RAG pipelines, ML model training, and platform engineering. Problem → approach → impact, with real numbers."
+  path="/portfolio"
+>
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <a class="page-hero__back" href="/">← Home</a>
+        <p class="kicker reveal">Portfolio</p>
+        <h1 class="page-hero__title reveal" style="--i:1">Case studies in <em>production AI</em>.</h1>
+        <p class="page-hero__lede reveal" style="--i:2">
+          Each of these shipped, ran against real traffic, and moved a number that
+          mattered. Problem → approach → impact.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="card-grid">
+          {
+            caseStudies.map((cs, i) => {
+              const Tag = cs.deep ? "a" : "article";
+              return (
+                <Tag
+                  class="tcard reveal"
+                  style={`--accent:${cs.accent};--i:${(i % 2) + 1}`}
+                  href={cs.deep ? `/portfolio/${cs.slug}` : undefined}
+                >
+                  <p class="tcard__tag">
+                    {cs.domain} · {cs.org}
+                  </p>
+                  <h2 class="tcard__title">{cs.title}</h2>
+                  <div class="cs-metric" style="margin:14px 0 16px">
+                    <span class="cs-metric__num" style="font-size:clamp(1.2rem,2.6vw,1.7rem)">{cs.metric}</span>
+                    <span class="cs-metric__sub">{cs.metricSub}</span>
+                  </div>
+                  <p class="tcard__body">{cs.problem}</p>
+                  <ul class="tcard__list">
+                    <li>{cs.approach}</li>
+                    <li>{cs.impact}</li>
+                  </ul>
+                  <div class="cs-stack" style="margin-top:18px">
+                    {cs.stack.map((s) => (
+                      <span class="case__chip">{s}</span>
+                    ))}
+                  </div>
+                  {cs.deep && <span class="tcard__cta">Read the deep dive</span>}
+                </Tag>
+              );
+            })
+          }
+        </div>
+
+        <div class="cs-next reveal">
+          <a class="btn btn--primary" href="/contact"><span>Want the deep dive? Get in touch</span></a>
+          <a class="btn btn--ghost" href="/resume"><span>View résumé</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

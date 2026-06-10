@@ -1,0 +1,94 @@
+---
+import Base from "../layouts/Base.astro";
+import { identity } from "../data/profile";
+
+const channels = [
+  {
+    icon: "✉️",
+    title: "Email",
+    body: "Best for anything substantive.",
+    value: identity.email,
+    href: `mailto:${identity.email}`,
+    accent: "#2ee6ff",
+  },
+  {
+    icon: "💼",
+    title: "LinkedIn",
+    body: "Connect, or message me about roles and projects.",
+    value: "linkedin.com/in/eantablin",
+    href: identity.linkedin,
+    accent: "#a855f7",
+  },
+  {
+    icon: "⌨️",
+    title: "GitHub",
+    body: "Code, experiments, and the occasional rabbit hole.",
+    value: "github.com/eantablin",
+    href: identity.github,
+    accent: "#36f9b3",
+  },
+];
+---
+
+<Base
+  title="Contact — Emanuel Antablin | AI Engineer"
+  description="Get in touch with Emanuel Antablin — hiring, collaborating, or talking shop about agentic AI. Email, LinkedIn, or GitHub."
+  path="/contact"
+>
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <a class="page-hero__back" href="/">← Home</a>
+        <p class="kicker reveal">Contact</p>
+        <h1 class="page-hero__title reveal" style="--i:1">Say <em>hello</em>.</h1>
+        <p class="page-hero__lede reveal" style="--i:2">
+          Hiring, collaborating, or just want to talk shop about agentic AI? Pick a
+          channel.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="card-grid card-grid--3">
+          {
+            channels.map((c, i) => (
+              <a
+                class="tcard reveal"
+                style={`--accent:${c.accent};--i:${i + 1}`}
+                href={c.href}
+                target={c.href.startsWith("http") ? "_blank" : undefined}
+                rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              >
+                <span class="tcard__icon">{c.icon}</span>
+                <h2 class="tcard__title">{c.title}</h2>
+                <p class="tcard__body">{c.body}</p>
+                <span class="channel__value">{c.value}</span>
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="cs-next reveal">
+          <button class="btn btn--primary" id="copyEmail" data-email={identity.email}>
+            <span>Copy email address</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const btn = document.getElementById("copyEmail");
+    btn?.addEventListener("click", async () => {
+      const email = btn.dataset.email || "";
+      try {
+        await navigator.clipboard.writeText(email);
+        btn.querySelector("span")!.textContent = "✓ Copied!";
+        setTimeout(() => (btn.querySelector("span")!.textContent = "Copy email address"), 1800);
+      } catch {
+        location.href = `mailto:${email}`;
+      }
+    });
+  </script>
+</Base>

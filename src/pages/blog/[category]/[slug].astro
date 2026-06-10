@@ -1,0 +1,74 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+import { categoryBySlug } from "../../../data/categories";
+import { identity } from "../../../data/profile";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { category: post.data.category, slug: post.id },
+    props: { post },
+  }));
+}
+const { post } = Astro.props;
+const cat = categoryBySlug(post.data.category)!;
+const { Content } = await render(post);
+
+const fmt = (d: Date) =>
+  `${d.getUTCFullYear()} · ${d.toLocaleString("en", { month: "short", timeZone: "UTC" })} ${d.getUTCDate()}`;
+
+const site = Astro.site ?? new URL("https://emanuel.antablin.com");
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  author: { "@type": "Person", name: identity.name, url: `${site.origin}/` },
+  url: new URL(`/blog/${cat.slug}/${post.id}`, site).href,
+  articleSection: cat.name,
+};
+---
+
+<Base
+  title={`${post.data.title} — Emanuel Antablin`}
+  description={post.data.description}
+  path={`/blog/${cat.slug}/${post.id}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} slot="head" />
+  <main id="main" style={`--accent:${cat.accent}`}>
+    <section class="page-hero">
+      <div class="wrap">
+        <a class="page-hero__back" href={`/blog/${cat.slug}`}>← {cat.name}</a>
+        <p class="kicker reveal">{cat.icon} {cat.name}</p>
+        <h1 class="page-hero__title reveal" style="--i:1">{post.data.title}</h1>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <article class="article">
+          <p class="article__meta reveal">
+            <b>{fmt(post.data.date)}</b> · {post.data.readMinutes} min read
+          </p>
+          <div class="article__body reveal" style="--i:1">
+            <Content />
+          </div>
+          {
+            post.data.tldr.length > 0 && (
+              <aside class="tldr reveal" style="--i:2">
+                <p class="tldr__label">TL;DR</p>
+                <ul>
+                  {post.data.tldr.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+              </aside>
+            )
+          }
+        </article>
+      </div>
+    </section>
+  </main>
+</Base>
