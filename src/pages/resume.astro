@@ -2,6 +2,9 @@
 import Base from "../layouts/Base.astro";
 import { identity } from "../data/profile";
 
+// bump this whenever the résumé content changes
+const lastUpdated = "June 2026";
+
 const skills = [
   { label: "Languages", value: "Python, TypeScript, JavaScript, Bash, SQL" },
   {
@@ -90,6 +93,7 @@ const jobs = [
             <a href={`mailto:${identity.email}`}>Email</a>
             <a href={identity.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href={identity.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span style="color:var(--faint)">· Updated {lastUpdated}</span>
           </div>
           <p class="resume__summary reveal" style="--i:1">
             AI Engineer specializing in <strong>agentic AI, RAG pipelines, and LLM

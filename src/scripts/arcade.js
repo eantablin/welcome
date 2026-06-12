@@ -32,10 +32,23 @@ function sfxFanfare() {
 }
 export function sfx(name) { if (name === "blip") blip(440, 0.05, "square", 0.04); }
 
-/* ---------- state ---------- */
-const state = { score: 0, jiggies: 0, jiggiesTotal: 5 };
+/* ---------- state (persisted across pages via localStorage) ---------- */
+const LS_JIG = "ea_jiggies", LS_SCORE = "ea_score";
+function lsGet(key, fallback) {
+  try { const v = localStorage.getItem(key); return v == null ? fallback : JSON.parse(v); }
+  catch (e) { return fallback; }
+}
+function lsSet(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+}
+const collected = new Set(lsGet(LS_JIG, []));
+const state = { score: lsGet(LS_SCORE, 0), jiggies: collected.size, jiggiesTotal: 5 };
 let hudScore, hudJig;
-function addScore(n) { state.score += n; if (hudScore) hudScore.textContent = state.score.toLocaleString(); }
+function addScore(n) {
+  state.score += n;
+  lsSet(LS_SCORE, state.score);
+  if (hudScore) hudScore.textContent = state.score.toLocaleString();
+}
 
 /* ---------- boot sequence ---------- */
 const BOOT_LINES = [
@@ -91,13 +104,17 @@ function runBoot(onStart) {
   })();
 }
 
-/* ---------- jiggy collectathon ---------- */
+/* ---------- jiggy collectathon ----------
+   Collected pieces persist in localStorage, so the hunt spans the whole
+   site and the HUD count stays consistent on every page.              */
 function placeJiggies() {
   const zones = [...document.querySelectorAll("[data-jiggy-zone]")];
-  state.jiggiesTotal = zones.length;
   if (hudJig) hudJig.textContent = `${state.jiggies}/${state.jiggiesTotal}`;
+  if (state.jiggies >= state.jiggiesTotal) document.getElementById("hudPlay")?.classList.add("on");
   const jiggySVG = `<svg viewBox="0 0 100 100" aria-hidden="true"><path fill="#ffd25a" stroke="#b8860b" stroke-width="4" stroke-linejoin="round" d="M22 22 L41 22 C41 10 59 10 59 22 L78 22 L78 41 C90 41 90 59 78 59 L78 78 L59 78 C59 66 41 66 41 78 L22 78 L22 59 C34 59 34 41 22 41 L22 22 Z"/></svg>`;
   zones.forEach((zone, idx) => {
+    const id = zone.id || `zone-${idx}`;
+    if (collected.has(id)) return; // already grabbed on a previous visit
     const j = document.createElement("button");
     j.className = "jiggy";
     j.type = "button";
@@ -114,7 +131,9 @@ function placeJiggies() {
       if (j.classList.contains("collected")) return;
       j.classList.add("collected");
       sfxNote(state.jiggies);
-      state.jiggies++;
+      collected.add(id);
+      lsSet(LS_JIG, [...collected]);
+      state.jiggies = collected.size;
       addScore(250);
       if (hudJig) hudJig.textContent = `${state.jiggies}/${state.jiggiesTotal}`;
       if (state.jiggies === state.jiggiesTotal) allJiggies();
@@ -139,6 +158,9 @@ function wireHud(openGame) {
   hudScore = document.getElementById("hudScore");
   hudJig = document.getElementById("hudJig");
   if (hud) state.jiggiesTotal = parseInt(hud.dataset.jiggiesTotal || "5", 10);
+  // paint persisted progress
+  if (hudScore) hudScore.textContent = state.score.toLocaleString();
+  if (hudJig) hudJig.textContent = `${state.jiggies}/${state.jiggiesTotal}`;
 
   document.getElementById("hudSound")?.addEventListener("click", (e) => {
     soundOn = !soundOn; e.currentTarget.classList.toggle("on", soundOn);

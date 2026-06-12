@@ -35,6 +35,9 @@ const nav = [
   { href: "/consulting", label: "Consulting" },
   { href: "/resume", label: "Résumé" },
 ];
+// highlight the nav item for the current page (and its subpaths)
+const isActive = (href: string) =>
+  href.startsWith("/") && !href.startsWith("/#") && (path === href || path.startsWith(href + "/"));
 ---
 
 <!doctype html>
@@ -47,6 +50,7 @@ const nav = [
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Emanuel Antablin — Blog" href="/rss.xml" />
     <slot name="head" />
   </head>
 
@@ -97,7 +101,17 @@ const nav = [
         <span class="nav__name">EMANUEL ANTABLIN</span>
       </a>
       <nav class="nav__links" id="navLinks" aria-label="Primary">
-        {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+        {
+          nav.map((n) => (
+            <a
+              href={n.href}
+              class:list={[{ "is-active": isActive(n.href) }]}
+              aria-current={isActive(n.href) ? "page" : undefined}
+            >
+              {n.label}
+            </a>
+          ))
+        }
       </nav>
       <a class="nav__cta" href="/contact">Get in touch</a>
       <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
@@ -117,6 +131,7 @@ const nav = [
           <a href="/contact">Contact</a>
         </nav>
         <span class="footer__meta">© <span id="year">2026</span> · Irvine, CA · built with too much fun</span>
+        <a class="footer__family" href="https://www.antablin.com">Part of the Antablin family ↗</a>
         <span class="footer__hint">psst — find all the <b>🧩 puzzle pieces</b></span>
       </div>
     </footer>

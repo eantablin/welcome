@@ -146,12 +146,12 @@ body.crt { filter: saturate(1.15) contrast(1.04); }
    HUD  (jiggies + score)
    ===================================================================== */
 .hud {
-  position: fixed; top: 14px; right: 16px; z-index: 760;
+  position: fixed; bottom: 16px; right: 16px; z-index: 760;
   display: flex; align-items: center; gap: 14px;
   font-family: var(--mono); font-size: 12px; letter-spacing: 1px;
   background: rgba(8,11,20,0.72); backdrop-filter: blur(10px);
   border: 1px solid var(--line); border-radius: 100px; padding: 7px 14px;
-  opacity: 0; transform: translateY(-8px); transition: opacity .5s var(--ease), transform .5s var(--ease);
+  opacity: 0; transform: translateY(8px); transition: opacity .5s var(--ease), transform .5s var(--ease);
 }
 body.loaded .hud { opacity: 1; transform: none; }
 .hud__item { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); }
@@ -162,11 +162,9 @@ body.loaded .hud { opacity: 1; transform: none; }
 .hud__btn { color: var(--faint); transition: color .25s var(--ease); }
 .hud__btn:hover { color: var(--cyan); }
 .hud__btn.on { color: var(--green); }
-/* on small screens the HUD drops to the bottom so it never collides with the nav */
+/* compact HUD on small screens */
 @media (max-width: 760px) {
-  .hud { top: auto; bottom: 14px; right: 14px; gap: 10px; padding: 7px 12px; font-size: 11px; }
-  body.loaded .hud { transform: none; }
-  .hud { transform: translateY(8px); }
+  .hud { bottom: 14px; right: 14px; gap: 10px; padding: 7px 12px; font-size: 11px; }
   .hud__label-full { display: none; }
 }
 
@@ -569,3 +567,32 @@ main { position: relative; z-index: 5; }
   .post-row__date { min-width: 0; }
   .skills-row { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* =====================================================================
+   POLISH PASS — anchors, view transitions, case links, hero FX
+   ===================================================================== */
+
+/* anchored sections land below the fixed nav */
+.section { scroll-margin-top: 84px; }
+
+/* smooth cross-document page transitions (Chrome/Edge/Safari; no-op elsewhere) */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+/* homepage case cards are links to their deep dives */
+a.case { cursor: pointer; }
+a.case:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); box-shadow: 0 26px 60px -30px rgba(0,0,0,.8), 0 0 44px -22px color-mix(in srgb, var(--accent) 65%, transparent); }
+.case__more { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; font-family: var(--mono); font-size: 12px; color: var(--accent); }
+.case__more::after { content: "→"; transition: transform .3s var(--ease); }
+a.case:hover .case__more::after { transform: translateX(4px); }
+
+/* subpage hero particle accent (canvas injected by JS) */
+.page-hero { overflow: hidden; }
+.page-hero__fx { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s var(--ease); }
+.page-hero__fx.is-ready { opacity: 1; }
+
+/* footer family link */
+.footer__family { font-family: var(--mono); font-size: 11px; color: var(--faint); transition: color .25s var(--ease); }
+.footer__family:hover { color: var(--amber); }

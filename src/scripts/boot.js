@@ -22,10 +22,19 @@ async function startHero() {
   catch (err) { console.warn("[antablin] hero WebGL failed", err); canvas.classList.add("is-ready"); }
 }
 
+async function startPageHero() {
+  if (!document.querySelector(".page-hero")) return;
+  try {
+    const { initPageHero } = await import("./pagehero.js");
+    initPageHero();
+  } catch (e) { /* decorative only */ }
+}
+
 function boot() {
   setYear(); initNav(); initRuler(); initReveal(); initStats(); initTyped();
   if (FINE && !REDUCE) initGridParallax();
   startHero();
+  startPageHero();
   initArcade();
 }
 

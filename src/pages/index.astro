@@ -8,6 +8,13 @@ const description =
 
 const phrases = hero.phrases.join("|");
 
+// homepage work cards link to their /portfolio deep dives (or the index)
+const deepDiveBySlug: Record<string, string> = {
+  "agentic-monitoring": "/portfolio/agentic-monitoring",
+  "rag-pipeline": "/portfolio/rag-diagnostics",
+  "ptsd-model": "/portfolio/ptsd-model",
+};
+
 const socialIcons: Record<string, string> = {
   github:
     "M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5.3 18 5.6 18 5.6c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z",
@@ -92,8 +99,10 @@ const arrow = '<path d="M5 12h14M13 6l6 6-6 6"/>';
         <h2 class="section__title reveal" style="--i:1">AI that survives contact with <em>production</em>.</h2>
         <p class="section__lede reveal" style="--i:2">Real systems, real stakes, real numbers — kept at a level I can talk through, with no proprietary internals.</p>
         <div class="cases">
-          {caseStudies.map((c) => (
-            <article class="case reveal" style={`--accent:${c.accent}`}>
+          {caseStudies.map((c) => {
+            const deepDive = deepDiveBySlug[c.id];
+            return (
+            <a class="case reveal" style={`--accent:${c.accent}`} href={deepDive ?? "/portfolio"}>
               <div class="case__main">
                 <span class="case__tag">{c.tag}</span>
                 <p class="case__org">{c.org}</p>
@@ -102,13 +111,15 @@ const arrow = '<path d="M5 12h14M13 6l6 6-6 6"/>';
                 <div class="case__block"><h4>What I built</h4><p>{c.built}</p></div>
                 <div class="case__block case__block--result"><h4>Result</h4><p>{c.result}</p></div>
                 <div class="case__stack">{c.stack.map((t) => <span class="case__chip">{t}</span>)}</div>
+                <span class="case__more">{deepDive ? "Read the deep dive" : "All case studies"}</span>
               </div>
               <div class="case__metric">
                 <div class="case__metric-val">{c.metric.value}</div>
                 <div class="case__metric-label">{c.metric.label}</div>
               </div>
-            </article>
-          ))}
+            </a>
+            );
+          })}
         </div>
         <div class="cs-next reveal" style="border:0;padding-top:8px">
           <a class="btn btn--ghost" href="/portfolio"><span>All case studies, with deep dives →</span></a>
