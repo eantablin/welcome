@@ -51,6 +51,18 @@ const isActive = (href: string) =>
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title="Emanuel Antablin — Blog" href="/rss.xml" />
+
+    <!-- GoatCounter analytics (privacy-friendly, cookieless). Records host+path
+         so all *.antablin.com sites stay distinguishable in one dashboard. -->
+    <script is:inline>
+      window.goatcounter = { path: (p) => location.host + (p || location.pathname) };
+    </script>
+    <script
+      is:inline
+      data-goatcounter="https://chop5091.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"></script>
+
     <slot name="head" />
   </head>
 
