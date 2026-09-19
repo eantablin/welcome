@@ -182,24 +182,30 @@ section[id] { scroll-margin-top: 72px; }
   stroke-width: 2;
 }
 
-/* dark-mode toggle — inverted tile: black square + moon while light,
-   white square + star while dark. Icon shows the theme you'll switch to. */
+/* dark-mode toggle — bare monochrome glyph straight on the page.
+   icon shows the mode you'll get: moon while light, sun while dark. */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border: 2px solid var(--ink);
-  background: var(--ink);
+  padding: 6px;
+  background: none;
+  border: 0;
   cursor: pointer;
-  padding: 0;
   margin-left: auto;
 }
-.theme-toggle__star { display: block; }
-.theme-toggle__moon { display: none; }
-.theme-toggle[aria-pressed="true"] .theme-toggle__star { display: none; }
-.theme-toggle[aria-pressed="true"] .theme-toggle__moon { display: block; }
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.theme-toggle__sun { display: none; }
+.theme-toggle[aria-pressed="true"] .theme-toggle__sun { display: block; }
+.theme-toggle[aria-pressed="true"] .theme-toggle__moon { display: none; }
 
 /* ---------- hero ---------- */
 
