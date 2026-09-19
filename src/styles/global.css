@@ -182,8 +182,8 @@ section[id] { scroll-margin-top: 72px; }
   stroke-width: 2;
 }
 
-/* dark-mode toggle — Mario Super Star in light mode, Majora's moon in dark mode
-   (original v1 site icons, restored verbatim from commit f6d994d) */
+/* dark-mode toggle — inverted tile: black square + moon while light,
+   white square + star while dark. Icon shows the theme you'll switch to. */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -191,12 +191,12 @@ section[id] { scroll-margin-top: 72px; }
   width: 42px;
   height: 42px;
   border: 2px solid var(--ink);
-  background: var(--bg);
+  background: var(--ink);
   cursor: pointer;
   padding: 0;
   margin-left: auto;
 }
-.theme-toggle svg { display: block; }
+.theme-toggle__star { display: block; }
 .theme-toggle__moon { display: none; }
 .theme-toggle[aria-pressed="true"] .theme-toggle__star { display: none; }
 .theme-toggle[aria-pressed="true"] .theme-toggle__moon { display: block; }
