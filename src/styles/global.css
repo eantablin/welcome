@@ -182,7 +182,8 @@ section[id] { scroll-margin-top: 72px; }
   stroke-width: 2;
 }
 
-/* dark-mode toggle — Majora's moon in light mode, Super Star in dark mode */
+/* dark-mode toggle — Mario Super Star in light mode, Majora's moon in dark mode
+   (original v1 site icons, restored verbatim from commit f6d994d) */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -195,15 +196,10 @@ section[id] { scroll-margin-top: 72px; }
   padding: 0;
   margin-left: auto;
 }
-.theme-toggle svg { width: 26px; height: 26px; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linejoin: miter; }
-.theme-toggle__moon circle { fill: #ffd25a; }
-.theme-toggle:hover { background: var(--ink); }
-.theme-toggle__star { display: none; }
-.theme-toggle__star path, .theme-toggle__star circle { fill: #ffd25a; }
-.theme-toggle__star .star-eye { fill: #000; stroke: none; }
-.theme-toggle__star .star-smile { fill: none; }
-.theme-toggle[aria-pressed="true"] .theme-toggle__moon { display: none; }
-.theme-toggle[aria-pressed="true"] .theme-toggle__star { display: block; }
+.theme-toggle svg { display: block; }
+.theme-toggle__moon { display: none; }
+.theme-toggle[aria-pressed="true"] .theme-toggle__star { display: none; }
+.theme-toggle[aria-pressed="true"] .theme-toggle__moon { display: block; }
 
 /* ---------- hero ---------- */
 
