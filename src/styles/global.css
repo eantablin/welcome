@@ -182,7 +182,7 @@ section[id] { scroll-margin-top: 72px; }
   stroke-width: 2;
 }
 
-/* dark-mode toggle — the old star/Majora's-mask moon, back from the HUD */
+/* dark-mode toggle — Majora's moon in light mode, Super Star in dark mode */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -195,9 +195,15 @@ section[id] { scroll-margin-top: 72px; }
   padding: 0;
   margin-left: auto;
 }
-.theme-toggle svg { width: 20px; height: 20px; fill: #ffd25a; stroke: var(--ink); stroke-width: 4; }
+.theme-toggle svg { width: 26px; height: 26px; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linejoin: miter; }
+.theme-toggle__moon circle { fill: #ffd25a; }
 .theme-toggle:hover { background: var(--ink); }
-.theme-toggle[aria-pressed="true"] svg { stroke: var(--bg); }
+.theme-toggle__star { display: none; }
+.theme-toggle__star path, .theme-toggle__star circle { fill: #ffd25a; }
+.theme-toggle__star .star-eye { fill: #000; stroke: none; }
+.theme-toggle__star .star-smile { fill: none; }
+.theme-toggle[aria-pressed="true"] .theme-toggle__moon { display: none; }
+.theme-toggle[aria-pressed="true"] .theme-toggle__star { display: block; }
 
 /* ---------- hero ---------- */
 

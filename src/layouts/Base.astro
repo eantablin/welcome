@@ -85,7 +85,22 @@ const isActive = (href: string) =>
         }
       </nav>
       <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode" aria-pressed="false">
-        <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M22 22 L41 22 C41 10 59 10 59 22 L78 22 L78 41 C90 41 90 59 78 59 L78 78 L59 78 C59 66 41 66 41 78 L22 78 L22 59 C34 59 34 41 22 41 L22 22 Z"/></svg>
+        <!-- Majora's Mask moon (light mode) -->
+        <svg class="theme-toggle__moon" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" />
+          <path d="M20 38 L40 32 L37 47 Z" />
+          <path d="M80 40 L60 32 L63 47 Z" />
+          <path d="M44 50 L56 50 L50 58 Z" />
+          <path d="M16 58 L28 70 L38 58 L48 72 L58 58 L68 70 L78 58 L86 64" />
+        </svg>
+        <!-- Super Mario Sunshine Shine Sprite (dark mode → switch to light) -->
+        <svg class="theme-toggle__star" viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M50 2 L59.95 25.98 L83.9 16.1 L74.02 40.05 L98 50 L74.02 59.95 L83.9 83.9 L59.95 74.02 L50 98 L40.05 74.02 L16.1 83.9 L25.98 59.95 L2 50 L25.98 40.05 L16.1 16.1 L40.05 25.98 Z" />
+          <circle cx="50" cy="50" r="26" />
+          <ellipse class="star-eye" cx="41.5" cy="44" rx="3.5" ry="6.5" />
+          <ellipse class="star-eye" cx="58.5" cy="44" rx="3.5" ry="6.5" />
+          <path class="star-smile" d="M40 58 Q50 67 60 58" />
+        </svg>
       </button>
       <a class="nav__cta" href="/contact">Get in touch</a>
     </header>
