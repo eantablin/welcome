@@ -12,7 +12,7 @@ export const identity = {
   email: "eantablin@protonmail.com",
   github: "https://github.com/eantablin",
   linkedin: "https://www.linkedin.com/in/eantablin",
-  blog: "https://eantablin.github.io/blog",
+  blog: "https://emanuel.antablin.com/blog",
   url: "https://emanuel.antablin.com",
 };
 
@@ -38,10 +38,10 @@ export interface Stat {
 }
 
 export const stats: Stat[] = [
-  { value: 30, prefix: "<", suffix: " min", label: "Incident MTTR", sub: "down from ~4 hrs" },
+  { value: 30, prefix: "＜", suffix: " min", label: "Incident MTTR", sub: "down from ~4 hrs" },
   { value: 1, prefix: "$", suffix: "M+", label: "Saved per year", sub: "workflow automation" },
   { value: 40, suffix: "%", label: "Throughput lift", sub: "team velocity" },
-  { value: 20, prefix: ">", suffix: "%", label: "Platform perf", sub: "global messaging path" },
+  { value: 20, prefix: "＞", suffix: "%", label: "Platform perf", sub: "global messaging path" },
 ];
 
 export interface Pillar {

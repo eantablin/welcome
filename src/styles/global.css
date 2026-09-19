@@ -553,6 +553,19 @@ th { background: var(--ink); color: var(--bg); text-transform: uppercase; }
   .nav__cta { margin-left: 0; padding: 5px 12px; }
 }
 
+@media print {
+  .nav, .footer, .skip-link, .btn, .cs-next { display: none; }
+  .hero, .section, .page-hero { border: 0; padding: 8pt 0; }
+  .wrap { max-width: none; padding: 0; }
+  .article, .resume { padding: 0; }
+  body { font-size: 11pt; }
+  h1, h2, h3, h4 { page-break-after: avoid; }
+  .case, .stat, .tl, .tcard, .pillar, .skillgroup, .job { border: 1pt solid #000; page-break-inside: avoid; }
+  .tcard__icon, .project__tags, .case__stack, .cs-stack { display: none; }
+  a { text-decoration: none; color: #000; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.85em; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
