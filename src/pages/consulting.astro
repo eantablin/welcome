@@ -4,7 +4,7 @@ import { identity } from "../data/profile";
 
 const offers = [
   {
-    icon: "🌟",
+    icon: "01",
     title: "First Contact",
     tag: "Free · 15 min",
     body: "An intro call to scope your problem and see if we're a fit.",
@@ -12,7 +12,7 @@ const offers = [
     accent: "#ffd25a",
   },
   {
-    icon: "🤖",
+    icon: "02",
     title: "AI Integration",
     tag: "Strategy → Production",
     body: "From LLM selection to agentic system architecture — ship AI that works in production, not just demos.",
@@ -25,7 +25,7 @@ const offers = [
     accent: "#2ee6ff",
   },
   {
-    icon: "🛡️",
+    icon: "03",
     title: "Security Audit",
     tag: "Defense",
     body: "Find the vulnerabilities before someone else does. OWASP-aligned assessments.",
@@ -38,7 +38,7 @@ const offers = [
     accent: "#36f9b3",
   },
   {
-    icon: "🏆",
+    icon: "04",
     title: "Mentorship",
     tag: "Level Up",
     body: "Accelerate your engineering career with structured guidance and hands-on practice.",
@@ -54,19 +54,19 @@ const offers = [
 
 const areas = [
   {
-    icon: "🤖",
+    icon: "01",
     title: "AI & Machine Learning",
     points: ["Agentic & RAG systems", "LLM integration & evaluation", "Model deployment pipelines", "Data science & engineering"],
     accent: "#2ee6ff",
   },
   {
-    icon: "⚙️",
+    icon: "02",
     title: "Software Development",
     points: ["Back-end & API development", "Front-end development", "Automation development"],
     accent: "#ffd25a",
   },
   {
-    icon: "🛡️",
+    icon: "03",
     title: "Security",
     points: ["Penetration testing", "OSINT investigations", "Vulnerability assessment", "OWASP Top 10 compliance"],
     accent: "#36f9b3",
@@ -98,7 +98,7 @@ const areas = [
         <div class="card-grid">
           {
             offers.map((o, i) => (
-              <article class="tcard" style={`--accent:${o.accent};--i:${(i % 2) + 1}`}>
+              <article class="tcard">
                 <span class="tcard__icon">{o.icon}</span>
                 <h2 class="tcard__title">{o.title}</h2>
                 <p class="tcard__tag">{o.tag}</p>
@@ -123,7 +123,7 @@ const areas = [
         <div class="card-grid card-grid--3">
           {
             areas.map((a, i) => (
-              <article class="tcard" style={`--accent:${a.accent};--i:${i + 1}`}>
+              <article class="tcard">
                 <span class="tcard__icon">{a.icon}</span>
                 <h3 class="tcard__title" style="font-size:1.15rem">{a.title}</h3>
                 <ul class="tcard__list" style="margin-top:10px">

@@ -4,7 +4,7 @@ import { identity } from "../data/profile";
 
 const channels = [
   {
-    icon: "✉️",
+    icon: "@",
     title: "Email",
     body: "Best for anything substantive.",
     value: identity.email,
@@ -12,7 +12,7 @@ const channels = [
     accent: "#2ee6ff",
   },
   {
-    icon: "💼",
+    icon: "in",
     title: "LinkedIn",
     body: "Connect, or message me about roles and projects.",
     value: "linkedin.com/in/eantablin",
@@ -20,7 +20,7 @@ const channels = [
     accent: "#a855f7",
   },
   {
-    icon: "⌨️",
+    icon: "gh",
     title: "GitHub",
     body: "Code, experiments, and the occasional rabbit hole.",
     value: "github.com/eantablin",
@@ -55,7 +55,7 @@ const channels = [
             channels.map((c, i) => (
               <a
                 class="tcard"
-                style={`--accent:${c.accent};--i:${i + 1}`}
+               
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}

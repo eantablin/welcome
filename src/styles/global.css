@@ -547,7 +547,10 @@ th { background: var(--ink); color: var(--bg); text-transform: uppercase; }
   .case { grid-template-columns: 1fr; }
   .case__metric { border-left: 0; border-top: 2px solid var(--ink); }
   .cs-cols { grid-template-columns: 1fr; }
-  .nav__cta { margin-left: 0; }
+  .nav { gap: 8px 16px; padding: 12px 14px; }
+  .nav__links { gap: 2px 12px; }
+  .nav__links a { font-size: 0.75rem; letter-spacing: 0.03em; }
+  .nav__cta { margin-left: 0; padding: 5px 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

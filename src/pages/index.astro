@@ -73,7 +73,7 @@ const arrow = '<path d="M5 12h14M13 6l6 6-6 6"/>';
         <p class="section__lede">Not prompts in a notebook — autonomous systems that observe, reason, and act in production. Four disciplines I bring to every build.</p>
         <div class="pillars">
           {pillars.map((p, i) => (
-            <article class="pillar" style={`--accent:${p.accent};--i:${i}`}>
+            <article class="pillar">
               <span class="pillar__index">{p.index}</span>
               <h3 class="pillar__title">{p.title}</h3>
               <p class="pillar__tagline">{p.tagline}</p>
@@ -95,7 +95,7 @@ const arrow = '<path d="M5 12h14M13 6l6 6-6 6"/>';
           {caseStudies.map((c) => {
             const deepDive = deepDiveBySlug[c.id];
             return (
-            <a class="case" style={`--accent:${c.accent}`} href={deepDive ?? "/portfolio"}>
+            <a class="case" href={deepDive ?? "/portfolio"}>
               <div class="case__main">
                 <span class="case__tag">{c.tag}</span>
                 <p class="case__org">{c.org}</p>

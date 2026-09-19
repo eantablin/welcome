@@ -37,7 +37,7 @@ const articleLd = {
   path={`/blog/${cat.slug}/${post.id}`}
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} slot="head" />
-  <main id="main" style={`--accent:${cat.accent}`}>
+  <main id="main">
     <section class="page-hero">
       <div class="wrap">
         <a class="page-hero__back" href={`/blog/${cat.slug}`}>← {cat.name}</a>

@@ -21,7 +21,7 @@ export const categories: Category[] = [
   {
     slug: "security",
     name: "Security",
-    icon: "🔒",
+    icon: "[SEC]",
     tagline: "Offense informs defense",
     blurb:
       "Security learnings, CTF writeups, and research — the offensive perspective that makes you a better defender.",
@@ -32,7 +32,7 @@ export const categories: Category[] = [
   {
     slug: "cognitive-science",
     name: "Cognitive Science",
-    icon: "🧠",
+    icon: "[MIND]",
     tagline: "Minds & machines",
     blurb:
       "Psychology, AI, neuroscience, and anthropology — where the study of natural intelligence meets the engineering of the artificial kind.",
@@ -43,7 +43,7 @@ export const categories: Category[] = [
   {
     slug: "jiu-jitsu",
     name: "Jiu-Jitsu",
-    icon: "🥋",
+    icon: "[JJ]",
     tagline: "The gentle art",
     blurb:
       "A newbie's thoughts and advice on Brazilian Jiu-Jitsu — the gentle art of folding clothes while people are still wearing them.",
@@ -54,7 +54,7 @@ export const categories: Category[] = [
   {
     slug: "ramblings",
     name: "Ramblings",
-    icon: "💭",
+    icon: "[RAM]",
     tagline: "Eye of the beholder",
     blurb:
       "Beauty is in the eye of the beholder. Miscellaneous writings on whatever catches my interest.",

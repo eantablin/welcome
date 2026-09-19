@@ -37,7 +37,7 @@ const catAccent = (slug: string) => categories.find((c) => c.slug === slug)?.acc
             categories.map((c, i) => (
               <a
                 class="tcard"
-                style={`--accent:${c.accent};--i:${i + 1}`}
+               
                 href={`/blog/${c.slug}`}
               >
                 <span class="tcard__icon">{c.icon}</span>
@@ -58,7 +58,7 @@ const catAccent = (slug: string) => categories.find((c) => c.slug === slug)?.acc
             posts.map((p) => (
               <a
                 class="post-row"
-                style={`--accent:${catAccent(p.data.category)}`}
+               
                 href={`/blog/${p.data.category}/${p.id}`}
               >
                 <span class="post-row__date">{fmt(p.data.date)}</span>

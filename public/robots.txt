@@ -1,4 +1,73 @@
+# Normal search indexing stays welcome.
 User-agent: *
 Allow: /
+
+# ── AI training / data-mining opt-out ──────────────────────────────────
+# Best-effort dissuasion: these crawlers claim to respect robots.txt.
+# Determined scrapers ignore it — no technical control can stop those.
+
+# OpenAI — model training
+User-agent: GPTBot
+Disallow: /
+
+# OpenAI — search only (ChatGPT search); allowed on purpose
+User-agent: OAI-SearchBot
+Allow: /
+
+# Google — Gemini training data
+User-agent: Google-Extended
+Disallow: /
+
+# Anthropic — Claude training
+User-agent: ClaudeBot
+Disallow: /
+User-agent: Claude-Web
+Disallow: /
+User-agent: anthropic-ai
+Disallow: /
+
+# Common Crawl — feeds countless training sets
+User-agent: CCBot
+Disallow: /
+
+# ByteDance — TikTok AI training
+User-agent: Bytespider
+Disallow: /
+
+# Meta / Facebook — LLaMA training
+User-agent: FacebookBot
+Disallow: /
+User-agent: Meta-ExternalAgent
+Disallow: /
+User-agent: Meta-ExternalAgent:2.0
+Disallow: /
+User-agent: meta-externalagent
+Disallow: /
+
+# Apple — training opt-out (Applebot still indexes Siri/Spotlight)
+User-agent: Applebot-Extended
+Disallow: /
+
+# Amazon
+User-agent: Amazonbot
+Disallow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Disallow: /
+
+# Others known for AI harvesting
+User-agent: Diffbot
+Disallow: /
+User-agent: Omgili
+Disallow: /
+User-agent: Omgilibot
+Disallow: /
+User-agent: YouBot
+Disallow: /
+User-agent: cohere-ai
+Disallow: /
+User-agent: ImagesiftBot
+Disallow: /
 
 Sitemap: https://emanuel.antablin.com/sitemap-index.xml

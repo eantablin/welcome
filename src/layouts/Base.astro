@@ -34,6 +34,9 @@ const isActive = (href: string) =>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffffff" />
+    <!-- AI training opt-out (proposed directives + W3C TDM Reservation Protocol) -->
+    <meta name="robots" content="noai, noimageai" />
+    <meta name="tdm-reservation" content="1" />
     <Seo title={title} description={description} path={path} noindex={noindex} structuredData={structuredData} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/manifest.webmanifest" />
