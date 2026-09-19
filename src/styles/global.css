@@ -6,10 +6,21 @@
 :root {
   --bg: #ffffff;
   --ink: #000000;
+  --text: #1a1a1a;
   --muted: #555555;
   --line: #000000;
+  --soft: #f2f2f2;
   --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --bg: #000000;
+  --ink: #ffffff;
+  --text: #e6e6e6;
+  --muted: #b3b3b3;
+  --line: #ffffff;
+  --soft: #1c1c1c;
 }
 
 * { box-sizing: border-box; }
@@ -19,14 +30,16 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--ink);
+  color: var(--text);
   font-family: var(--font-body);
   font-size: 17px;
-  line-height: 1.55;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection { background: var(--ink); color: var(--bg); }
+
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 
 img, svg, video { max-width: 100%; height: auto; }
 
@@ -36,10 +49,11 @@ a:hover { background: var(--ink); color: var(--bg); }
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 0.5em;
   font-weight: 800;
-  line-height: 1.1;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  line-height: 1.15;
 }
+
+/* short display headings stay uppercase; long section h2/h3 go mixed case */
+h1, .kicker { text-transform: uppercase; letter-spacing: 0.02em; }
 
 p { margin: 0 0 1em; }
 ul, ol { margin: 0 0 1em; padding-left: 1.2em; }
@@ -60,12 +74,12 @@ code, pre {
   font-size: 0.9em;
 }
 code {
-  background: #f2f2f2;
+  background: var(--soft);
   padding: 1px 5px;
   border: 1px solid var(--ink);
 }
 pre {
-  background: #f2f2f2;
+  background: var(--soft);
   border: 2px solid var(--ink);
   padding: 14px;
   overflow-x: auto;
@@ -106,13 +120,20 @@ th { background: var(--ink); color: var(--bg); text-transform: uppercase; }
 /* ---------- nav ---------- */
 
 .nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px 24px;
   padding: 16px 20px;
   border-bottom: 2px solid var(--line);
+  background: var(--bg);
 }
+
+/* anchored sections must not land under the sticky nav */
+section[id] { scroll-margin-top: 72px; }
 
 .nav__brand { text-decoration: none; font-weight: 800; }
 .nav__brand:hover { background: none; color: var(--ink); }
@@ -124,9 +145,8 @@ th { background: var(--ink); color: var(--bg); text-transform: uppercase; }
 .nav__links a.is-active { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 3px; }
 
 .nav__cta {
-  margin-left: auto;
   border: 2px solid var(--ink);
-  padding: 6px 14px;
+  padding: 6px 12px;
   text-decoration: none;
   text-transform: uppercase;
   font-size: 0.85rem;
@@ -153,7 +173,31 @@ th { background: var(--ink); color: var(--bg); text-transform: uppercase; }
 .btn:hover { background: var(--ink); color: var(--bg); }
 .btn--primary { background: var(--ink); color: var(--bg); }
 .btn--primary:hover { background: var(--bg); color: var(--ink); }
-.btn svg { width: 1em; height: 1em; vertical-align: -2px; }
+.btn svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: -2px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+/* dark-mode toggle — the old star/Majora's-mask moon, back from the HUD */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 2px solid var(--ink);
+  background: var(--bg);
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+}
+.theme-toggle svg { width: 20px; height: 20px; fill: #ffd25a; stroke: var(--ink); stroke-width: 4; }
+.theme-toggle:hover { background: var(--ink); }
+.theme-toggle[aria-pressed="true"] svg { stroke: var(--bg); }
 
 /* ---------- hero ---------- */
 
@@ -547,10 +591,11 @@ th { background: var(--ink); color: var(--bg); text-transform: uppercase; }
   .case { grid-template-columns: 1fr; }
   .case__metric { border-left: 0; border-top: 2px solid var(--ink); }
   .cs-cols { grid-template-columns: 1fr; }
-  .nav { gap: 8px 16px; padding: 12px 14px; }
-  .nav__links { gap: 2px 12px; }
-  .nav__links a { font-size: 0.75rem; letter-spacing: 0.03em; }
-  .nav__cta { margin-left: 0; padding: 5px 12px; }
+  .nav { gap: 8px 16px; padding: 10px 14px; }
+  .nav__links { gap: 2px 6px; }
+  .nav__links a { font-size: 0.8rem; letter-spacing: 0.03em; padding: 10px 8px; }
+  .nav__cta { margin-left: 0; padding: 10px 12px; }
+  .theme-toggle { margin-left: 0; }
 }
 
 @media print {

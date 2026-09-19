@@ -34,6 +34,12 @@ const isActive = (href: string) =>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffffff" />
+    <script is:inline>
+      // set theme before first paint to avoid flash
+      document.documentElement.dataset.theme =
+        localStorage.getItem("theme") ??
+        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    </script>
     <!-- AI training opt-out (proposed directives + W3C TDM Reservation Protocol) -->
     <meta name="robots" content="noai, noimageai" />
     <meta name="tdm-reservation" content="1" />
@@ -78,10 +84,34 @@ const isActive = (href: string) =>
           ))
         }
       </nav>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M22 22 L41 22 C41 10 59 10 59 22 L78 22 L78 41 C90 41 90 59 78 59 L78 78 L59 78 C59 66 41 66 41 78 L22 78 L22 59 C34 59 34 41 22 41 L22 22 Z"/></svg>
+      </button>
       <a class="nav__cta" href="/contact">Get in touch</a>
     </header>
 
     <slot />
+
+    <script is:inline>
+      // dark-mode toggle — persisted, syncs the theme-color meta
+      (() => {
+        const root = document.documentElement;
+        const btn = document.getElementById("themeToggle");
+        const meta = document.querySelector('meta[name="theme-color"]');
+        const sync = () => {
+          const dark = root.dataset.theme === "dark";
+          btn?.setAttribute("aria-pressed", String(dark));
+          meta?.setAttribute("content", dark ? "#000000" : "#ffffff");
+        };
+        sync();
+        btn?.addEventListener("click", () => {
+          const next = root.dataset.theme === "dark" ? "light" : "dark";
+          localStorage.setItem("theme", next);
+          root.dataset.theme = next;
+          sync();
+        });
+      })();
+    </script>
 
     <!-- footer -->
     <footer class="footer">
