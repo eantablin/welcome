@@ -31,9 +31,9 @@ const articleLd = {
     <section class="page-hero">
       <div class="wrap">
         <a class="page-hero__back" href="/portfolio">← Portfolio</a>
-        <p class="kicker reveal">{cs.domain} · {cs.org}</p>
-        <h1 class="page-hero__title reveal" style="--i:1">{cs.title}</h1>
-        <div class="cs-metric reveal" style="--i:2">
+        <p class="kicker">{cs.domain} · {cs.org}</p>
+        <h1 class="page-hero__title">{cs.title}</h1>
+        <div class="cs-metric">
           <span class="cs-metric__num">{cs.metric}</span>
           <span class="cs-metric__sub">{cs.metricSub}</span>
         </div>
@@ -42,7 +42,7 @@ const articleLd = {
 
     <section class="section" style="padding-top:0">
       <div class="wrap">
-        <div class="cs-cols reveal">
+        <div class="cs-cols">
           <div class="cs-col"><h3>Problem</h3><p>{cs.problem}</p></div>
           <div class="cs-col"><h3>Approach</h3><p>{cs.approach}</p></div>
           <div class="cs-col"><h3>Impact</h3><p>{cs.impact}</p></div>
@@ -51,7 +51,7 @@ const articleLd = {
         <div class="cs-detail">
           {
             cs.detail?.map((d) => (
-              <div class="reveal">
+              <div>
                 <h2>{d.heading}</h2>
                 <p>{d.body}</p>
               </div>
@@ -59,11 +59,11 @@ const articleLd = {
           }
         </div>
 
-        <div class="cs-stack reveal">
+        <div class="cs-stack">
           {cs.stack.map((s) => <span class="case__chip">{s}</span>)}
         </div>
 
-        <div class="cs-next reveal">
+        <div class="cs-next">
           {
             others.map((o) => (
               <a class="btn btn--ghost" href={`/portfolio/${o.slug}`}>

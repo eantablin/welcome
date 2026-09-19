@@ -21,9 +21,9 @@ const catAccent = (slug: string) => categories.find((c) => c.slug === slug)?.acc
     <section class="page-hero">
       <div class="wrap">
         <a class="page-hero__back" href="/">← Home</a>
-        <p class="kicker reveal">Blog</p>
-        <h1 class="page-hero__title reveal" style="--i:1">Notes from the <em>rabbit hole</em>.</h1>
-        <p class="page-hero__lede reveal" style="--i:2">
+        <p class="kicker">Blog</p>
+        <h1 class="page-hero__title">Notes from the <em>rabbit hole</em>.</h1>
+        <p class="page-hero__lede">
           Security, cognitive science, AI, jiu-jitsu, and whatever else catches my
           interest. Pick a category or jump to a recent post.
         </p>
@@ -36,7 +36,7 @@ const catAccent = (slug: string) => categories.find((c) => c.slug === slug)?.acc
           {
             categories.map((c, i) => (
               <a
-                class="tcard reveal"
+                class="tcard"
                 style={`--accent:${c.accent};--i:${i + 1}`}
                 href={`/blog/${c.slug}`}
               >
@@ -50,14 +50,14 @@ const catAccent = (slug: string) => categories.find((c) => c.slug === slug)?.acc
           }
         </div>
 
-        <h2 class="section__title reveal" style="margin-top:70px;font-size:clamp(1.4rem,3vw,2rem)">
+        <h2 class="section__title" style="margin-top:70px;font-size:clamp(1.4rem,3vw,2rem)">
           Recent posts
         </h2>
         <div class="posts">
           {
             posts.map((p) => (
               <a
-                class="post-row reveal"
+                class="post-row"
                 style={`--accent:${catAccent(p.data.category)}`}
                 href={`/blog/${p.data.category}/${p.id}`}
               >

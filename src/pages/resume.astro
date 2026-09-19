@@ -78,9 +78,9 @@ const jobs = [
     <section class="page-hero" style="padding-bottom:10px">
       <div class="wrap">
         <a class="page-hero__back" href="/">← Home</a>
-        <p class="kicker reveal">Résumé</p>
-        <h1 class="page-hero__title reveal" style="--i:1">Emanuel <em>Antablin</em></h1>
-        <p class="page-hero__lede reveal" style="--i:2">
+        <p class="kicker">Résumé</p>
+        <h1 class="page-hero__title">Emanuel <em>Antablin</em></h1>
+        <p class="page-hero__lede">
           AI Engineer · Lead Software Engineer
         </p>
       </div>
@@ -89,21 +89,21 @@ const jobs = [
     <section class="section" style="padding-top:20px">
       <div class="wrap">
         <div class="resume">
-          <div class="resume__links reveal">
+          <div class="resume__links">
             <a href={`mailto:${identity.email}`}>Email</a>
             <a href={identity.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href={identity.github} target="_blank" rel="noopener noreferrer">GitHub</a>
             <span style="color:var(--faint)">· Updated {lastUpdated}</span>
           </div>
-          <p class="resume__summary reveal" style="--i:1">
+          <p class="resume__summary">
             AI Engineer specializing in <strong>agentic AI, RAG pipelines, and LLM
             systems in production</strong>. I turn machine learning into reliable
             infrastructure at enterprise scale — cutting incident response from hours
             to minutes and saving millions through automation.
           </p>
 
-          <h2 class="reveal">Skills</h2>
-          <div class="skills-rows reveal">
+          <h2>Skills</h2>
+          <div class="skills-rows">
             {
               skills.map((s) => (
                 <div class="skills-row">
@@ -114,10 +114,10 @@ const jobs = [
             }
           </div>
 
-          <h2 class="reveal">Experience</h2>
+          <h2>Experience</h2>
           {
             jobs.map((j) => (
-              <div class="job reveal">
+              <div class="job">
                 <div class="job__head">
                   <span class="job__role">
                     {j.role}, <i>{j.org}</i>
@@ -133,15 +133,15 @@ const jobs = [
             ))
           }
 
-          <h2 class="reveal">Education</h2>
-          <div class="job reveal">
+          <h2>Education</h2>
+          <div class="job">
             <div class="job__head">
               <span class="job__role">Full Sail University — <i>B.S. in Computer Science · Salutatorian</i></span>
               <span class="job__when">Florida · 2018</span>
             </div>
           </div>
 
-          <div class="resume__actions reveal">
+          <div class="resume__actions">
             <a class="btn btn--primary" href="/AntablinEmanuelResume.pdf" download>
               <span>⬇ Download PDF</span>
             </a>

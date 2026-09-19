@@ -12,9 +12,9 @@ import { caseStudies } from "../../data/casestudies";
     <section class="page-hero">
       <div class="wrap">
         <a class="page-hero__back" href="/">← Home</a>
-        <p class="kicker reveal">Portfolio</p>
-        <h1 class="page-hero__title reveal" style="--i:1">Case studies in <em>production AI</em>.</h1>
-        <p class="page-hero__lede reveal" style="--i:2">
+        <p class="kicker">Portfolio</p>
+        <h1 class="page-hero__title">Case studies in <em>production AI</em>.</h1>
+        <p class="page-hero__lede">
           Each of these shipped, ran against real traffic, and moved a number that
           mattered. Problem → approach → impact.
         </p>
@@ -29,7 +29,7 @@ import { caseStudies } from "../../data/casestudies";
               const Tag = cs.deep ? "a" : "article";
               return (
                 <Tag
-                  class="tcard reveal"
+                  class="tcard"
                   style={`--accent:${cs.accent};--i:${(i % 2) + 1}`}
                   href={cs.deep ? `/portfolio/${cs.slug}` : undefined}
                 >
@@ -58,7 +58,7 @@ import { caseStudies } from "../../data/casestudies";
           }
         </div>
 
-        <div class="cs-next reveal">
+        <div class="cs-next">
           <a class="btn btn--primary" href="/contact"><span>Want the deep dive? Get in touch</span></a>
           <a class="btn btn--ghost" href="/resume"><span>View résumé</span></a>
         </div>

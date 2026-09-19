@@ -39,9 +39,9 @@ const channels = [
     <section class="page-hero">
       <div class="wrap">
         <a class="page-hero__back" href="/">← Home</a>
-        <p class="kicker reveal">Contact</p>
-        <h1 class="page-hero__title reveal" style="--i:1">Say <em>hello</em>.</h1>
-        <p class="page-hero__lede reveal" style="--i:2">
+        <p class="kicker">Contact</p>
+        <h1 class="page-hero__title">Say <em>hello</em>.</h1>
+        <p class="page-hero__lede">
           Hiring, collaborating, or just want to talk shop about agentic AI? Pick a
           channel.
         </p>
@@ -54,7 +54,7 @@ const channels = [
           {
             channels.map((c, i) => (
               <a
-                class="tcard reveal"
+                class="tcard"
                 style={`--accent:${c.accent};--i:${i + 1}`}
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
@@ -69,7 +69,7 @@ const channels = [
           }
         </div>
 
-        <div class="cs-next reveal">
+        <div class="cs-next">
           <button class="btn btn--primary" id="copyEmail" data-email={identity.email}>
             <span>Copy email address</span>
           </button>
