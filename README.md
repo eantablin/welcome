@@ -10,6 +10,10 @@ Built with **[Astro](https://astro.build)**, deployed to GitHub Pages via
 ## What's inside
 
 - **Boot sequence** — an "INSERT COIN" style cold-boot intro → `PRESS START`.
+- **BRUTAL BIRD** (`public/games/`) — an installable, offline-capable PWA
+  mini-game (canvas flappy, black/white, WebAudio SFX, localStorage best score).
+  Served at `/games/`; installable via Add to Home Screen (iOS) or install
+  prompt (Chromium), playable offline via its own service worker + manifest.
 - **WebGL hero** (Three.js) — a 3D *agent network*: glowing agent-nodes wired
   into a graph with signal pulses routing along the edges (observe → reason →
   act). Degrades to a static frame; perf guards on low-power devices; respects
@@ -33,6 +37,10 @@ Built with **[Astro](https://astro.build)**, deployed to GitHub Pages via
 ```
 public/
   CNAME .nojekyll robots.txt favicon.svg og-image.jpg manifest.webmanifest
+  games/                 ← BRUTAL BIRD PWA (index.html, game.js, style.css, sw.js, manifest, icons/)
+scripts/
+  make-game-icons.mjs    ← regenerates the game's PNG icons (node scripts/make-game-icons.mjs)
+  smoke-game.mjs         ← headless logic smoke test for the game (node scripts/smoke-game.mjs)
 src/
   data/profile.ts        ← single source of truth (all copy, stats, case studies)
   layouts/Base.astro     ← shell: boot, overlays, HUD, nav, footer, mini-game modal

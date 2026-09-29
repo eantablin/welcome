@@ -1,0 +1,210 @@
+/* =====================================================================
+   BRUTAL BIRD — brutalist. White paper, black ink, hard borders.
+   No gradients, no glow, no radius, no shadows, no animation easing.
+   ===================================================================== */
+
+:root {
+  --bg: #ffffff;
+  --ink: #000000;
+  --text: #1a1a1a;
+  --soft: #f2f2f2;
+  --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --bg: #000000;
+  --ink: #ffffff;
+  --text: #e6e6e6;
+  --soft: #1c1c1c;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+#main {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+           max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  gap: 8px;
+}
+
+/* ── HUD ─────────────────────────────────────────────────────────────── */
+.hud {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.hud__brand { font-size: 0.95rem; }
+
+.hud__score {
+  margin-left: auto;
+  font-size: 1.4rem;
+  border: 3px solid var(--ink);
+  padding: 2px 12px;
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.hud__best { font-size: 0.8rem; color: var(--text); opacity: 0.7; }
+
+/* ── stage ───────────────────────────────────────────────────────────── */
+.stage-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#stage {
+  border: 4px solid var(--ink);
+  background: var(--bg);
+  touch-action: none;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 480 / 640;
+}
+
+/* ── overlay ─────────────────────────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  inset: 4px; /* inset inside the canvas border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* let taps hit the canvas underneath */
+}
+
+.overlay__panel {
+  pointer-events: auto;
+  background: var(--bg);
+  border: 4px solid var(--ink);
+  padding: 28px 32px;
+  text-align: center;
+  max-width: 90%;
+}
+
+.overlay__title {
+  margin: 0 0 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 2.2rem;
+  line-height: 1.05;
+}
+
+.overlay__sub {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 18px;
+}
+
+.overlay__score {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  padding: 8px 0;
+}
+
+.overlay__install {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 14px;
+  background: var(--soft);
+  border: 2px solid var(--ink);
+  padding: 6px 8px;
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  background: var(--ink);
+  color: var(--bg);
+  border: 3px solid var(--ink);
+  padding: 12px 28px;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: var(--bg);
+  color: var(--ink);
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.btn:active { transform: none; }
+
+/* ── footer ──────────────────────────────────────────────────────────── */
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.foot a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.foot a:hover { background: var(--ink); color: var(--bg); }
+
+.foot__sound {
+  margin-left: auto;
+  font-family: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  background: none;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.foot__sound[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+@media (max-width: 480px) {
+  .hud__brand { font-size: 0.75rem; }
+  .hud__score { font-size: 1.1rem; }
+  .overlay__title { font-size: 1.6rem; }
+}
