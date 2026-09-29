@@ -46,6 +46,7 @@ const sandbox = {
   document: {
     documentElement: { dataset: {} },
     getElementById: (id) => els[id] ?? makeEl(id),
+    querySelector: () => null,
     addEventListener: (ev, fn) => { (listeners["doc:" + ev] ??= []).push(fn); },
   },
   localStorage: {

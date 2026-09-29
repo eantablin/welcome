@@ -44,6 +44,7 @@ const sandbox = {
   document: {
     documentElement: { dataset: {} },
     getElementById: (id) => (/^m\d$/.test(id) ? holes[Number(id[1])] : els[id]),
+    querySelector: () => null,
     addEventListener: (ev, fn) => { (listeners["doc:" + ev] ??= []).push(fn); },
   },
   localStorage: {

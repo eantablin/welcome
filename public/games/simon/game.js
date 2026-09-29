@@ -136,7 +136,7 @@
       els.best.textContent = `BEST ${best}`;
     }
     els.overlayTitle.innerHTML = "GAME<br>OVER";
-    els.overlaySub.textContent = "KEYS 1-4 OR TAP";
+    els.overlaySub.textContent = "TAP PADS OR KEYS 1-4";
     els.overlayScore.hidden = false;
     els.overlayScore.textContent = `ROUNDS ${completed} · BEST ${best}`;
     els.overlay.style.display = "";
@@ -172,6 +172,10 @@
 
   // ── wiring ───────────────────────────────────────────────────────────
   els.startBtn.addEventListener("click", start);
+  // tap anywhere on the instructions panel = start (touch-first)
+  document.querySelector(".overlay__panel")?.addEventListener("click", (e) => {
+    if (e.target !== els.startBtn) start();
+  });
   for (const b of els.padsBtns) {
     b.addEventListener("pointerdown", (e) => {
       e.preventDefault();

@@ -63,6 +63,7 @@ const sandbox = {
   document: {
     documentElement: { dataset: {} },
     getElementById: (id) => els[id] ?? makeEl(id),
+    querySelector: () => null,
     createElement: (_tag) => makeEl("dyn"),
     addEventListener: (ev, fn) => { if (ev === "keydown") keydowns.push(fn); },
   },

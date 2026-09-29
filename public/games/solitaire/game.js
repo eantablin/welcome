@@ -374,6 +374,10 @@
   };
 
   els.startBtn.addEventListener("click", start);
+  // tap anywhere on the instructions panel = start (touch-first)
+  document.querySelector(".overlay__panel")?.addEventListener("click", (e) => {
+    if (e.target !== els.startBtn) start();
+  });
 
   // ── boot ─────────────────────────────────────────────────────────────
   // state is dealt behind the overlay so the table is ready to play

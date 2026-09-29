@@ -321,6 +321,8 @@
     if (phase === "idle") {
       placeMines(board, MINES, r, c);
       startTimer();
+      els.overlay.hidden = true;
+      els.startBtn.textContent = "NEW SWEEP";
     }
 
     const cell = board[r][c];
@@ -391,6 +393,12 @@
   });
   els.newBtn.addEventListener("click", () => { unlockAudio(); startGame(); });
   els.startBtn.addEventListener("click", () => { unlockAudio(); startGame(); });
+  // tap anywhere on the instructions panel = start (touch-first)
+  els.overlayPanel.addEventListener("click", (e) => {
+    if (e.target === els.startBtn) return;
+    unlockAudio();
+    startGame();
+  });
   els.soundBtn.addEventListener("click", () => {
     unlockAudio();
     soundOn = !soundOn;
