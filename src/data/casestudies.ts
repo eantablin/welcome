@@ -27,8 +27,8 @@ export const caseStudies: CaseStudy[] = [
     deep: true,
     domain: "Agentic AI",
     org: "Walmart Global Tech",
-    title: "Distributed Agentic Monitoring System",
-    metric: "4h → <30m",
+    title: "Agentic Monitoring System",
+    metric: "4h → ＜30m",
     metricSub: "mean time to resolution",
     problem:
       "SRE teams discovered DC infrastructure incidents reactively — burning hours in the discover → escalate → troubleshoot chain before a human even understood what broke.",
@@ -64,7 +64,7 @@ export const caseStudies: CaseStudy[] = [
     org: "Walmart Global Tech",
     title: "RAG Diagnostics Pipeline",
     metric: "Real-time",
-    metricSub: "context for every agent decision",
+    metricSub: "context for agent decisions",
     problem:
       "Monitoring agents could see telemetry but lacked the operational and historical context to diagnose why something was failing.",
     approach:
@@ -97,7 +97,7 @@ export const caseStudies: CaseStudy[] = [
     deep: true,
     domain: "Machine Learning",
     org: "Stealth Startup",
-    title: "PTSD Symptom Analysis Model",
+    title: "PTSD Analysis Model",
     metric: "End-to-end",
     metricSub: "raw data → trained model",
     problem:

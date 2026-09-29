@@ -41,7 +41,7 @@ export const stats: Stat[] = [
   { value: 30, prefix: "＜", suffix: " min", label: "Incident MTTR", sub: "down from ~4 hrs" },
   { value: 1, prefix: "$", suffix: "M+", label: "Saved per year", sub: "workflow automation" },
   { value: 40, suffix: "%", label: "Throughput lift", sub: "team velocity" },
-  { value: 20, prefix: "＞", suffix: "%", label: "Platform perf", sub: "global messaging path" },
+  { value: 20, prefix: "+", suffix: "%", label: "Platform perf", sub: "global messaging path" },
 ];
 
 export interface Pillar {
@@ -162,7 +162,7 @@ export const caseStudies: CaseStudy[] = [
     id: "ptsd-model",
     tag: "APPLIED ML · NLP",
     org: "Founding Technical Lead · Stealth Startup",
-    title: "PTSD Symptom-Analysis Model",
+    title: "PTSD Analysis Model",
     problem:
       "Clinical PTSD symptom tracking is hard to scale. The goal: detect symptom signals automatically from language patterns in user input — applied ML with real human stakes.",
     built:
