@@ -1,10 +1,9 @@
 // =====================================================================
-// BRUTAL BIRD — service worker.
-// App-shell precache + cache-first for the game's own assets.
-// Same-origin only; never touches cross-origin requests (analytics etc).
+// BRUTAL 21 — service worker. App-shell precache, cache-first assets.
+// Same-origin only; never touches cross-origin requests.
 // =====================================================================
 
-const CACHE = "brutalbird-v1";
+const CACHE = "brutal21-v1";
 const ASSETS = [
   "./",
   "./index.html",
@@ -37,9 +36,8 @@ self.addEventListener("fetch", (e) => {
   if (req.method !== "GET") return;
 
   const url = new URL(req.url);
-  if (url.origin !== location.origin) return; // let cross-origin (analytics) pass through
+  if (url.origin !== location.origin) return;
 
-  // navigate: network-first, fall back to cached shell (offline play)
   if (req.mode === "navigate") {
     e.respondWith(
       fetch(req)
@@ -53,7 +51,6 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // everything else: cache-first, refresh in background
   e.respondWith(
     caches.match(req).then((hit) => {
       const net = fetch(req)

@@ -1,11 +1,11 @@
-// Generates BRUTAL BIRD PWA icons (white paper, black ink square bird).
-// Pure Node + zlib — no image deps. Run: node make-icons.mjs
+// Generates PWA icons for all three games (white paper, black ink).
+// Pure Node + zlib — no image deps. Run: node scripts/make-game-icons.mjs
 import { deflateSync } from "node:zlib";
-import { writeFileSync } from "node:fs";
+import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const outDir = join(dirname(fileURLToPath(import.meta.url)), "icons");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 function crc32(buf) {
   let table = crc32.table;
@@ -35,12 +35,12 @@ function png(width, height, rgba) {
   const ihdr = Buffer.alloc(13);
   ihdr.writeUInt32BE(width, 0);
   ihdr.writeUInt32BE(height, 4);
-  ihdr[8] = 8;  // bit depth
-  ihdr[9] = 6;  // RGBA
+  ihdr[8] = 8;
+  ihdr[9] = 6;
   const stride = width * 4;
   const raw = Buffer.alloc((stride + 1) * height);
   for (let y = 0; y < height; y++) {
-    raw[y * (stride + 1)] = 0; // filter none
+    raw[y * (stride + 1)] = 0;
     rgba.copy(raw, y * (stride + 1) + 1, y * stride, (y + 1) * stride);
   }
   return Buffer.concat([
@@ -51,58 +51,168 @@ function png(width, height, rgba) {
   ]);
 }
 
-// Icon: white bg, black frame, black bird square, white eye + beak notch.
-// maskable: content shrunk into the inner 80% safe zone.
-function drawIcon(size, maskable = false) {
+// ── drawing helpers ────────────────────────────────────────────────────
+const WHITE = 0xffffff, BLACK = 0x000000;
+
+function makeCanvas(size) {
   const rgba = Buffer.alloc(size * size * 4);
-  const set = (x, y, c, a = 255) => {
+  const set = (x, y, c) => {
     if (x < 0 || y < 0 || x >= size || y >= size) return;
     const i = (y * size + x) * 4;
-    rgba[i] = (c >> 16) & 0xff; rgba[i + 1] = (c >> 8) & 0xff; rgba[i + 2] = c & 0xff; rgba[i + 3] = a;
+    rgba[i] = (c >> 16) & 0xff; rgba[i + 1] = (c >> 8) & 0xff; rgba[i + 2] = c & 0xff; rgba[i + 3] = 255;
   };
-  const WHITE = 0xffffff, BLACK = 0x000000;
+  const rect = (x, y, w, h, c) => { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) set(x + i, y + j, c); };
+  const line = (x0, y0, x1, y1, c, thickness = 1) => {
+    // Bresenham with thickness square brush
+    const dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
+    const sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+    let err = dx - dy, x = x0, y = y0;
+    for (;;) {
+      const half = Math.floor(thickness / 2);
+      for (let j = -half; j <= half; j++) for (let i = -half; i <= half; i++) set(x + i, y + j, c);
+      if (x === x1 && y === y1) break;
+      const e2 = 2 * err;
+      if (e2 > -dy) { err -= dy; x += sx; }
+      if (e2 < dx) { err += dx; y += sy; }
+    }
+  };
+  return { rgba, set, rect, line };
+}
 
-  // content box: maskable keeps 10% margin all around (80% safe zone)
+// 5x7 bitmap digits, rows LSB-top. "1" and "2" suffice for "21".
+const DIGITS = {
+  1: ["..#..", ".##..", "..#..", "..#..", "..#..", "..#..", ".###."],
+  2: [".###.", "#...#", "....#", "...#.", "..#..", ".#...", "#####"],
+};
+
+function drawGlyphs(canvas, text, size, m, scale, color = BLACK) {
+  const glyphW = 5 * scale;
+  const gap = scale;
+  const totalW = text.length * glyphW + (text.length - 1) * gap;
+  let x0 = Math.round((size - totalW) / 2);
+  const y0 = Math.round((size - 7 * scale) / 2);
+  for (const ch of text) {
+    const rows = DIGITS[ch];
+    if (!rows) { x0 += glyphW + gap; continue; }
+    for (let r = 0; r < 7; r++)
+      for (let c = 0; c < 5; c++)
+        if (rows[r][c] === "#") canvas.rect(x0 + c * scale, y0 + r * scale, scale, scale, color);
+    x0 += glyphW + gap;
+  }
+}
+
+function frame(canvas, size, m, frameW) {
+  canvas.rect(m, m, size - 2 * m, frameW, BLACK);                          // top
+  canvas.rect(m, size - m - frameW, size - 2 * m, frameW, BLACK);          // bottom
+  canvas.rect(m, m, frameW, size - 2 * m, BLACK);                          // left
+  canvas.rect(size - m - frameW, m, frameW, size - 2 * m, BLACK);          // right
+}
+
+// ── per-game content ───────────────────────────────────────────────────
+
+// flappy: frame + square bird with eye + beak notch
+function drawBird(size, maskable) {
+  const canvas = makeCanvas(size);
   const m = maskable ? Math.round(size * 0.1) : Math.round(size * 0.04);
   const inner = size - m * 2;
-  const frame = Math.max(2, Math.round(inner * 0.055));
+  const frameW = Math.max(2, Math.round(inner * 0.055));
+  canvas.rect(0, 0, size, size, WHITE);
+  frame(canvas, size, m, frameW);
 
-  for (let y = 0; y < size; y++)
-    for (let x = 0; x < size; x++) set(x, y, WHITE);
-
-  // frame
-  for (let y = m; y < size - m; y++)
-    for (let x = m; x < size - m; x++)
-      if (x < m + frame || x >= size - m - frame || y < m + frame || y >= size - m - frame) set(x, y, BLACK);
-
-  // bird square centered
   const birdSize = Math.round(inner * 0.42);
   const bx = Math.round((size - birdSize) / 2);
   const by = Math.round((size - birdSize) / 2);
-  for (let y = by; y < by + birdSize; y++)
-    for (let x = bx; x < bx + birdSize; x++) set(x, y, BLACK);
-
-  // eye (white square, upper-right of bird)
+  canvas.rect(bx, by, birdSize, birdSize, BLACK);
+  // eye (white)
   const eye = Math.max(3, Math.round(birdSize * 0.16));
-  const ex = bx + Math.round(birdSize * 0.55), ey = by + Math.round(birdSize * 0.2);
-  for (let y = ey; y < ey + eye; y++)
-    for (let x = ex; x < ex + eye; x++) set(x, y, WHITE);
-
-  // beak notch (white strip poking out right edge)
-  const notchH = Math.max(3, Math.round(birdSize * 0.12));
-  const ny = by + Math.round(birdSize * 0.45);
-  for (let y = ny; y < ny + notchH; y++)
-    for (let x = bx + birdSize; x < bx + birdSize + Math.round(birdSize * 0.12); x++) set(x, y, BLACK);
-
-  return png(size, size, rgba);
+  canvas.rect(bx + Math.round(birdSize * 0.55), by + Math.round(birdSize * 0.2), eye, eye, WHITE);
+  // beak notch
+  canvas.rect(bx + birdSize, by + Math.round(birdSize * 0.45), Math.round(birdSize * 0.12), Math.max(3, Math.round(birdSize * 0.12)), BLACK);
+  return canvas;
 }
 
-for (const [name, size, maskable] of [
-  ["icon-192.png", 192, false],
-  ["icon-512.png", 512, false],
-  ["icon-maskable-192.png", 192, true],
-  ["icon-maskable-512.png", 512, true],
-]) {
-  writeFileSync(join(outDir, name), drawIcon(size, maskable));
-  console.log("wrote", name);
+// blackjack: frame + big "21" digits over a card outline
+function drawBlackjack(size, maskable) {
+  const canvas = makeCanvas(size);
+  const m = maskable ? Math.round(size * 0.1) : Math.round(size * 0.05);
+  const inner = size - m * 2;
+  const frameW = Math.max(2, Math.round(inner * 0.055));
+  canvas.rect(0, 0, size, size, WHITE);
+  frame(canvas, size, m, frameW);
+
+  // "21" digits, upper area
+  const scale = Math.max(3, Math.round(size * 0.06));
+  const glyphH = 7 * scale;
+  const topPad = Math.round(size * 0.11);
+  // drawGlyphs centers vertically; shift digits up by drawing into a clipped canvas
+  const digits = makeCanvas(size);
+  drawGlyphs(digits, "21", size, m, scale, BLACK);
+  // copy only the top band (rows topPad .. topPad + glyphH)
+  for (let y = topPad; y < Math.min(size, topPad + glyphH); y++)
+    for (let x = m; x < size - m; x++) {
+      const i = (y * size + x) * 4;
+      if (digits.rgba[i + 3] > 0 && digits.rgba[i] === 0) canvas.set(x, y, BLACK);
+    }
+
+  // card below: black-filled card with white pip
+  const cardW = Math.round(inner * 0.3);
+  const cardH = Math.round(cardW * 1.35);
+  const cx = Math.round((size - cardW) / 2);
+  const cy = Math.round(size * 0.56);
+  canvas.rect(cx, cy, cardW, cardH, BLACK);
+  const pip = Math.max(3, Math.round(cardW * 0.2));
+  canvas.rect(cx + Math.round((cardW - pip) / 2), cy + Math.round(cardH * 0.2), pip, pip, WHITE);
+  return canvas;
+}
+
+// tictactoe: frame + 3x3 grid with a big X in the center cell
+function drawTicTacToe(size, maskable) {
+  const canvas = makeCanvas(size);
+  const m = maskable ? Math.round(size * 0.1) : Math.round(size * 0.05);
+  const inner = size - m * 2;
+  const frameW = Math.max(2, Math.round(inner * 0.05));
+  canvas.rect(0, 0, size, size, WHITE);
+  frame(canvas, size, m, frameW);
+
+  // grid
+  const g0 = m + frameW + Math.round(inner * 0.04); // grid area start
+  const gSize = size - g0 * 2 + m * 0;              // grid square side
+  const cell = Math.round(gSize / 3);
+  const lw = Math.max(2, Math.round(size * 0.025));
+  canvas.line(g0 + cell, g0, g0 + cell, g0 + gSize, BLACK, lw);
+  canvas.line(g0 + 2 * cell, g0, g0 + 2 * cell, g0 + gSize, BLACK, lw);
+  canvas.line(g0, g0 + cell, g0 + gSize, g0 + cell, BLACK, lw);
+  canvas.line(g0, g0 + 2 * cell, g0 + gSize, g0 + 2 * cell, BLACK, lw);
+
+  // X in center cell (two diagonals)
+  const pad = Math.round(cell * 0.28);
+  const x0 = g0 + cell + pad, x1 = g0 + 2 * cell - pad;
+  const y0 = g0 + cell + pad, y1 = g0 + 2 * cell - pad;
+  const xw = Math.max(2, Math.round(size * 0.035));
+  canvas.line(x0, y0, x1, y1, BLACK, xw);
+  canvas.line(x0, y1, x1, y0, BLACK, xw);
+  return canvas;
+}
+
+// ── emit ───────────────────────────────────────────────────────────────
+const GAMES = [
+  { dir: "public/games", draw: drawBird },
+  { dir: "public/blackjack", draw: drawBlackjack },
+  { dir: "public/tictactoe", draw: drawTicTacToe },
+];
+
+for (const { dir, draw } of GAMES) {
+  const out = join(root, dir, "icons");
+  mkdirSync(out, { recursive: true });
+  for (const [name, size, maskable] of [
+    ["icon-180.png", 180, false],
+    ["icon-192.png", 192, false],
+    ["icon-512.png", 512, false],
+    ["icon-maskable-192.png", 192, true],
+    ["icon-maskable-512.png", 512, true],
+  ]) {
+    const canvas = draw(size, maskable);
+    writeFileSync(join(out, name), png(size, size, canvas.rgba));
+  }
+  console.log("icons →", dir);
 }

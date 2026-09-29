@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>BRUTAL TIC-TAC-TOE — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white brutalist tic-tac-toe against an unbeatable AI. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="TIC-TAC-TOE">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">TIC-TAC-TOE</span>
+      <span class="hud__score" id="record">W0&nbsp;L0&nbsp;D0</span>
+    </header>
+
+    <section class="stage-wrap">
+      <div class="board" id="board" aria-label="Tic-tac-toe board">
+        <button class="cell" data-i="0" type="button" aria-label="cell 1"></button>
+        <button class="cell" data-i="1" type="button" aria-label="cell 2"></button>
+        <button class="cell" data-i="2" type="button" aria-label="cell 3"></button>
+        <button class="cell" data-i="3" type="button" aria-label="cell 4"></button>
+        <button class="cell" data-i="4" type="button" aria-label="cell 5"></button>
+        <button class="cell" data-i="5" type="button" aria-label="cell 6"></button>
+        <button class="cell" data-i="6" type="button" aria-label="cell 7"></button>
+        <button class="cell" data-i="7" type="button" aria-label="cell 8"></button>
+        <button class="cell" data-i="8" type="button" aria-label="cell 9"></button>
+      </div>
+
+      <p class="msg" id="msg">YOU ARE X — TAP A CELL</p>
+
+      <div class="actions">
+        <button class="btn" id="newBtn" type="button">NEW GAME</button>
+        <button class="btn btn--ghost" id="resetBtn" type="button">RESET STATS</button>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
