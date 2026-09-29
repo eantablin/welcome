@@ -155,12 +155,6 @@
     render();
   };
 
-  // style a tile: bigger numbers → slightly lighter ink (opacity ladder)
-  const tileOpacity = (v) => {
-    const ladder = { 2: 0.92, 4: 0.84, 8: 0.76, 16: 0.68, 32: 0.66, 64: 0.58, 128: 0.5, 256: 0.44, 512: 0.36, 1024: 0.28, 2048: 0.2, 4096: 0.14, 8192: 0.14 };
-    return ladder[v] ?? 0.14;
-  };
-
   const render = () => {
     boardEl.textContent = "";
     for (let y = 0; y < SIZE; y++)
@@ -172,7 +166,6 @@
         } else {
           cell.className = "cell tile";
           cell.dataset.v = String(v);
-          cell.style.opacity = String(tileOpacity(v));
           const n = document.createElement("span");
           n.className = "tile__n" + (v >= 128 ? " tile__n--long" : "");
           n.textContent = String(v);

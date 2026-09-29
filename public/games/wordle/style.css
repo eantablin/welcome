@@ -8,6 +8,11 @@
   --ink: #000000;
   --text: #1a1a1a;
   --soft: #f2f2f2;
+  --sig-red: #d62828;
+  --sig-orange: #f77f00;
+  --sig-yellow: #fcbf49;
+  --sig-green: #2f9e44;
+  --sig-blue: #1c6dd0;
   --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
 }
@@ -101,9 +106,9 @@ body {
 
 .cell--filled { background: var(--soft); }
 
-/* feedback: exact = inverted, present = thick border, absent = dimmed */
-.cell--exact { background: var(--ink); color: var(--bg); }
-.cell--present { border-width: 6px; }
+/* feedback: correct = signal green, present = signal yellow, absent = dimmed */
+.cell--correct { background: var(--sig-green); color: #ffffff; }
+.cell--present { background: var(--sig-yellow); color: #000000; }
 .cell--absent { opacity: 0.35; }
 
 /* ── message ─────────────────────────────────────────────────────────── */
@@ -147,8 +152,8 @@ body {
 
 .key--wide { min-width: 58px; font-size: 0.65rem; }
 .key--filled { background: var(--soft); }
-.key--exact { background: var(--ink); color: var(--bg); }
-.key--present { border-width: 5px; }
+.key--correct { background: var(--sig-green); color: #ffffff; }
+.key--present { background: var(--sig-yellow); color: #000000; }
 .key--absent { opacity: 0.3; }
 
 .key:active { transform: none; }

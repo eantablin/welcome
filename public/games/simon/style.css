@@ -10,6 +10,12 @@
   --soft: #f2f2f2;
   --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+  /* signal palette — flat, identical in dark mode (reads on both #fff and #000) */
+  --sig-red: #d62828;
+  --sig-orange: #f77f00;
+  --sig-yellow: #fcbf49;
+  --sig-green: #2f9e44;
+  --sig-blue: #1c6dd0;
 }
 
 [data-theme="dark"] {
@@ -110,8 +116,7 @@ body {
   font-weight: 800;
   font-size: clamp(1.6rem, 9vmin, 3rem);
   letter-spacing: 0.08em;
-  background: var(--bg);
-  color: var(--ink);
+  color: #ffffff;
   border: 4px solid var(--ink);
   cursor: pointer;
   display: flex;
@@ -122,11 +127,17 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.pad--active { background: var(--ink); color: var(--bg); }
+/* identity colors — flat signal fills, hard borders kept */
+.pad--red    { background: var(--sig-red);    color: #ffffff; }
+.pad--blue   { background: var(--sig-blue);   color: #ffffff; }
+.pad--green  { background: var(--sig-green);  color: #ffffff; }
+.pad--yellow { background: var(--sig-yellow); color: #000000; }
+
+.pad--active { border-width: 6px; filter: brightness(1.18); }
 
 .pad:disabled { cursor: default; }
 
-.pad:disabled:not(.pad--active):hover { background: var(--bg); color: var(--ink); }
+.pad:disabled:not(.pad--active):hover { filter: none; }
 
 /* ── overlay ─────────────────────────────────────────────────────────── */
 .overlay {

@@ -93,7 +93,10 @@
   const renderCell = (i) => {
     const el = cells[i];
     if (!el) return;
-    const face = "<span class=\"cell__face\">" + deck[i] + "</span>";
+    const [rank, suit] = [deck[i][0], deck[i][1]];
+    const suitCls = (suit === "\u2665" || suit === "\u2666") ? " cell__suit--red" : "";
+    const face = "<span class=\"cell__face\"><span class=\"cell__rank\">" + rank +
+      "</span><span class=\"cell__suit" + suitCls + "\">" + suit + "</span></span>";
     if (matched[i]) {
       el.classList.remove("cell--up");
       el.classList.add("cell--matched");

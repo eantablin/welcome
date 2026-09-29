@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>TETRIS — emanuel.antablin.com</title>
+  <meta name="description" content="A signal-color Tetris arcade game. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="TETRIS">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">TETRIS</span>
+      <span class="hud__next-wrap">
+        <span>NEXT</span>
+        <canvas id="next" width="96" height="48" aria-label="Next piece preview"></canvas>
+      </span>
+      <span class="hud__score" id="score">0</span>
+      <span class="hud__stats">
+        <span class="hud__stat">LVL&nbsp;<b id="level">1</b></span>
+        <span class="hud__stat">LINES&nbsp;<b id="lines">0</b></span>
+      </span>
+      <span class="hud__best" id="best">BEST&nbsp;0</span>
+    </header>
+
+    <div class="stage-wrap">
+      <canvas id="stage" width="300" height="600" aria-label="Tetris game area"></canvas>
+
+      <!-- overlay: start / game over — brutalist inverted block -->
+      <div class="overlay" id="overlay">
+        <div class="overlay__panel" id="overlayPanel">
+          <h1 class="overlay__title" id="overlayTitle">TETRIS</h1>
+          <p class="overlay__sub" id="overlaySub">SWIPE-TAP CONTROLS</p>
+          <p class="overlay__score" id="overlayScore" hidden></p>
+          <p class="overlay__hint" id="overlayHint">◄ ► MOVE · ▼ SOFT · UP/⟳ ROTATE · SPACE = DROP</p>
+          <p class="overlay__install" id="installHint" hidden>
+            iOS: SHARE → <strong>ADD TO HOME SCREEN</strong> — plays offline.
+          </p>
+          <button class="btn" id="startBtn" type="button">PRESS START</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pad" aria-label="Touch controls">
+      <button class="pad__btn" id="btnLeft" type="button" aria-label="Move left">◄</button>
+      <button class="pad__btn" id="btnRight" type="button" aria-label="Move right">►</button>
+      <button class="pad__btn" id="btnDown" type="button" aria-label="Soft drop">▼</button>
+      <button class="pad__btn" id="btnRot" type="button" aria-label="Rotate">⟳</button>
+      <button class="pad__btn pad__btn--drop" id="btnDrop" type="button" aria-label="Hard drop">DROP</button>
+    </div>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

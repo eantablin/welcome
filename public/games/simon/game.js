@@ -62,6 +62,8 @@
   };
 
   // ── constants ────────────────────────────────────────────────────────
+  const PAD_CLASSES = ["pad--red", "pad--blue", "pad--green", "pad--yellow"];
+  els.padsBtns.forEach((b, i) => b.classList.add(PAD_CLASSES[i]));
   const HIGHLIGHT_MS = 420;   // per-pad playback highlight
   const GAP_MS = 120;         // dark gap between highlights
   const INK_MS = 160;         // brief flash on player taps

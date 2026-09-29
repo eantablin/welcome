@@ -10,13 +10,13 @@ Built with **[Astro](https://astro.build)**, deployed to GitHub Pages via
 ## What's inside
 
 - **Boot sequence** — an "INSERT COIN" style cold-boot intro → `PRESS START`.
-- **THE ARCADE** — 13 installable, offline-capable PWA mini-games, all
-  vanilla JS, black/white, WebAudio SFX, localStorage records, each with its
-  own service worker + manifest:
+- **THE ARCADE** — 14 installable, offline-capable PWA mini-games, all
+  vanilla JS, black/white + shared signal-color palette (`--sig-*`), WebAudio
+  SFX, localStorage records, each with its own service worker + manifest:
   `public/games/` (index page + `brutal-bird/`, `snake/`, `2048/`,
   `whack-a-mole/`, `simon/`, `minesweeper/`, `memory-pairs/`, `wordle/`,
-  `brutal-golf/`, `solitaire/`, `raycaster/`) plus `public/blackjack/`
-  and `public/tictactoe/`.
+  `brutal-golf/`, `solitaire/`, `raycaster/`, `tetris/`) plus
+  `public/blackjack/` and `public/tictactoe/`.
 - **Game tooling**: `scripts/icon-lib.mjs` (shared icon rasterizer),
   `scripts/make-game-icons.mjs` (generates 5 PNG sizes per game; discovers
   new games via their `icon-draw.mjs`), `scripts/smoke-*.mjs` (headless logic
@@ -47,7 +47,7 @@ public/
   blackjack/ tictactoe/  ← standalone game PWAs
   games/                 ← THE ARCADE index + brutal-bird/ snake/ 2048/ whack-a-mole/
                             simon/ minesweeper/ memory-pairs/ wordle/ brutal-golf/
-                            solitaire/ raycaster/ (each: index.html, style.css,
+                            solitaire/ raycaster/ tetris/ (each: index.html, style.css,
                             game.js, sw.js, manifest.webmanifest, icon-draw.mjs, icons/)
 scripts/
   icon-lib.mjs           ← shared PNG rasterizer helpers for game icons

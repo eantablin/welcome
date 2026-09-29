@@ -133,6 +133,8 @@ assert(els.msg.textContent === "", "no warning message after a valid guess");
 assert(els.overlayTitle.innerHTML.includes("SOLVED"), "win overlay says SOLVED");
 assert(els.overlaySub.textContent.toUpperCase().includes("TRY"), "win overlay shows attempt count");
 assert(JSON.stringify(JSON.parse(sandbox.localStorage.store.wordle_stats)) === JSON.stringify(st().stats), "stats chip mirrors persisted stats");
+assert(els.grid.children.some((el) => String(el.className || "").includes("cell--correct")), "grid cells carry the cell--correct verdict class");
+assert(els.keys.children.some((row) => row.children.some((el) => el.classList.contains("key--correct"))), "keycaps carry the key--correct verdict class");
 
 // ── lose flow: 6 wrong guesses in a fresh game ────────────────────────
 startBtn.click();

@@ -1,5 +1,6 @@
 /* =====================================================================
-   MEMORY PAIRS — brutalist. White paper, black ink, hard borders.
+   TETRIS — brutalist signal colors. White paper, black ink, hard borders.
+   Flat riso spot colors carry piece identity and state feedback.
    No gradients, no glow, no radius, no shadows, no animation easing.
    ===================================================================== */
 
@@ -8,13 +9,13 @@
   --ink: #000000;
   --text: #1a1a1a;
   --soft: #f2f2f2;
-  --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
   --sig-red: #d62828;
   --sig-orange: #f77f00;
   --sig-yellow: #fcbf49;
   --sig-green: #2f9e44;
   --sig-blue: #1c6dd0;
+  --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
 }
 
 [data-theme="dark"] {
@@ -22,6 +23,7 @@
   --ink: #ffffff;
   --text: #e6e6e6;
   --soft: #1c1c1c;
+  /* same flats: they read on both #ffffff and #000000 */
   --sig-red: #d62828;
   --sig-orange: #f77f00;
   --sig-yellow: #fcbf49;
@@ -31,10 +33,7 @@
 
 * { box-sizing: border-box; }
 
-html, body {
-  margin: 0;
-  height: 100%;
-}
+html, body { margin: 0; height: 100%; }
 
 body {
   background: var(--bg);
@@ -57,8 +56,9 @@ body {
 /* ── HUD ─────────────────────────────────────────────────────────────── */
 .hud {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -66,6 +66,19 @@ body {
 }
 
 .hud__brand { font-size: 0.95rem; }
+
+.hud__next-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+}
+
+.hud__next-wrap canvas {
+  display: block;
+  border: 3px solid var(--ink);
+  background: var(--bg);
+}
 
 .hud__score {
   margin-left: auto;
@@ -76,76 +89,45 @@ body {
   color: var(--bg);
 }
 
+.hud__stats {
+  display: flex;
+  gap: 12px;
+  font-size: 0.75rem;
+}
+
+.hud__stat b { font-weight: 800; }
+
 .hud__best { font-size: 0.8rem; color: var(--text); opacity: 0.7; }
 
-/* ── board ───────────────────────────────────────────────────────────── */
-.board {
+/* ── stage ───────────────────────────────────────────────────────────── */
+.stage-wrap {
   position: relative;
   flex: 1;
   min-height: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  width: 100%;
-  max-width: 420px;
-  margin: auto;
-}
-
-.cell {
-  aspect-ratio: 3 / 4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-weight: 800;
-  font-size: 1.5rem;
+#stage {
+  border: 4px solid var(--ink);
   background: var(--bg);
-  color: var(--text);
-  border: 3px solid var(--ink);
-  cursor: pointer;
-  padding: 0;
+  touch-action: none;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 1 / 2; /* 10x20 board */
 }
-
-.cell:hover,
-.cell:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
-
-.cell--up { background: var(--bg); color: var(--text); }
-
-.cell--matched {
-  background: var(--ink);
-  border-color: var(--sig-green);
-  color: var(--bg);
-  cursor: default;
-}
-
-.cell::after { content: "×"; font-size: 1.6rem; }
-
-.cell--up::after,
-.cell--matched::after { content: ""; }
-
-.cell__face { z-index: 1; display: inline-flex; gap: 0.1em; align-items: baseline; }
-
-.cell__rank { color: inherit; }
-
-.cell__suit--red { color: var(--sig-red); } /* ♥ and ♦: fixed red on both themes, rank stays ink */
 
 /* ── overlay ─────────────────────────────────────────────────────────── */
 .overlay {
   position: absolute;
-  inset: 0;
+  inset: 4px; /* inset inside the canvas border */
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none; /* let taps hit cells underneath */
+  pointer-events: none; /* let taps hit the canvas underneath */
 }
-
-.overlay[hidden] { display: none; }
 
 .overlay__panel {
   pointer-events: auto;
@@ -175,12 +157,34 @@ body {
 
 .overlay__score {
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-transform: uppercase;
   margin: 0 0 14px;
   border-top: 3px solid var(--ink);
   border-bottom: 3px solid var(--ink);
   padding: 8px 0;
+}
+
+.overlay__hint {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 14px;
+  background: var(--soft);
+  border: 2px solid var(--ink);
+  padding: 6px 8px;
+}
+
+.overlay__install {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 14px;
+  background: var(--soft);
+  border: 2px solid var(--ink);
+  padding: 6px 8px;
 }
 
 .btn {
@@ -205,6 +209,40 @@ body {
 }
 
 .btn:active { transform: none; }
+
+/* ── touch button row ────────────────────────────────────────────────── */
+.pad {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pad__btn {
+  flex: 1;
+  max-width: 96px;
+  min-height: 52px; /* large touch target */
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--bg);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  padding: 8px 4px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.pad__btn:active { background: var(--ink); color: var(--bg); }
+
+.pad__btn--drop {
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 0.85rem;
+}
+
+.pad__btn--drop:active { background: var(--bg); color: var(--ink); }
 
 /* ── footer ──────────────────────────────────────────────────────────── */
 .foot {
@@ -244,6 +282,6 @@ body {
 @media (max-width: 480px) {
   .hud__brand { font-size: 0.75rem; }
   .hud__score { font-size: 1.1rem; }
-  .cell { font-size: 1.1rem; }
+  .hud__stats { display: none; }
   .overlay__title { font-size: 1.6rem; }
 }

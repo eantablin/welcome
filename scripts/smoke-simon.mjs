@@ -97,6 +97,17 @@ const pressKey = (digit) => listeners["doc:keydown"][0]({ key: digit, repeat: fa
 assert(st().sequence.length === 0 && st().round === 0, "boots with empty sequence, round 0");
 assert(sandbox.localStorage.getItem("simon_best") === null, "no best yet on first boot");
 
+// ── pads carry deterministic identity classes ─────────────────────────
+const PAD_CLASSES = ["pad--red", "pad--blue", "pad--green", "pad--yellow"];
+assert(
+  els.padsBtns.every((b, i) => b.classList.contains(PAD_CLASSES[i]) && b.classList.size === 1),
+  "pads 0-3 assigned red/blue/green/yellow classes in deterministic order"
+);
+assert(
+  new Set(els.padsBtns.map((b) => [...b.classList._s][0])).size === 4,
+  "exactly four distinct pad color classes"
+);
+
 // ── start: sequence grows by exactly one, playback scheduled ──────────
 els.startBtn.click = () => listeners["startBtn:click"][0]();
 els.startBtn.click();

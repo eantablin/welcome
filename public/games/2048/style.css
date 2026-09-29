@@ -1,10 +1,14 @@
 /* =====================================================================
    2048 — brutalist. White paper, black ink, hard borders.
    No gradients, no glow, no radius, no shadows, no animation easing.
-   Tile values render as inverted (ink-filled) blocks of decreasing
-   intensity — copied visual language of the whole arcade.
+   Tile values render as flat signal-color blocks — value classifies
+   the tile (state), never decoration. Swiss/riso flats, hard ink
+   borders, explicit text color on every accent for both themes.
    ===================================================================== */
 
+/* Signal flat colors. Dark mode uses the same values — these flats
+   read on both #ffffff and #000000. Text on accents is explicit per
+   fill so contrast survives theme switching.                            */
 :root {
   --bg: #ffffff;
   --ink: #000000;
@@ -19,6 +23,15 @@
   --ink: #ffffff;
   --text: #e6e6e6;
   --soft: #1c1c1c;
+}
+
+[data-theme="dark"],
+:root {
+  --sig-red: #d62828;
+  --sig-orange: #f77f00;
+  --sig-yellow: #fcbf49;
+  --sig-green: #2f9e44;
+  --sig-blue: #1c6dd0;
 }
 
 * { box-sizing: border-box; }
@@ -110,27 +123,62 @@ body {
 /* Empty cell shows a faint dash so the grid reads as paper+ink */
 .cell--empty::after { content: "·"; opacity: 0.15; }
 
-/* Occupied tiles: inverted blocks. Higher values = lighter ink
-   (a weaker black), so the board darkens where the small tiles sit
-   and big numbers pop in paper color.                                       */
+/* Occupied tiles: flat signal fills classified by value.
+   Low tiers sit on paper tones; mid tiers are signal spots; top tiers
+   are ink inversions whose border thickens so big numbers still pop.  */
 .tile {
-  border: none;
-  background: var(--ink);
-  color: var(--bg);
+  border: 2px solid var(--ink);
+  background: var(--bg);
+  color: var(--ink);
   opacity: 1;
 }
-.tile[data-v="2"]   { opacity: 0.92; }
-.tile[data-v="4"]   { opacity: 0.84; }
-.tile[data-v="8"]   { opacity: 0.76; }
-.tile[data-v="16"]  { opacity: 0.68; }
-.tile[data-v="32"]  { opacity: 0.66; }
-.tile[data-v="64"]  { opacity: 0.58; }
-.tile[data-v="128"] { opacity: 0.5; }
-.tile[data-v="256"] { opacity: 0.44; }
-.tile[data-v="512"] { opacity: 0.36; }
-.tile[data-v="1024"]{ opacity: 0.28; }
-.tile[data-v="2048"]{ opacity: 0.2; }
-.tile[data-v="4096"], .tile[data-v="8192"] { opacity: 0.14; }
+.tile[data-v="4"] {
+  background: var(--soft);
+  color: var(--ink);
+}
+.tile[data-v="8"] {
+  background: var(--sig-yellow);
+  color: #000000;
+}
+.tile[data-v="16"] {
+  background: var(--sig-orange);
+  color: #ffffff;
+}
+.tile[data-v="32"] {
+  background: var(--sig-red);
+  color: #ffffff;
+}
+.tile[data-v="64"] {
+  background: var(--sig-blue);
+  color: #ffffff;
+}
+.tile[data-v="128"],
+.tile[data-v="256"] {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.tile[data-v="512"] {
+  background: var(--ink);
+  color: var(--bg);
+  border: 3px solid var(--ink);
+}
+.tile[data-v="1024"] {
+  background: var(--ink);
+  color: var(--bg);
+  border: 4px solid var(--ink);
+}
+.tile[data-v="2048"] {
+  background: var(--ink);
+  color: var(--bg);
+  border: 6px solid var(--ink);
+}
+.tile[data-v="4096"],
+.tile[data-v="8192"] {
+  background: var(--ink);
+  color: var(--bg);
+  border: 6px solid var(--ink);
+}
 
 .tile__n {
   font-size: clamp(1.1rem, 6.5vmin, 3rem);
