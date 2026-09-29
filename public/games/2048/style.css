@@ -1,0 +1,280 @@
+/* =====================================================================
+   2048 — brutalist. White paper, black ink, hard borders.
+   No gradients, no glow, no radius, no shadows, no animation easing.
+   Tile values render as inverted (ink-filled) blocks of decreasing
+   intensity — copied visual language of the whole arcade.
+   ===================================================================== */
+
+:root {
+  --bg: #ffffff;
+  --ink: #000000;
+  --text: #1a1a1a;
+  --soft: #f2f2f2;
+  --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --bg: #000000;
+  --ink: #ffffff;
+  --text: #e6e6e6;
+  --soft: #1c1c1c;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+#main {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+           max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  gap: 8px;
+}
+
+/* ── HUD ─────────────────────────────────────────────────────────────── */
+.hud {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.hud__brand { font-size: 0.95rem; }
+
+.hud__score--chip {
+  margin-left: auto;
+  font-size: 1.3rem;
+  border: 3px solid var(--ink);
+  padding: 2px 12px;
+  background: var(--ink);
+  color: var(--bg);
+  min-width: 64px;
+  text-align: center;
+}
+
+.hud__best { font-size: 0.8rem; color: var(--text); opacity: 0.7; }
+
+/* ── board ───────────────────────────────────────────────────────────── */
+.stage-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  width: min(84vw, 60vh, 420px);
+  aspect-ratio: 1 / 1;
+  border: 4px solid var(--ink);
+  background: var(--bg);
+  display: grid;
+  grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+  gap: 6px;
+  padding: 6px;
+  touch-action: none;
+}
+
+.cell {
+  border: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  line-height: 1;
+  user-select: none;
+}
+
+.cell--empty { background: transparent; }
+
+/* Empty cell shows a faint dash so the grid reads as paper+ink */
+.cell--empty::after { content: "·"; opacity: 0.15; }
+
+/* Occupied tiles: inverted blocks. Higher values = lighter ink
+   (a weaker black), so the board darkens where the small tiles sit
+   and big numbers pop in paper color.                                       */
+.tile {
+  border: none;
+  background: var(--ink);
+  color: var(--bg);
+  opacity: 1;
+}
+.tile[data-v="2"]   { opacity: 0.92; }
+.tile[data-v="4"]   { opacity: 0.84; }
+.tile[data-v="8"]   { opacity: 0.76; }
+.tile[data-v="16"]  { opacity: 0.68; }
+.tile[data-v="32"]  { opacity: 0.66; }
+.tile[data-v="64"]  { opacity: 0.58; }
+.tile[data-v="128"] { opacity: 0.5; }
+.tile[data-v="256"] { opacity: 0.44; }
+.tile[data-v="512"] { opacity: 0.36; }
+.tile[data-v="1024"]{ opacity: 0.28; }
+.tile[data-v="2048"]{ opacity: 0.2; }
+.tile[data-v="4096"], .tile[data-v="8192"] { opacity: 0.14; }
+
+.tile__n {
+  font-size: clamp(1.1rem, 6.5vmin, 3rem);
+  letter-spacing: -0.02em;
+}
+
+.tile__n--long { font-size: clamp(0.9rem, 5vmin, 2.2rem); }
+
+/* ── overlay ─────────────────────────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.overlay__panel {
+  pointer-events: auto;
+  background: var(--bg);
+  border: 4px solid var(--ink);
+  padding: 28px 32px;
+  text-align: center;
+  max-width: 90%;
+}
+
+.overlay__title {
+  margin: 0 0 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 2.2rem;
+  line-height: 1.05;
+}
+
+.overlay__sub {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 18px;
+}
+
+.overlay__score {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  padding: 8px 0;
+}
+
+.overlay__install {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 14px;
+  background: var(--soft);
+  border: 2px solid var(--ink);
+  padding: 6px 8px;
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  background: var(--ink);
+  color: var(--bg);
+  border: 3px solid var(--ink);
+  padding: 12px 28px;
+  cursor: pointer;
+}
+
+.btn + .btn { margin-left: 10px; }
+
+.btn:hover,
+.btn:focus-visible {
+  background: var(--bg);
+  color: var(--ink);
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.btn--ghost { background: var(--bg); color: var(--ink); }
+.btn--ghost:hover { background: var(--ink); color: var(--bg); }
+
+.btn--primary { min-width: 190px; }
+
+/* ── hint strip ──────────────────────────────────────────────────────── */
+.hint {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  text-align: center;
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  padding: 8px 0;
+  margin: 0;
+}
+
+/* ── footer ──────────────────────────────────────────────────────────── */
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.foot a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.foot a:hover { background: var(--ink); color: var(--bg); }
+
+.foot__sound {
+  margin-left: auto;
+  font-family: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  background: none;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.foot__sound[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+@media (max-width: 480px) {
+  .hud__brand { font-size: 0.75rem; }
+  .hud__score--chip { font-size: 1.1rem; }
+  .overlay__title { font-size: 1.6rem; }
+}

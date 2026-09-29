@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>SIMON — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white brutalist Simon memory game. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="SIMON">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">SIMON</span>
+      <span class="hud__score" id="round">0</span>
+      <span class="hud__best" id="best">BEST&nbsp;0</span>
+    </header>
+
+    <section class="stage">
+      <div class="stage__msg" id="msg">PRESS START</div>
+
+      <div class="pads" id="pads" aria-label="Simon pad grid">
+        <button class="pad" id="pad0" data-pad="0" type="button" aria-label="Pad 1">I</button>
+        <button class="pad" id="pad1" data-pad="1" type="button" aria-label="Pad 2">II</button>
+        <button class="pad" id="pad2" data-pad="2" type="button" aria-label="Pad 3">III</button>
+        <button class="pad" id="pad3" data-pad="3" type="button" aria-label="Pad 4">IV</button>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+
+    <!-- overlay: start / game over — brutalist inverted block -->
+    <div class="overlay" id="overlay">
+      <div class="overlay__panel">
+        <h1 class="overlay__title" id="overlayTitle">SIMON</h1>
+        <p class="overlay__sub" id="overlaySub">REMEMBER THE SEQUENCE</p>
+        <p class="overlay__score" id="overlayScore" hidden></p>
+        <button class="btn" id="startBtn" type="button">PRESS START</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

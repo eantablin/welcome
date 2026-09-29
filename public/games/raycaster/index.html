@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>RAYS — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white Doom-style raycaster demo. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="RAYS">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">RAYS</span>
+      <span class="hud__score" id="clock">0.0</span>
+      <span class="hud__best" id="best">BEST&nbsp;–</span>
+    </header>
+
+    <div class="stage-wrap">
+      <canvas id="stage" width="320" height="200" aria-label="RAYS game area"></canvas>
+
+      <!-- on-screen touch pad: ◄ ► turn, ▲ ▼ move -->
+      <div class="pad" id="pad">
+        <button class="pad__btn pad__btn--left"  data-key="left"  aria-label="turn left">&#9668;</button>
+        <button class="pad__btn pad__btn--up"    data-key="up"    aria-label="move forward">&#9650;</button>
+        <button class="pad__btn pad__btn--down"  data-key="down"  aria-label="move backward">&#9660;</button>
+        <button class="pad__btn pad__btn--right" data-key="right" aria-label="turn right">&#9658;</button>
+      </div>
+
+      <!-- overlay: start / level clear — brutalist inverted block -->
+      <div class="overlay" id="overlay">
+        <div class="overlay__panel">
+          <h1 class="overlay__title" id="overlayTitle">RAYS</h1>
+          <p class="overlay__sub" id="overlaySub">WASD MOVE &middot; ARROWS TURN &middot; FIND&nbsp;E</p>
+          <p class="overlay__score" id="overlayScore" hidden></p>
+          <p class="overlay__install" id="installHint" hidden>
+            iOS: SHARE → <strong>ADD TO HOME SCREEN</strong> — plays offline.
+          </p>
+          <button class="btn" id="startBtn" type="button">PRESS START</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

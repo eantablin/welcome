@@ -1,112 +1,13 @@
-// Generates PWA icons for all three games (white paper, black ink).
+// Generates PWA icons for all games (white paper, black ink).
+// Legacy games draw inline below; new-style games are discovered dynamically
+// via public/games/*/icon-draw.mjs. PNG encoding comes from scripts/icon-lib.mjs.
 // Pure Node + zlib — no image deps. Run: node scripts/make-game-icons.mjs
-import { deflateSync } from "node:zlib";
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { png, makeCanvas, frame, drawText, WHITE, BLACK } from "./icon-lib.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-
-function crc32(buf) {
-  let table = crc32.table;
-  if (!table) {
-    table = crc32.table = new Int32Array(256);
-    for (let n = 0; n < 256; n++) {
-      let c = n;
-      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
-      table[n] = c;
-    }
-  }
-  let c = -1;
-  for (let i = 0; i < buf.length; i++) c = table[(c ^ buf[i]) & 0xff] ^ (c >>> 8);
-  return (c ^ -1) >>> 0;
-}
-
-function chunk(type, data) {
-  const len = Buffer.alloc(4);
-  len.writeUInt32BE(data.length);
-  const body = Buffer.concat([Buffer.from(type), data]);
-  const crc = Buffer.alloc(4);
-  crc.writeUInt32BE(crc32(body));
-  return Buffer.concat([len, body, crc]);
-}
-
-function png(width, height, rgba) {
-  const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(width, 0);
-  ihdr.writeUInt32BE(height, 4);
-  ihdr[8] = 8;
-  ihdr[9] = 6;
-  const stride = width * 4;
-  const raw = Buffer.alloc((stride + 1) * height);
-  for (let y = 0; y < height; y++) {
-    raw[y * (stride + 1)] = 0;
-    rgba.copy(raw, y * (stride + 1) + 1, y * stride, (y + 1) * stride);
-  }
-  return Buffer.concat([
-    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
-    chunk("IHDR", ihdr),
-    chunk("IDAT", deflateSync(raw, { level: 9 })),
-    chunk("IEND", Buffer.alloc(0)),
-  ]);
-}
-
-// ── drawing helpers ────────────────────────────────────────────────────
-const WHITE = 0xffffff, BLACK = 0x000000;
-
-function makeCanvas(size) {
-  const rgba = Buffer.alloc(size * size * 4);
-  const set = (x, y, c) => {
-    if (x < 0 || y < 0 || x >= size || y >= size) return;
-    const i = (y * size + x) * 4;
-    rgba[i] = (c >> 16) & 0xff; rgba[i + 1] = (c >> 8) & 0xff; rgba[i + 2] = c & 0xff; rgba[i + 3] = 255;
-  };
-  const rect = (x, y, w, h, c) => { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) set(x + i, y + j, c); };
-  const line = (x0, y0, x1, y1, c, thickness = 1) => {
-    // Bresenham with thickness square brush
-    const dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
-    const sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
-    let err = dx - dy, x = x0, y = y0;
-    for (;;) {
-      const half = Math.floor(thickness / 2);
-      for (let j = -half; j <= half; j++) for (let i = -half; i <= half; i++) set(x + i, y + j, c);
-      if (x === x1 && y === y1) break;
-      const e2 = 2 * err;
-      if (e2 > -dy) { err -= dy; x += sx; }
-      if (e2 < dx) { err += dx; y += sy; }
-    }
-  };
-  return { rgba, set, rect, line };
-}
-
-// 5x7 bitmap digits, rows LSB-top. "1" and "2" suffice for "21".
-const DIGITS = {
-  1: ["..#..", ".##..", "..#..", "..#..", "..#..", "..#..", ".###."],
-  2: [".###.", "#...#", "....#", "...#.", "..#..", ".#...", "#####"],
-};
-
-function drawGlyphs(canvas, text, size, m, scale, color = BLACK) {
-  const glyphW = 5 * scale;
-  const gap = scale;
-  const totalW = text.length * glyphW + (text.length - 1) * gap;
-  let x0 = Math.round((size - totalW) / 2);
-  const y0 = Math.round((size - 7 * scale) / 2);
-  for (const ch of text) {
-    const rows = DIGITS[ch];
-    if (!rows) { x0 += glyphW + gap; continue; }
-    for (let r = 0; r < 7; r++)
-      for (let c = 0; c < 5; c++)
-        if (rows[r][c] === "#") canvas.rect(x0 + c * scale, y0 + r * scale, scale, scale, color);
-    x0 += glyphW + gap;
-  }
-}
-
-function frame(canvas, size, m, frameW) {
-  canvas.rect(m, m, size - 2 * m, frameW, BLACK);                          // top
-  canvas.rect(m, size - m - frameW, size - 2 * m, frameW, BLACK);          // bottom
-  canvas.rect(m, m, frameW, size - 2 * m, BLACK);                          // left
-  canvas.rect(size - m - frameW, m, frameW, size - 2 * m, BLACK);          // right
-}
 
 // ── per-game content ───────────────────────────────────────────────────
 
@@ -140,14 +41,13 @@ function drawBlackjack(size, maskable) {
   canvas.rect(0, 0, size, size, WHITE);
   frame(canvas, size, m, frameW);
 
-  // "21" digits, upper area
+  // "21" digits, upper area (drawText centered the way drawGlyphs did)
   const scale = Math.max(3, Math.round(size * 0.06));
   const glyphH = 7 * scale;
   const topPad = Math.round(size * 0.11);
-  // drawGlyphs centers vertically; shift digits up by drawing into a clipped canvas
+  // draw digits into a scratch canvas, then copy only the top band
   const digits = makeCanvas(size);
-  drawGlyphs(digits, "21", size, m, scale, BLACK);
-  // copy only the top band (rows topPad .. topPad + glyphH)
+  drawText(digits, "21", size, scale, Math.round((size - glyphH) / 2), BLACK);
   for (let y = topPad; y < Math.min(size, topPad + glyphH); y++)
     for (let x = m; x < size - m; x++) {
       const i = (y * size + x) * 4;
@@ -195,24 +95,60 @@ function drawTicTacToe(size, maskable) {
 }
 
 // ── emit ───────────────────────────────────────────────────────────────
-const GAMES = [
-  { dir: "public/games", draw: drawBird },
+const SIZES = [
+  ["icon-180.png", 180, false],
+  ["icon-192.png", 192, false],
+  ["icon-512.png", 512, false],
+  ["icon-maskable-192.png", 192, true],
+  ["icon-maskable-512.png", 512, true],
+];
+
+function emitIcons(relDir, draw) {
+  const out = join(root, relDir, "icons");
+  mkdirSync(out, { recursive: true });
+  for (const [name, size, maskable] of SIZES) {
+    const canvas = draw(size, maskable);
+    writeFileSync(join(out, name), png(size, size, canvas.rgba));
+  }
+  console.log("icons \u2192", relDir);
+}
+
+const LEGACY_GAMES = [
+  { dir: "public/games/brutal-bird", draw: drawBird },
   { dir: "public/blackjack", draw: drawBlackjack },
   { dir: "public/tictactoe", draw: drawTicTacToe },
 ];
 
-for (const { dir, draw } of GAMES) {
-  const out = join(root, dir, "icons");
-  mkdirSync(out, { recursive: true });
-  for (const [name, size, maskable] of [
-    ["icon-180.png", 180, false],
-    ["icon-192.png", 192, false],
-    ["icon-512.png", 512, false],
-    ["icon-maskable-192.png", 192, true],
-    ["icon-maskable-512.png", 512, true],
-  ]) {
-    const canvas = draw(size, maskable);
-    writeFileSync(join(out, name), png(size, size, canvas.rgba));
+for (const { dir, draw } of LEGACY_GAMES) emitIcons(dir, draw);
+
+// ── dynamic discovery: public/games/<slug>/icon-draw.mjs ──────────────
+const gamesDir = join(root, "public", "games");
+const legacySlugs = new Set(LEGACY_GAMES.map(({ dir }) => dir.split("/").pop()));
+
+let entries;
+try {
+  entries = readdirSync(gamesDir, { withFileTypes: true });
+} catch (err) {
+  console.log(`SKIP public/games: cannot scan (${err?.message ?? err})`);
+}
+
+if (entries) {
+  for (const entry of entries) {
+    if (!entry.isDirectory() || legacySlugs.has(entry.name)) continue;
+    const slug = entry.name;
+    const drawModule = join(gamesDir, slug, "icon-draw.mjs");
+    try {
+      if (!existsSync(drawModule)) {
+        console.log(`SKIP ${slug}: no icon-draw.mjs yet`);
+        continue;
+      }
+      const mod = await import(pathToFileURL(drawModule).href);
+      if (typeof mod.draw !== "function") {
+        throw new Error("icon-draw.mjs must export draw(size, maskable)");
+      }
+      emitIcons(`public/games/${slug}`, (size, maskable) => mod.draw(size, maskable));
+    } catch (err) {
+      console.log(`SKIP ${slug}: ${err?.message ?? err}`);
+    }
   }
-  console.log("icons →", dir);
 }

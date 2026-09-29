@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>MINESWEEPER — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white brutalist minesweeper. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MINESWEEPER">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">MINESWEEPER</span>
+      <span class="hud__chip" id="mines">10</span>
+      <span class="hud__chip hud__chip--time" id="time">00:00</span>
+      <span class="hud__best" id="best">BEST —</span>
+    </header>
+
+    <section class="tools">
+      <button class="tool" id="flagMode" type="button" aria-pressed="false">FLAG MODE: OFF</button>
+      <button class="tool" id="newBtn" type="button">NEW GAME</button>
+      <span class="tools__status" id="status">PLAY</span>
+    </section>
+
+    <div class="stage-wrap">
+      <div class="board" id="board" aria-label="minesweeper board"></div>
+
+      <!-- overlay: start / game over — brutalist inverted block -->
+      <div class="overlay" id="overlay" hidden>
+        <div class="overlay__panel">
+          <h1 class="overlay__title" id="overlayTitle">MINE<br>SWEEPER</h1>
+          <p class="overlay__sub" id="overlaySub">TAP A CELL TO START — FIRST CLICK IS ALWAYS SAFE</p>
+          <p class="overlay__score" id="overlayScore" hidden></p>
+          <p class="overlay__install">RIGHT-CLICK TO FLAG · FLAG MODE FOR TOUCH · ARROWS + SPACE OR F</p>
+          <button class="btn" id="startBtn" type="button">PRESS START</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>BRUTAL WHACK — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white whack-a-mole arcade game. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BRUTAL WHACK">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">BRUTAL&nbsp;WHACK</span>
+      <span class="hud__time" id="time" aria-live="off">30.0s</span>
+      <span class="hud__score" id="score">0</span>
+      <span class="hud__best" id="best">BEST&nbsp;0</span>
+    </header>
+
+    <div class="stage-wrap">
+      <div class="board" id="board" aria-label="Whack a mole board, 3 by 3 holes">
+        <button class="hole" id="m0" type="button" aria-label="HOLE 1"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+        <button class="hole" id="m1" type="button" aria-label="HOLE 2"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+        <button class="hole" id="m2" type="button" aria-label="HOLE 3"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+        <button class="hole" id="m3" type="button" aria-label="HOLE 4"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+        <button class="hole" id="m4" type="button" aria-label="HOLE 5"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+        <button class="hole" id="m5" type="button" aria-label="HOLE 6"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+        <button class="hole" id="m6" type="button" aria-label="HOLE 7"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+        <button class="hole" id="m7" type="button" aria-label="HOLE 8"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+        <button class="hole" id="m8" type="button" aria-label="HOLE 9"><span class="hole__mole"></span><span class="hole__eye hole__eye--l"></span><span class="hole__eye hole__eye--r"></span></button>
+
+        <!-- overlay: start / round over — brutalist inverted block -->
+        <div class="overlay" id="overlay">
+          <div class="overlay__panel">
+            <h1 class="overlay__title" id="overlayTitle">BRUTAL<br>WHACK</h1>
+            <p class="overlay__sub" id="overlaySub">TAP THE MOLE · KEYS 1–9 · 30 SECONDS</p>
+            <p class="overlay__score" id="overlayScore" hidden></p>
+            <button class="btn" id="startBtn" type="button">PRESS START</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

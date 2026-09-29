@@ -3,53 +3,245 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <title>BRUTAL BIRD — emanuel.antablin.com</title>
-  <meta name="description" content="A black-and-white flappy arcade game. Installable, offline-capable.">
+  <title>THE ARCADE — emanuel.antablin.com</title>
+  <meta name="description" content="A brutalist arcade of vanilla-JS mini-games. Installable, offline-capable.">
   <meta name="robots" content="noai, noimageai">
   <meta name="theme-color" content="#ffffff">
+  <script>
+    // theme before first paint — matches game pages
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #000000;
+      --text: #1a1a1a;
+      --soft: #f2f2f2;
+      --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+      --font-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    }
 
-  <!-- PWA: iOS standalone + icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="BRUTAL BIRD">
-  <link rel="apple-touch-icon" href="icons/icon-180.png">
-  <link rel="icon" href="icons/icon-192.png" type="image/png">
-  <link rel="manifest" href="manifest.webmanifest">
+    [data-theme="dark"] {
+      --bg: #000000;
+      --ink: #ffffff;
+      --text: #e6e6e6;
+      --soft: #1c1c1c;
+    }
 
-  <link rel="stylesheet" href="style.css">
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #main {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: max(8px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+               max(8px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      gap: 16px;
+    }
+
+    /* ── header ──────────────────────────────────────────────────────────── */
+    .hud {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      border-bottom: 4px solid var(--ink);
+      padding-bottom: 10px;
+    }
+
+    .hud__brand {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .hud__sub {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      opacity: 0.75;
+    }
+
+    /* ── card grid ───────────────────────────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+      flex: 1;
+      align-content: start;
+    }
+
+    .game {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border: 4px solid var(--ink);
+      padding: 14px;
+      background: var(--bg);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .game:hover,
+    .game:focus-visible {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .game__name {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .game__desc {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+      flex: 1;
+    }
+
+    .game__play {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── footer ──────────────────────────────────────────────────────────── */
+    .foot {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-top: 4px solid var(--ink);
+      padding-top: 10px;
+    }
+
+    .foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+    .foot a:hover { background: var(--ink); color: var(--bg); }
+
+    .foot__note {
+      margin-left: auto;
+      color: var(--ink);
+      opacity: 0.75;
+    }
+
+    @media (max-width: 480px) {
+      .hud { flex-direction: column; gap: 4px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
   <main id="main">
     <header class="hud">
-      <span class="hud__brand">BRUTAL&nbsp;BIRD</span>
-      <span class="hud__score" id="score">0</span>
-      <span class="hud__best" id="best">BEST&nbsp;0</span>
+      <span class="hud__brand">THE&nbsp;ARCADE</span>
+      <span class="hud__sub">VANILLA-JS MINI-GAMES · EMANUEL.ANTABLIN.COM</span>
     </header>
 
-    <div class="stage-wrap">
-      <canvas id="stage" width="480" height="640" aria-label="BRUTAL BIRD game area"></canvas>
-
-      <!-- overlay: start / game over — brutalist inverted block -->
-      <div class="overlay" id="overlay">
-        <div class="overlay__panel">
-          <h1 class="overlay__title" id="overlayTitle">BRUTAL<br>BIRD</h1>
-          <p class="overlay__sub" id="overlaySub">TAP / SPACE / ↑ TO FLAP</p>
-          <p class="overlay__score" id="overlayScore" hidden></p>
-          <p class="overlay__install" id="installHint" hidden>
-            iOS: SHARE → <strong>ADD TO HOME SCREEN</strong> — plays offline.
-          </p>
-          <button class="btn" id="startBtn" type="button">PRESS START</button>
-        </div>
-      </div>
+    <div class="grid">
+      <a class="game" href="/games/brutal-bird/">
+        <span class="game__name">Brutal Bird</span>
+        <span class="game__desc">One-button flappy flight, hard mode vibes.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/blackjack/">
+        <span class="game__name">Brutal 21</span>
+        <span class="game__desc">Blackjack at a 3:2 table, no mercy.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/tictactoe/">
+        <span class="game__name">Tic-Tac-Toe</span>
+        <span class="game__desc">Perfect minimax AI — best case is a draw.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/snake/">
+        <span class="game__name">Snake</span>
+        <span class="game__desc">Classic grid snake — every apple makes you longer.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/2048/">
+        <span class="game__name">2048</span>
+        <span class="game__desc">Slide and merge tiles until 2048.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/whack-a-mole/">
+        <span class="game__name">Whack-a-Mole</span>
+        <span class="game__desc">Fast reflexes — bonk the moles before they duck.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/simon/">
+        <span class="game__name">Simon</span>
+        <span class="game__desc">Repeat the growing tone-and-light sequence.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/minesweeper/">
+        <span class="game__name">Minesweeper</span>
+        <span class="game__desc">Flag every mine, don't click one.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/memory-pairs/">
+        <span class="game__name">Memory Pairs</span>
+        <span class="game__desc">Flip cards two at a time and match all pairs.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/wordle/">
+        <span class="game__name">Brutal Wordle</span>
+        <span class="game__desc">Six guesses, one hidden word.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/brutal-golf/">
+        <span class="game__name">Brutal Golf</span>
+        <span class="game__desc">Sink the ball in as few strokes as possible.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/solitaire/">
+        <span class="game__name">Solitaire</span>
+        <span class="game__desc">Klondike patience, cleared to the four aces.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
+      <a class="game" href="/games/raycaster/">
+        <span class="game__name">Raycaster</span>
+        <span class="game__desc">First-person walk through a grid maze.</span>
+        <span class="game__play">PLAY →</span>
+      </a>
     </div>
 
     <footer class="foot">
       <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
-      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+      <span class="foot__note">ALL GAMES INSTALLABLE · PLAY OFFLINE</span>
     </footer>
   </main>
-
-  <script src="game.js"></script>
 </body>
 </html>

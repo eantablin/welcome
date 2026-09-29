@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>WORDLE — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white brutalist word-guessing game. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="WORDLE">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">BRUTAL&nbsp;WORDLE</span>
+      <span class="hud__chip" id="statsChip">W0&nbsp;L0</span>
+    </header>
+
+    <section class="board">
+      <div class="grid" id="grid" aria-label="wordle grid"></div>
+      <p class="board__msg" id="msg">GUESS THE 5-LETTER WORD</p>
+      <div class="keys" id="keys" aria-label="on-screen keyboard"></div>
+
+      <!-- overlay: start / win / lose — brutalist inverted block -->
+      <div class="overlay" id="overlay">
+        <div class="overlay__panel">
+          <h1 class="overlay__title" id="overlayTitle">BRUTAL<br>WORDLE</h1>
+          <p class="overlay__sub" id="overlaySub">6 TRIES · ENTER TO GUESS</p>
+          <p class="overlay__score" id="overlayScore" hidden></p>
+          <p class="overlay__install" id="installHint" hidden>
+            iOS: SHARE → <strong>ADD TO HOME SCREEN</strong> — plays offline.
+          </p>
+          <button class="btn" id="startBtn" type="button">NEW WORD</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

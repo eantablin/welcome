@@ -3,7 +3,7 @@
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
-const code = readFileSync(new URL("../public/games/game.js", import.meta.url), "utf8")
+const code = readFileSync(new URL("../public/games/brutal-bird/game.js", import.meta.url), "utf8")
   // expose internal state for the harness only (shipped file is untouched)
   .replace(
     "  resetGame();\n  lastT = performance.now();",

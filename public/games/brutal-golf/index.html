@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>BRUTAL GOLF — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white top-down mini-golf. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BRUTAL GOLF">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">BRUTAL&nbsp;GOLF</span>
+      <span class="hud__chip" id="holeChip">HOLE&nbsp;1&nbsp;PAR&nbsp;2</span>
+      <span class="hud__chip" id="strokesChip">STROKES&nbsp;0</span>
+      <span class="hud__best" id="best">TOTAL&nbsp;E&nbsp;·&nbsp;BEST&nbsp;—</span>
+    </header>
+
+    <div class="stage-wrap">
+      <canvas id="stage" width="480" height="640" aria-label="BRUTAL GOLF course"></canvas>
+
+      <!-- overlay: start / hole complete / course complete — brutalist block -->
+      <div class="overlay" id="overlay">
+        <div class="overlay__panel">
+          <h1 class="overlay__title" id="overlayTitle">BRUTAL<br>GOLF</h1>
+          <p class="overlay__sub" id="overlaySub">DRAG FROM THE BALL — RELEASE TO PUTT</p>
+          <p class="overlay__score" id="overlayScore" hidden></p>
+          <p class="overlay__install" id="installHint" hidden>
+            iOS: SHARE → <strong>ADD TO HOME SCREEN</strong> — plays offline.
+          </p>
+          <button class="btn" id="startBtn" type="button">PRESS START</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

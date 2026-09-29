@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>MEMORY PAIRS — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white memory pairs card game. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MEMORY PAIRS">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">MEMORY&nbsp;PAIRS</span>
+      <span class="hud__score" id="moves">0</span>
+      <span class="hud__best" id="best">BEST&nbsp;&mdash;</span>
+    </header>
+
+    <div class="board">
+      <div class="grid" id="grid" aria-label="MEMORY PAIRS game area">
+        <button class="cell" type="button" aria-label="CARD 1, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 2, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 3, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 4, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 5, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 6, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 7, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 8, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 9, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 10, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 11, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 12, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 13, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 14, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 15, FACE DOWN"></button>
+        <button class="cell" type="button" aria-label="CARD 16, FACE DOWN"></button>
+      </div>
+
+      <!-- overlay: start / win — brutalist inverted block -->
+      <div class="overlay" id="overlay">
+        <div class="overlay__panel">
+          <h1 class="overlay__title">MEMORY<br>PAIRS</h1>
+          <p class="overlay__sub">MATCH ALL 8 CARD PAIRS — TAP OR ARROWS + ENTER</p>
+          <p class="overlay__score" id="overlayScore" hidden></p>
+          <button class="btn" id="startBtn" type="button">PRESS START</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

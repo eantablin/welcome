@@ -10,10 +10,17 @@ Built with **[Astro](https://astro.build)**, deployed to GitHub Pages via
 ## What's inside
 
 - **Boot sequence** — an "INSERT COIN" style cold-boot intro → `PRESS START`.
-- **BRUTAL BIRD** (`public/games/`), **BRUTAL 21** (`public/blackjack/`), and
-  **TIC-TAC-TOE** (`public/tictactoe/`) — installable, offline-capable PWA
-  mini-games (black/white, WebAudio SFX, localStorage records). Each ships its
-  own service worker + manifest; icons via `scripts/make-game-icons.mjs`.
+- **THE ARCADE** — 13 installable, offline-capable PWA mini-games, all
+  vanilla JS, black/white, WebAudio SFX, localStorage records, each with its
+  own service worker + manifest:
+  `public/games/` (index page + `brutal-bird/`, `snake/`, `2048/`,
+  `whack-a-mole/`, `simon/`, `minesweeper/`, `memory-pairs/`, `wordle/`,
+  `brutal-golf/`, `solitaire/`, `raycaster/`) plus `public/blackjack/`
+  and `public/tictactoe/`.
+- **Game tooling**: `scripts/icon-lib.mjs` (shared icon rasterizer),
+  `scripts/make-game-icons.mjs` (generates 5 PNG sizes per game; discovers
+  new games via their `icon-draw.mjs`), `scripts/smoke-*.mjs` (headless logic
+  suites — run `node scripts/smoke-<game>.mjs`; all must pass before deploy).
 - **WebGL hero** (Three.js) — a 3D *agent network*: glowing agent-nodes wired
   into a graph with signal pulses routing along the edges (observe → reason →
   act). Degrades to a static frame; perf guards on low-power devices; respects
@@ -37,10 +44,15 @@ Built with **[Astro](https://astro.build)**, deployed to GitHub Pages via
 ```
 public/
   CNAME .nojekyll robots.txt favicon.svg og-image.jpg manifest.webmanifest
-  games/ blackjack/ tictactoe/   ← PWA mini-games (each: index.html, style.css, game.js, sw.js, manifest, icons/)
+  blackjack/ tictactoe/  ← standalone game PWAs
+  games/                 ← THE ARCADE index + brutal-bird/ snake/ 2048/ whack-a-mole/
+                            simon/ minesweeper/ memory-pairs/ wordle/ brutal-golf/
+                            solitaire/ raycaster/ (each: index.html, style.css,
+                            game.js, sw.js, manifest.webmanifest, icon-draw.mjs, icons/)
 scripts/
-  make-game-icons.mjs    ← regenerates the game's PNG icons (node scripts/make-game-icons.mjs)
-  smoke-game.mjs         ← headless logic smoke test for the game (node scripts/smoke-game.mjs)
+  icon-lib.mjs           ← shared PNG rasterizer helpers for game icons
+  make-game-icons.mjs    ← regenerates all game icons (node scripts/make-game-icons.mjs)
+  smoke-*.mjs            ← per-game logic suites (node scripts/smoke-<game>.mjs)
 src/
   data/profile.ts        ← single source of truth (all copy, stats, case studies)
   layouts/Base.astro     ← shell: boot, overlays, HUD, nav, footer, mini-game modal

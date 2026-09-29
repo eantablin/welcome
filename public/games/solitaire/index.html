@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>SOLITAIRE — emanuel.antablin.com</title>
+  <meta name="description" content="A black-and-white brutalist Klondike solitaire. Installable, offline-capable.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- PWA: iOS standalone + icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="SOLITAIRE">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main">
+    <header class="hud">
+      <span class="hud__brand">SOLITAIRE</span>
+      <span class="hud__score" id="moves">MOVES&nbsp;0</span>
+      <span class="hud__best" id="timer">TIME&nbsp;0:00</span>
+    </header>
+
+    <section class="table">
+      <div class="table__top">
+        <div class="pile">
+          <p class="pile__label">STOCK</p>
+          <div class="pile__slot pile__slot--f" id="stock" tabindex="0" aria-label="STOCK"></div>
+        </div>
+        <div class="pile">
+          <p class="pile__label">WASTE</p>
+          <div class="pile__slot pile__slot--f" id="waste"></div>
+        </div>
+        <div class="pile">
+          <p class="pile__label">♠</p>
+          <div class="pile__slot pile__slot--foundation" data-fi="0"></div>
+        </div>
+        <div class="pile">
+          <p class="pile__label">♥</p>
+          <div class="pile__slot pile__slot--foundation" data-fi="1"></div>
+        </div>
+        <div class="pile">
+          <p class="pile__label">♦</p>
+          <div class="pile__slot pile__slot--foundation" data-fi="2"></div>
+        </div>
+        <div class="pile">
+          <p class="pile__label">♣</p>
+          <div class="pile__slot pile__slot--foundation" data-fi="3"></div>
+        </div>
+      </div>
+
+      <div class="tableau" id="tableau" aria-label="SOLITAIRE tableau"></div>
+    </section>
+
+    <footer class="foot">
+      <a href="https://emanuel.antablin.com">◄ BACK TO EMANUEL.ANTABLIN.COM</a>
+      <button class="foot__sound" id="soundBtn" type="button" aria-pressed="false">SOUND: OFF</button>
+    </footer>
+
+    <!-- overlay: start / win — brutalist panel above the dealt table -->
+    <div class="overlay" id="overlay">
+      <div class="overlay__panel">
+        <h1 class="overlay__title">SOLITAIRE</h1>
+        <p class="overlay__sub">TAP A CARD, THEN ITS DESTINATION — EMPTY THE TABLE</p>
+        <p class="overlay__score" id="overlayScore" hidden></p>
+        <button class="btn" id="startBtn" type="button">PRESS START</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
